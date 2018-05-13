@@ -55,7 +55,6 @@ public:
     bool isApproximate(const Matrix b, double epsilon) const;
     double squared_norm() const;
     double norm() const;
-    Matrix ones(int i, int j) const;
 
 private:
     int _rows;

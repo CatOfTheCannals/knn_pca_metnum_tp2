@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/cgiudice/metnum/knn_pca/src/Matrix.cpp" "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/src/Matrix.cpp.o"
-  "/Users/cgiudice/metnum/knn_pca/src/Svd.cpp" "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/src/Svd.cpp.o"
-  "/Users/cgiudice/metnum/knn_pca/src/empty_file.cpp" "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/src/empty_file.cpp.o"
+  "/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Matrix.cpp" "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/src/Matrix.cpp.o"
+  "/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Svd.cpp" "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/src/Svd.cpp.o"
+  "/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/empty_file.cpp" "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/src/empty_file.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

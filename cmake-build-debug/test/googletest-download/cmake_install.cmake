@@ -1,4 +1,4 @@
-# Install script for directory: /Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download
+# Install script for directory: /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

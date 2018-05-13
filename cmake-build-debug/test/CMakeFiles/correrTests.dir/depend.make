@@ -3,6 +3,7 @@
 
 test/CMakeFiles/correrTests.dir/svd_test.cpp.o: ../src/Matrix.hpp
 test/CMakeFiles/correrTests.dir/svd_test.cpp.o: ../src/Svd.hpp
+test/CMakeFiles/correrTests.dir/svd_test.cpp.o: ../src/matrix.hpp
 test/CMakeFiles/correrTests.dir/svd_test.cpp.o: ../test/svd_test.cpp
 test/CMakeFiles/correrTests.dir/svd_test.cpp.o: test/googletest-src/googletest/include/gtest/gtest-death-test.h
 test/CMakeFiles/correrTests.dir/svd_test.cpp.o: test/googletest-src/googletest/include/gtest/gtest-message.h

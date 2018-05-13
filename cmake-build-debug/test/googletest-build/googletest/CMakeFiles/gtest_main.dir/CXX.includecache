@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src/googletest/src/gtest_main.cc
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src/googletest/src/gtest_main.cc
 stdio.h
 -
 gtest/gtest.h
-/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src/googletest/src/gtest/gtest.h
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src/googletest/src/gtest/gtest.h
 
 test/googletest-src/googletest/include/gtest/gtest-death-test.h
 gtest/internal/gtest-death-test-internal.h

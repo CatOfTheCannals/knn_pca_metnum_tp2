@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/cgiudice/metnum/knn_pca/main.cpp" "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/CMakeFiles/main.dir/main.cpp.o"
+  "/Users/cgiudice/metnum/knn_pca_metnum_tp2/main.cpp" "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/CMakeFiles/main.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
@@ -14,7 +14,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/DependInfo.cmake"
+  "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/CMakeFiles/metodos-tp2-base.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

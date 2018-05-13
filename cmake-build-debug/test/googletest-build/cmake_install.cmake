@@ -1,4 +1,4 @@
-# Install script for directory: /Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src
+# Install script for directory: /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -29,7 +29,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-build/googletest/cmake_install.cmake")
+  include("/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-build/googletest/cmake_install.cmake")
 
 endif()
 

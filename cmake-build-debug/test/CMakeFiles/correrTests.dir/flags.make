@@ -6,5 +6,5 @@ CXX_FLAGS =  -std=c++11 -Wall -Wno-long-long -pedantic -Wno-variadic-macros -g
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src/googletest/include 
+CXX_INCLUDES = -isystem /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src/googletest/include 
 

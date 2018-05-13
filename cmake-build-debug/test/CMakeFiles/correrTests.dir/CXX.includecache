@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/cgiudice/metnum/knn_pca/src/Matrix.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Matrix.hpp
 iostream
 -
 vector
@@ -20,9 +20,29 @@ tuple
 math.h
 -
 
-/Users/cgiudice/metnum/knn_pca/src/Svd.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Svd.hpp
+cassert
+-
+chrono
+-
+matrix.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/matrix.hpp
 
-/Users/cgiudice/metnum/knn_pca/test/svd_test.cpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/matrix.hpp
+iostream
+-
+vector
+-
+string
+-
+assert.h
+-
+tuple
+-
+math.h
+-
+
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/test/svd_test.cpp
 iostream
 -
 fstream
@@ -30,11 +50,11 @@ fstream
 stdlib.h
 -
 gtest/gtest.h
-/Users/cgiudice/metnum/knn_pca/test/gtest/gtest.h
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/test/gtest/gtest.h
 ../src/Matrix.hpp
-/Users/cgiudice/metnum/knn_pca/src/Matrix.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Matrix.hpp
 ../src/Svd.hpp
-/Users/cgiudice/metnum/knn_pca/src/Svd.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Svd.hpp
 
 test/googletest-src/googletest/include/gtest/gtest-death-test.h
 gtest/internal/gtest-death-test-internal.h

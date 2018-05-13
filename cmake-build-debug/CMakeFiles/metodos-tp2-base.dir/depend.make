@@ -4,7 +4,6 @@
 CMakeFiles/metodos-tp2-base.dir/src/Matrix.cpp.o: ../src/Matrix.cpp
 CMakeFiles/metodos-tp2-base.dir/src/Matrix.cpp.o: ../src/Matrix.hpp
 
-CMakeFiles/metodos-tp2-base.dir/src/Svd.cpp.o: ../src/Matrix.hpp
 CMakeFiles/metodos-tp2-base.dir/src/Svd.cpp.o: ../src/Svd.cpp
 CMakeFiles/metodos-tp2-base.dir/src/Svd.cpp.o: ../src/Svd.hpp
 CMakeFiles/metodos-tp2-base.dir/src/Svd.cpp.o: ../src/matrix.hpp

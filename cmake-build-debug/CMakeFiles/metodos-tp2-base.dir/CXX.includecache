@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/Users/cgiudice/metnum/knn_pca/src/Matrix.cpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Matrix.cpp
 Matrix.hpp
-/Users/cgiudice/metnum/knn_pca/src/Matrix.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Matrix.hpp
 
-/Users/cgiudice/metnum/knn_pca/src/Matrix.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Matrix.hpp
 iostream
 -
 vector
@@ -24,23 +24,21 @@ tuple
 math.h
 -
 
-/Users/cgiudice/metnum/knn_pca/src/Svd.cpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Svd.cpp
+Svd.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Svd.hpp
+
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/Svd.hpp
 cassert
 -
 chrono
 -
 matrix.hpp
-/Users/cgiudice/metnum/knn_pca/src/matrix.hpp
-Svd.hpp
-/Users/cgiudice/metnum/knn_pca/src/Svd.hpp
-Matrix.hpp
-/Users/cgiudice/metnum/knn_pca/src/Matrix.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/matrix.hpp
 
-/Users/cgiudice/metnum/knn_pca/src/Svd.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/empty_file.cpp
 
-/Users/cgiudice/metnum/knn_pca/src/empty_file.cpp
-
-/Users/cgiudice/metnum/knn_pca/src/matrix.hpp
+/Users/cgiudice/metnum/knn_pca_metnum_tp2/src/matrix.hpp
 iostream
 -
 vector

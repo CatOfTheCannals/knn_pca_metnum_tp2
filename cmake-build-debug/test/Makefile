@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/cgiudice/metnum/knn_pca
+CMAKE_SOURCE_DIR = /Users/cgiudice/metnum/knn_pca_metnum_tp2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/cgiudice/metnum/knn_pca/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ install/local/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_progress_start /Users/cgiudice/metnum/knn_pca/cmake-build-debug/CMakeFiles /Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/CMakeFiles/progress.marks
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cgiudice/metnum/knn_pca/cmake-build-debug/CMakeFiles 0
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_progress_start /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/CMakeFiles /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/CMakeFiles/progress.marks
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/clean
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/preinstall
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/preinstall
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 test/CMakeFiles/correrTests.dir/rule:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/correrTests.dir/rule
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/correrTests.dir/rule
 .PHONY : test/CMakeFiles/correrTests.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ correrTests: test/CMakeFiles/correrTests.dir/rule
 
 # fast build rule for target.
 correrTests/fast:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/build
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/build
 .PHONY : correrTests/fast
 
 svd_test.o: svd_test.cpp.o
@@ -177,7 +177,7 @@ svd_test.o: svd_test.cpp.o
 
 # target to build an object file
 svd_test.cpp.o:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/svd_test.cpp.o
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/svd_test.cpp.o
 .PHONY : svd_test.cpp.o
 
 svd_test.i: svd_test.cpp.i
@@ -186,7 +186,7 @@ svd_test.i: svd_test.cpp.i
 
 # target to preprocess a source file
 svd_test.cpp.i:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/svd_test.cpp.i
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/svd_test.cpp.i
 .PHONY : svd_test.cpp.i
 
 svd_test.s: svd_test.cpp.s
@@ -195,7 +195,7 @@ svd_test.s: svd_test.cpp.s
 
 # target to generate assembly for a file
 svd_test.cpp.s:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/svd_test.cpp.s
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(MAKE) -f test/CMakeFiles/correrTests.dir/build.make test/CMakeFiles/correrTests.dir/svd_test.cpp.s
 .PHONY : svd_test.cpp.s
 
 # Help Target
@@ -225,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/cgiudice/metnum/knn_pca/cmake-build-debug && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

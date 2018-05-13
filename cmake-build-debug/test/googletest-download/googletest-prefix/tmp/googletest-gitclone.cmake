@@ -4,21 +4,21 @@ endif()
 
 set(run 0)
 
-if("/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitinfo.txt" IS_NEWER_THAN "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt")
+if("/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitinfo.txt" IS_NEWER_THAN "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt")
   set(run 1)
 endif()
 
 if(NOT run)
-  message(STATUS "Avoiding repeated git clone, stamp file is up to date: '/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt'")
+  message(STATUS "Avoiding repeated git clone, stamp file is up to date: '/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt'")
   return()
 endif()
 
 execute_process(
-  COMMAND ${CMAKE_COMMAND} -E remove_directory "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src"
+  COMMAND ${CMAKE_COMMAND} -E remove_directory "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src"
   RESULT_VARIABLE error_code
   )
 if(error_code)
-  message(FATAL_ERROR "Failed to remove directory: '/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src'")
+  message(FATAL_ERROR "Failed to remove directory: '/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src'")
 endif()
 
 set(git_options)
@@ -53,7 +53,7 @@ set(number_of_tries 0)
 while(error_code AND number_of_tries LESS 3)
   execute_process(
     COMMAND "/usr/bin/git" ${git_options} clone ${git_clone_options} --origin "origin" "https://github.com/google/googletest.git" "googletest-src"
-    WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test"
+    WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test"
     RESULT_VARIABLE error_code
     )
   math(EXPR number_of_tries "${number_of_tries} + 1")
@@ -71,7 +71,7 @@ endif()
 # because that will not search for remote branch names, a common use case.
 execute_process(
   COMMAND "/usr/bin/git" ${git_options} checkout master
-  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src"
+  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src"
   RESULT_VARIABLE error_code
   )
 if(error_code)
@@ -80,32 +80,32 @@ endif()
 
 execute_process(
   COMMAND "/usr/bin/git" ${git_options} submodule init 
-  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src"
+  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src"
   RESULT_VARIABLE error_code
   )
 if(error_code)
-  message(FATAL_ERROR "Failed to init submodules in: '/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src'")
+  message(FATAL_ERROR "Failed to init submodules in: '/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src'")
 endif()
 
 execute_process(
   COMMAND "/usr/bin/git" ${git_options} submodule update --recursive --init 
-  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src"
+  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src"
   RESULT_VARIABLE error_code
   )
 if(error_code)
-  message(FATAL_ERROR "Failed to update submodules in: '/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src'")
+  message(FATAL_ERROR "Failed to update submodules in: '/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src'")
 endif()
 
 # Complete success, update the script-last-run stamp file:
 #
 execute_process(
   COMMAND ${CMAKE_COMMAND} -E copy
-    "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitinfo.txt"
-    "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt"
-  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-src"
+    "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitinfo.txt"
+    "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt"
+  WORKING_DIRECTORY "/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-src"
   RESULT_VARIABLE error_code
   )
 if(error_code)
-  message(FATAL_ERROR "Failed to copy script-last-run stamp file: '/Users/cgiudice/metnum/knn_pca/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt'")
+  message(FATAL_ERROR "Failed to copy script-last-run stamp file: '/Users/cgiudice/metnum/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download/googletest-prefix/src/googletest-stamp/googletest-gitclone-lastrun.txt'")
 endif()
 

@@ -49,7 +49,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
 
     auto start = chrono::steady_clock::now();
 
-    Matrix x_0(ones(A.rows(), 1));
+    Matrix x_0( ones(A.rows(), 1));
 
 /*
     Matrix X(A);
@@ -94,4 +94,14 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
 
     return make_tuple(k_eigen_vectors, lambdas);
     */
+}
+
+Matrix ones(int i, int j)  {
+    Matrix res(i, j);
+    for (std::size_t i = 0; i < i; i++) {
+        for (std::size_t j = 0; j < j; j++) {
+            res.setIndex(i, j, 1);
+        }
+    }
+    return res;
 }

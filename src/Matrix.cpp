@@ -253,14 +253,3 @@ double Matrix::norm() const {
     return sqrt(this->squared_norm());
 }
 
-
-
-Matrix Matrix::ones(int i, int j) const {
-    Matrix res(i, j);
-    for (std::size_t i = 0; i < i; i++) {
-        for (std::size_t j = 0; j < j; j++) {
-            res.setIndex(i, j, 1);
-        }
-    }
-    return res;
-}

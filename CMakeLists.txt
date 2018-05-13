@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(tp1_metodos CXX)
+project(tp2_metodos CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-long-long -pedantic -Wno-variadic-macros")
 
