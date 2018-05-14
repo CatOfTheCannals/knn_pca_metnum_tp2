@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -Wall -Wno-long-long -pedantic -Wno-variadic-macros   CMakeFiles/correrTests.dir/svd_test.cpp.o CMakeFiles/correrTests.dir/kNN_test.cpp.o  -o correrTests ../libmetodos-tp2-base.a googletest-build/googletest/libgtest_main.a googletest-build/googletest/libgtest.a -pthread 

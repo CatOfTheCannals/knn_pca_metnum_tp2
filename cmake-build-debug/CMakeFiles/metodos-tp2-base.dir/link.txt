@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libmetodos-tp2-base.a  CMakeFiles/metodos-tp2-base.dir/src/Matrix.cpp.o CMakeFiles/metodos-tp2-base.dir/src/empty_file.cpp.o CMakeFiles/metodos-tp2-base.dir/src/Svd.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libmetodos-tp2-base.a

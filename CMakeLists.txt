@@ -5,7 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-long-long -pedanti
 
 set(SOURCE_FILES
         src/Matrix.cpp
-        src/empty_file.cpp src/Svd.cpp src/Svd.hpp)
+        src/empty_file.cpp src/Svd.cpp src/kNN.cpp)
 
 add_library(metodos-tp2-base ${SOURCE_FILES})
 

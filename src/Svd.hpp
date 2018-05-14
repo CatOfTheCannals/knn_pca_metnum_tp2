@@ -3,7 +3,7 @@
 
 #include <cassert>
 #include <chrono>
-#include "matrix.hpp"
+#include "Matrix.hpp"
 
 tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
                                    double epsilon);
