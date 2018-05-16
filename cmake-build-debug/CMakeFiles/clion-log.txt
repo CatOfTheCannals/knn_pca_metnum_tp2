@@ -1,0 +1,15 @@
+/opt/clion-2017.1.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/cmake-build-debug/test/googletest-download
+[ 11%] Performing update step for 'googletest'
+Current branch master is up to date.
+[ 22%] No configure step for 'googletest'
+[ 33%] No build step for 'googletest'
+[ 44%] No install step for 'googletest'
+[ 55%] No test step for 'googletest'
+[ 66%] Completed 'googletest'
+[100%] Built target googletest
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/cmake-build-debug
