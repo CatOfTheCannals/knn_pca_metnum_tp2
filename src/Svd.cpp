@@ -43,15 +43,13 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
 
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
                           double epsilon) {
-    cout << "Running "
-         << "SVD(num_components=" << num_components << "). Input: " << A.rows()
-         << " rows" << endl;
+
 
     auto start = chrono::steady_clock::now();
 
     Matrix x_0( ones(A.rows(), 1));
 
-/*
+
     Matrix X(A);
 
     assert((num_components <= X.rows()) && (num_components <= X.cols()));
@@ -67,39 +65,27 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
                 power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
 
         for (auto q = 0; q < k_eigen_vectors.rows(); q++) {
-            k_eigen_vectors(q, i) =
-                    eigen_vector(q, 0); // fill eigen vector in res matrix
+            k_eigen_vectors.setIndex(q, i, eigen_vector(q, 0)); // fill eigen vector in res matrix
         }
-        lambdas(i, i) = eigen_value;
+        lambdas.setIndex(i, i, eigen_value);
 
-        auto external = eigen_vector * eigen_vector.transpose();
-        auto internal = eigen_vector.transpose() * eigen_vector;
-        double internal_val = internal(0, 0);
+        auto external = eigen_vector.multiply(eigen_vector.transpose());
 
-        X = X - (external * (eigen_value / internal_val));
+        cout << "pre-deflation X: " << endl << X << endl;
+        cout << "external * eigen_value: " << endl << external * eigen_value<< endl;
+        X = X - (external * eigen_value );
+        cout << "pos-deflation X: " << endl << X << endl;
 
-        if ((i + 1) % 10 == 0) {
-            cout << "SVD(num_components=" << num_components << "): " << i + 1 << "/"
-                 << num_components << " done" << endl;
-        }
     }
 
-    cout << "SVD(num_components=" << num_components << "): " << num_components
-         << "/" << num_components << " done" << endl;
-
-    auto end = chrono::steady_clock::now();
-    auto delta_t = chrono::duration<double, milli>(end - start).count();
-    cout << "Run SVD(num_components=" << num_components << ") in "
-         << (delta_t / 1000.0) / 60.0 << " mins" << endl;
 
     return make_tuple(k_eigen_vectors, lambdas);
-    */
 }
 
-Matrix ones(int i, int j)  {
-    Matrix res(i, j);
-    for (std::size_t i = 0; i < i; i++) {
-        for (std::size_t j = 0; j < j; j++) {
+Matrix ones(int rows, int cols)  {
+    Matrix res(rows, cols);
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = 0; j < cols; j++) {
             res.setIndex(i, j, 1);
         }
     }

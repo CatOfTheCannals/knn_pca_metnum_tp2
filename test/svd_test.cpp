@@ -23,10 +23,22 @@ protected:
             x_0.setIndex(0, 0, 1);
             x_0.setIndex(1, 0, 2);
             x_0.setIndex(2, 0, 3);
+
+
+            f.setIndex(0, 0, 7);
+            f.setIndex(0, 1, 2);
+            f.setIndex(0, 2, 5);
+            f.setIndex(1, 1, 1);
+            f.setIndex(1, 2, 4);
+            f.setIndex(1, 0, 4);
+            f.setIndex(2, 1, 3);
+            f.setIndex(2, 2, 2);
+            f.setIndex(2, 0, 1);
     }
+    Matrix f = Matrix(3,3);
     Matrix g = Matrix(3,3);
     Matrix x_0 = Matrix(3,1);
-    double epsilon = 0.001;
+    double epsilon = 0.0000001;
 };
 
 
@@ -39,12 +51,35 @@ TEST_F (runTest, powerG){
     epsilon *= 10; // la precision queda asi por algun motivo
     ASSERT_TRUE(g.multiply(v).isApproximate(v * lambda, epsilon)) ;
 }
+/*
+TEST_F (runTest, svdTest){
 
-TEST_F (runTest, svd){
-    /*
-    auto svdRes = g.svd(2, epsilon);
-    Matrix lambdas(std::get<0>svd_res);
-    Matrix autoVecs(std::get<1>svd_res);
-     */
+    std::cout << g.getRow(0) << std::endl;
 
+    auto svdRes = svd(g, 3, epsilon);
+    Matrix lambdas(std::get<0>(svdRes));
+    Matrix autoVecs(std::get<1>(svdRes));
+
+    std::cout << lambdas << std::endl;
+    std::cout << autoVecs << std::endl;
+}*/
+
+TEST_F (runTest, svdTest2){
+
+    std::cout << f << std::endl;
+
+    auto svdRes = svd(f, 3, epsilon);
+    Matrix autoVecs(std::get<0>(svdRes));
+    Matrix lambdas(std::get<1>(svdRes));
+
+    std::cout << lambdas << std::endl;
+    std::cout << autoVecs << std::endl;
+
+    for(int j = 0; j < autoVecs.cols(); j++){
+        Matrix eigenVec(autoVecs.rows(), 1);
+        for(int i = 0; i < autoVecs.rows(); i++){
+            eigenVec.setIndex(i,0,autoVecs(i,j));
+        }
+        std::cout << f.multiply(eigenVec) - eigenVec * lambdas(j,j) << std::endl;
+    }
 }
