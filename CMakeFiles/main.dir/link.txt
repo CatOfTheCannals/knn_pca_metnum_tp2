@@ -1,1 +1,1 @@
-/usr/bin/c++   -std=c++11 -Wall -Wno-long-long -pedantic -Wno-variadic-macros   CMakeFiles/main.dir/main.cpp.o  -o main libmetodos-tp2-base.a 
+/usr/bin/c++    -std=c++11 -Wall -Wno-long-long -pedantic -Wno-variadic-macros -g   CMakeFiles/main.dir/main.cpp.o  -o main libmetodos-tp2-base.a 

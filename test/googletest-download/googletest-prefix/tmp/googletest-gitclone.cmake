@@ -37,17 +37,7 @@ if(git_shallow)
   list(APPEND git_clone_options --depth 1 --no-single-branch)
 endif()
 
-set(git_progress "")
-if(git_progress)
-  list(APPEND git_clone_options --progress)
-endif()
-
-set(git_config "")
-foreach(config IN LISTS git_config)
-  list(APPEND git_clone_options --config ${config})
-endforeach()
-
-# try the clone 3 times in case there is an odd git clone issue
+# try the clone 3 times incase there is an odd git clone issue
 set(error_code 1)
 set(number_of_tries 0)
 while(error_code AND number_of_tries LESS 3)
@@ -67,7 +57,7 @@ if(error_code)
 endif()
 
 execute_process(
-  COMMAND "/usr/bin/git" ${git_options} checkout master --
+  COMMAND "/usr/bin/git" ${git_options} checkout master
   WORKING_DIRECTORY "/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/test/googletest-src"
   RESULT_VARIABLE error_code
   )

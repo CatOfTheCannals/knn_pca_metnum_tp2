@@ -8,25 +8,36 @@
 
 
 
-Matrix distance(Matrix& data, Matrix& image) { /* returns a column Matrix with the distance
- of every image on data with the one that enters as a parameter */
-    assert(data.cols() == image.cols());
+Matrix distance(const Matrix& data, const Matrix& image) { /* returns a column Matrix with the distance
+ of every image on data with the one that enters as a parameter //The image is taken as a col vector*/
+    assert(data.cols() == image.rows());
     Matrix res(data.rows(),1);
-
-    Matrix aux = Matrix(data.rows(),data.cols());
-    for (int i = 1; i <= data.rows(); ++i) {
-        aux.setIndex(i, 1, 1);
-    }
-    aux.multiply(image); //creates a matrix with image in all it's rows.
-    data-aux;
-    for (int i = 1; i <= aux.rows(); ++i){
-        double sum = 0;
-        for (int j = 1; j <= aux.cols(); ++j) {
-            int value = aux(i,j);
-            sum = sum + value * value;
+    std::cout<<"res matrix"<< endl << res;
+    std::cout<<"data matrix"<< endl << data;
+    std::cout<<"image matrix"<< endl <<image;
+    Matrix aux = Matrix(data.rows(),image.rows());
+    std::cout<<"aux matrix" << endl << aux;
+    for (int i = 0; i < data.rows(); ++i) {
+        for (int j = 0; j < image.rows(); ++j) {
+            aux.setIndex(i, j, image(j));
         }
-        res.setIndex(i,1, sqrt(sum)); //sets in every row of res the distance between the imput image and the
     }
+    std::cout<<"aux matrix" << endl << aux <<endl;
+    Matrix difference = Matrix(data.rows(),data.rows());
+    difference = data-aux;
+    std::cout<<"data - aux" << endl <<difference<< endl;
+    for (int i = 0; i < difference.rows(); ++i){
+        double sum = 0;
+        for (int j = 0; j < difference.cols(); ++j) {
+            int value = difference(i,j);
+            std::cout <<"value is " << value << endl;
+            sum = sum + (value * value);
+        }
+        std::cout<<"sum sub " << i <<" " << sum << endl;
+        res.setIndex(i, 0, sqrt(sum)); //sets in every row of res the distance between the imput image and the
+    }
+    std::cout<<"res matrix" << endl << res << endl;
+
     return res;
 }
 //

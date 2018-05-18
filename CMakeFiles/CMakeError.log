@@ -1,22 +1,22 @@
 Determining if the pthread_create exist failed with the following output:
 Change Dir: /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_6c88d/fast"
-/usr/bin/make -f CMakeFiles/cmTC_6c88d.dir/build.make CMakeFiles/cmTC_6c88d.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_fc411/fast"
+/usr/bin/make -f CMakeFiles/cmTC_fc411.dir/build.make CMakeFiles/cmTC_fc411.dir/build
 make[1]: se entra en el directorio '/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_6c88d.dir/CheckSymbolExists.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_6c88d.dir/CheckSymbolExists.c.o   -c /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_6c88d
-/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6c88d.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_6c88d.dir/CheckSymbolExists.c.o  -o cmTC_6c88d 
-CMakeFiles/cmTC_6c88d.dir/CheckSymbolExists.c.o: En la función `main':
+Building C object CMakeFiles/cmTC_fc411.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_fc411.dir/CheckSymbolExists.c.o   -c /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_fc411
+/opt/clion-2017.1.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fc411.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_fc411.dir/CheckSymbolExists.c.o  -o cmTC_fc411 -rdynamic 
+CMakeFiles/cmTC_fc411.dir/CheckSymbolExists.c.o: En la función `main':
 CheckSymbolExists.c:(.text+0x16): referencia a `pthread_create' sin definir
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_6c88d.dir/build.make:86: fallo en las instrucciones para el objetivo 'cmTC_6c88d'
-make[1]: *** [cmTC_6c88d] Error 1
+CMakeFiles/cmTC_fc411.dir/build.make:97: fallo en las instrucciones para el objetivo 'cmTC_fc411'
+make[1]: *** [cmTC_fc411] Error 1
 make[1]: se sale del directorio '/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp'
-Makefile:126: fallo en las instrucciones para el objetivo 'cmTC_6c88d/fast'
-make: *** [cmTC_6c88d/fast] Error 2
+Makefile:126: fallo en las instrucciones para el objetivo 'cmTC_fc411/fast'
+make: *** [cmTC_fc411/fast] Error 2
 
 File /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */

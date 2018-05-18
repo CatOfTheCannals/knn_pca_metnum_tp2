@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/correrTests.dir/svd_test.cpp.o"
   "CMakeFiles/correrTests.dir/kNN_test.cpp.o"
   "correrTests.pdb"
   "correrTests"
