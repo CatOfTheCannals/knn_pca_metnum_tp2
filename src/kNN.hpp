@@ -7,6 +7,10 @@
 
 Matrix distance(Matrix& input, Matrix& image);
 
+struct int_pair{
+    int key;
+    int value;
+}
 
 
 #endif //TP1_METODOS_KKN_H
