@@ -75,6 +75,7 @@ protected:
         x_2.setIndex(3, 0, 4);
 
 
+
     }
     Matrix f = Matrix(4,4);
     Matrix g = Matrix(4,4);
@@ -84,6 +85,11 @@ protected:
     Matrix x_0 = Matrix(4,1);
     Matrix x_1 = Matrix(4,1);
     Matrix x_2 = Matrix(4,1);
+
+    int rep1 [5] = { 2, 9, 3, 33, 4 };
+    int rep2 [5] = { 2, 9, 3, 4, 3 };
+    int rep3 [1] = { 6 };
+    int rep4 [6] = { 2, 1, 1, 1, 2, 2 };
 };
 
 
@@ -91,5 +97,13 @@ TEST_F (runTest, distance){
     ASSERT_EQ( distance(g, x_1), res_0);//Negative
     ASSERT_EQ( distance(g, x_2), res_1);//Positive
     ASSERT_EQ( distance(f, x_0), res_2); //Null matrix
+
+}
+
+TEST_F (runTest, mostAppears){
+    ASSERT_EQ( mostAppears(rep1, 5), 4);//Negative
+    ASSERT_EQ( mostAppears(rep2, 5), 2);//Negative
+    ASSERT_EQ( mostAppears(rep3, 1), 1);//Negative
+    ASSERT_EQ( mostAppears(rep4, 6), 1);//Negative
 
 }

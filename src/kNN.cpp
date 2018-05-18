@@ -40,19 +40,20 @@ Matrix distance(const Matrix& data, const Matrix& image) { /* returns a column M
 
     return res;
 }
-//
-//int mostAppears(int array[], int length){//fixme: check the parameters
-//    int mostRepeated = 0;
-//    if (length > 1) {
-//        for (int i = 0, i < length; ++i) {
-//            if(array[i] > array[mostRepeated]){
-//                mostRepeated = i;
-//            }
-//        }
-//    }
-//    return mostRepeated+1;
-//}
-//
+
+int mostAppears(const int array[], const int length){/* returns the index of the biggest element (the imput
+ array has the number of repetitions of it's index. */
+    int mostRepeated = 0;
+    if (length > 1) {
+        for (int i = 0; i < length; ++i) {
+            if(array[i] > array[mostRepeated]){
+                mostRepeated = i;
+            }
+        }
+    }
+    return mostRepeated+1;
+}
+
 //
 //int kNN(Matrix& data, Matrix& image, int k, int numberOfPeople) {
 //
