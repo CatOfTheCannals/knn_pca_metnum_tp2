@@ -54,22 +54,20 @@ int mostAppears(const int array[], const int length){/* returns the index of the
     return mostRepeated+1;
 }
 
-//
-//int kNN(Matrix& data, Matrix& image, int k, int numberOfPeople) {
-//
-//    Matrix distance = distance(data, image);
-//    vector<tuple<int, double>> v; /*first element of tuple identifies the person on data image, second is the distance
-//    to the imput image. */
-//    int person = 1;
-//    for (int i = 0; i < distance.rows(); i++) { //sets v to be as needed.
-//        if (i - person * 10 != 0) { //used to diferenciate between persons
-//            v.push_back(std::make_tuple(person, distance(i))) //fixme: suposing that () gives you the ith element
-//        } else {
-//            v.push_back(std::make_tuple(person, distance(i))) //fixme: suposing that () gives you the ith element
-//            person++;
-//        }
-//    }
-//    bool myComparison(const pair<int,double> &a,const pair<int,double> &b) //used to sort v
+
+int kNN(const Matrix& data, const Matrix& image, int k, int numberOfPeople) {
+    Matrix distances = distance(data, image);
+    vector<tuple<int, double>> v; /*first element of tuple identifies the person on data image, second is the distance
+    to the imput image. */
+    int person = 1;
+    for (int i = 0; i < distances.rows(); ++i) { //sets v to be as needed.
+        if (i - person * 10 != 0) { //used to diferenciate between persons
+            v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element} else {
+            v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element
+            person++;
+        }
+    }
+    bool myComparison(const pair<int,double> &a,const pair<int,double> &b); //used to sort v
 //    {
 //        return a.second<b.second;
 //    }
@@ -81,4 +79,5 @@ int mostAppears(const int array[], const int length){/* returns the index of the
 // * on the ith nearest position */// substraction of one is due to repetitions index from 0
 //    }
 //    return mostAppears(repetitions, numberOfPeople); //returns the person that appears the most on the kNN.
-//}
+    return 0;
+}
