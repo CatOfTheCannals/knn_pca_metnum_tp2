@@ -74,6 +74,110 @@ protected:
         x_2.setIndex(2, 0, 3);
         x_2.setIndex(3, 0, 4);
 
+        //////////////////////////kNN data:
+        data_1.setIndex(0, 0, 1);
+        data_1.setIndex(0, 1, 2);
+        data_1.setIndex(0, 2, 1);
+        data_1.setIndex(0, 3, 3);
+        data_1.setIndex(0, 4, 1);
+        data_1.setIndex(0, 5, 9);
+
+        image_1.setIndex(0, 0, 1);
+        image_1.setIndex(1, 0, 3);
+        image_1.setIndex(2, 0, 1);
+        image_1.setIndex(3, 0, 3);
+        image_1.setIndex(4, 0, 2);
+        image_1.setIndex(5, 0, 9);
+
+        data_2.setIndex(0, 0, 1);
+        data_2.setIndex(0, 1, 2);
+        data_2.setIndex(0, 2, 9);
+        data_2.setIndex(0, 3, 7);
+        data_2.setIndex(0, 4, 8);
+        data_2.setIndex(0, 5, 9);
+        data_2.setIndex(0, 6, 7);
+
+        data_2.setIndex(1, 0, 1);
+        data_2.setIndex(1, 1, 3);
+        data_2.setIndex(1, 2, 9);
+        data_2.setIndex(1, 3, 6);
+        data_2.setIndex(1, 4, 7);
+        data_2.setIndex(1, 5, 8);
+        data_2.setIndex(1, 6, 6);
+
+        data_2.setIndex(2, 0, 1);
+        data_2.setIndex(2, 1, 2);
+        data_2.setIndex(2, 2, 9);
+        data_2.setIndex(2, 3, 2);
+        data_2.setIndex(2, 4, 8);
+        data_2.setIndex(2, 5, 9);
+        data_2.setIndex(2, 6, 7);
+
+        data_2.setIndex(3, 0, 1);
+        data_2.setIndex(3, 1, 2);
+        data_2.setIndex(3, 2, 9);
+        data_2.setIndex(3, 3, 7);
+        data_2.setIndex(3, 4, 8);
+        data_2.setIndex(3, 5, 9);
+        data_2.setIndex(3, 6, 10);
+
+        data_2.setIndex(4, 0, 10);
+        data_2.setIndex(4, 1, 10);
+        data_2.setIndex(4, 2, 10);
+        data_2.setIndex(4, 3, 9);
+        data_2.setIndex(4, 4, 8);
+        data_2.setIndex(4, 5, 9);
+        data_2.setIndex(4, 6, 7);
+
+        data_2.setIndex(5, 0, 10);
+        data_2.setIndex(5, 1, 9);
+        data_2.setIndex(5, 2, 8);
+        data_2.setIndex(5, 3, 7);
+        data_2.setIndex(5, 4, 6);
+        data_2.setIndex(5, 5, 8);
+        data_2.setIndex(5, 6, 9);
+
+        data_2.setIndex(6, 0, 1);
+        data_2.setIndex(6, 1, 2);
+        data_2.setIndex(6, 2, 10);
+        data_2.setIndex(6, 3, 8);
+        data_2.setIndex(6, 4, 7);
+        data_2.setIndex(6, 5, 9);
+        data_2.setIndex(6, 6, 7);
+
+        data_2.setIndex(7, 0, 1);
+        data_2.setIndex(7, 1, 2);
+        data_2.setIndex(7, 2, 8);
+        data_2.setIndex(7, 3, 7);
+        data_2.setIndex(7, 4, 8);
+        data_2.setIndex(7, 5, 9);
+        data_2.setIndex(7, 6, 7);
+
+        data_2.setIndex(8, 0, 1);
+        data_2.setIndex(8, 1, 2);
+        data_2.setIndex(8, 2, 8);
+        data_2.setIndex(8, 3, 7);
+        data_2.setIndex(8, 4, 8);
+        data_2.setIndex(8, 5, 7);
+        data_2.setIndex(8, 6, 8);
+
+        data_2.setIndex(9, 0, 1);
+        data_2.setIndex(9, 1, 2);
+        data_2.setIndex(9, 2, 9);
+        data_2.setIndex(9, 3, 7);
+        data_2.setIndex(9, 4, 8);
+        data_2.setIndex(9, 5, 9);
+        data_2.setIndex(9, 6, 9);
+
+        image_2.setIndex(0, 0, 1);
+        image_2.setIndex(1, 0, 2);
+        image_2.setIndex(2, 0, 9);
+        image_2.setIndex(3, 0, 11);
+        image_2.setIndex(4, 0, 8);
+        image_2.setIndex(5, 0, 9);
+        image_2.setIndex(6, 0, 7);
+
+
 
 
     }
@@ -85,6 +189,12 @@ protected:
     Matrix x_0 = Matrix(4,1);
     Matrix x_1 = Matrix(4,1);
     Matrix x_2 = Matrix(4,1);
+
+    Matrix data_1 = Matrix(1,6);
+    Matrix image_1 = Matrix(6,1);
+
+    Matrix data_2 = Matrix(10,7);
+    Matrix image_2 = Matrix(7,1);
 
     int rep1 [5] = { 2, 9, 3, 33, 4 };
     int rep2 [5] = { 2, 9, 3, 4, 3 };
@@ -106,4 +216,9 @@ TEST_F (runTest, mostAppears){
     ASSERT_EQ( mostAppears(rep3, 1), 1);//Negative
     ASSERT_EQ( mostAppears(rep4, 6), 1);//Negative
 
+}
+
+TEST_F (runTest, kNN){
+    ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);
+    ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 1);
 }

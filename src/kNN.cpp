@@ -59,20 +59,24 @@ bool myComparison(const tuple<int,double> a, const tuple<int,double> b) {//used 
     return std::get<1>(a) < std::get<1>(b);  //fixme: check that this is the way to acces the second element of a tuple
 }
 
-int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople) {
+int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople) {
+    assert(data.rows() <= k); //the number of neighbours must be equal or less to the number of pictures on the dataset
     Matrix distances = distance(data, image);
     vector<tuple<int, double>> v; /*first element of tuple identifies the person on data image, second is the distance
     to the imput image. */
     int person = 1;
-    for (int i = 0; i < distances.rows(); ++i) { //sets v to be as needed.
-        if (i - person * 10 != 0) { //used to diferenciate between persons
-            v.push_back(
-                    std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element} else {
+    for (int i = 0; i < distances.rows(); ++i) { /* sets v to be as needed (a vector of tuples with the id of the person
+        and the distance of his picture to the imput image) */
+        if (i - person * numberOfPicturesPerPeople != 0) { //used to diferenciate between persons //fixme: numberOfPicturesPerPeople was 10
+            v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element} else {
             v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element
             person++;
         }
     }
-
+    cout<<"matrix distances per person: "<<endl;
+    for ( const auto& i : v ) {
+        cout << "person " << get<0>(i) << "distance " << get<1>(i) << endl;
+    }
     sort(v.begin(), v.end(), myComparison); //Sorts v from the shortest distance to the largest.
     int repetitions[numberOfPeople] = {}; /*this array is used to count the number on the k nearest neighbours.
     Our data set has 41 persons, so we will count as max 41 repetitions.*/

@@ -7,7 +7,7 @@
 
 Matrix distance(const Matrix& input, const Matrix& image);
 int mostAppears(const int array[], const int length);//fixme: check the parameters
-int kNN(const Matrix& data, const Matrix& image, int k, int numberOfPeople);
+int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople);
 
 
 struct int_pair{
