@@ -16,10 +16,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c700433-0b74-41b7-941c-4a61c3f2799b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMakeFiles/metodos-tp2-base.dir/src/kNN.cpp.o" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libmetodos-tp2-base.a" afterPath="$PROJECT_DIR$/libmetodos-tp2-base.a" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kNN.cpp" afterPath="$PROJECT_DIR$/src/kNN.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/correrTests" afterPath="$PROJECT_DIR$/test/correrTests" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/kNN_test.cpp" afterPath="$PROJECT_DIR$/test/kNN_test.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/CMakeFiles/" />
@@ -50,8 +46,8 @@
       <file leaf-file-name="kNN_test.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/kNN_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="640">
-              <caret line="300" column="0" lean-forward="false" selection-start-line="291" selection-start-column="0" selection-end-line="300" selection-end-column="0" />
+            <state relative-caret-position="520">
+              <caret line="294" column="5" lean-forward="false" selection-start-line="294" selection-start-column="5" selection-end-line="294" selection-end-column="5" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -499,12 +495,12 @@
       <workItem from="1526594546759" duration="1460000" />
       <workItem from="1526596988141" duration="8063000" />
       <workItem from="1526665948279" duration="14910000" />
-      <workItem from="1526758866720" duration="13077000" />
+      <workItem from="1526758866720" duration="13142000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55902000" />
+    <option name="totallyTimeSpent" value="55967000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
@@ -897,8 +893,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/kNN_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="300" column="0" lean-forward="false" selection-start-line="291" selection-start-column="0" selection-end-line="300" selection-end-column="0" />
+        <state relative-caret-position="520">
+          <caret line="294" column="5" lean-forward="false" selection-start-line="294" selection-start-column="5" selection-end-line="294" selection-end-column="5" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
