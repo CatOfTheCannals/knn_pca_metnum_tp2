@@ -60,7 +60,7 @@ bool myComparison(const tuple<int,double> a, const tuple<int,double> b) {//used 
 }
 
 int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople) {
-    assert(data.rows() >= k); //the number of neighbours must be equal or less to the number of pictures on the dataset
+    assert(data.rows() >= k && k > 0); //the number of neighbours must be equal or less to the number of pictures on the dataset
     Matrix distances = distance(data, image);
     vector<tuple<int, double>> v; /*first element of tuple identifies the person on data image, second is the distance
     to the imput image. */
@@ -75,14 +75,14 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
             picCounter = 0;
         }
     }
-    cout<<"matrix distances per person: "<<endl;
+    std::cout<<"matrix distances per person: "<<endl;
     for ( const auto& i : v ) {//prints out the vector v //fixme: i don't know why it prints each element two times
-        cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
+        std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
     sort(v.begin(), v.end(), myComparison); //Sorts v from the shortest distance to the largest.
-    cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
+    std::cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
     for ( const auto& i : v ) {//prints out the vector v //fixme: i don't know why it prints each element two times
-        cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
+        std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
     int repetitions[numberOfPeople] = {}; /*this array is used to count the number on the k nearest neighbours.
     Our data set has 41 persons, so we will count as max 41 repetitions.*/
@@ -90,5 +90,10 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
         repetitions[get<0>(v[i]) - 1]++; /*ads one to the number of repetitions of the person
 // * on the ith nearest position */// substraction of one is due to repetitions index from 0
     }
-    return mostAppears(repetitions, numberOfPeople); //returns the person that appears the most on the kNN.
+//    std::cout<<endl<< "number of appearences of each person on the kNN: ";
+//    for (int i = 0; i < numberOfPeople; ++i) {
+//        std::cout << repetitions[i]<<endl; //fixme: don't know why this returns 2147483647 instead of the elements of repetitions
+
+//    }
+        return mostAppears(repetitions, numberOfPeople); //returns the person that appears the most on the kNN.
 }

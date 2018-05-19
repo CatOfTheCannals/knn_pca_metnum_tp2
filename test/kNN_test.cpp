@@ -185,6 +185,54 @@ protected:
         image_3.setIndex(5, 0, 8);
         image_3.setIndex(6, 0, 9);
 
+        image_4.setIndex(0, 0, 100);
+        image_4.setIndex(1, 0, 100);
+        image_4.setIndex(2, 0, 100);
+        image_4.setIndex(3, 0, 100);
+        image_4.setIndex(4, 0, 100);
+        image_4.setIndex(5, 0, 100);
+
+        image_5.setIndex(0, 0, 100);
+        image_5.setIndex(1, 0, 100);
+        image_5.setIndex(2, 0, 100);
+        image_5.setIndex(3, 0, 100);
+        image_5.setIndex(4, 0, 100);
+        image_5.setIndex(5, 0, 100);
+        image_5.setIndex(6, 0, 100);
+
+
+        data_3.setIndex(0, 0, 9);
+        data_3.setIndex(0, 1, 9);
+        data_3.setIndex(0, 2, 7);
+        data_3.setIndex(0, 3, 9);
+
+        data_3.setIndex(1, 0, 1);
+        data_3.setIndex(1, 1, 8);
+        data_3.setIndex(1, 2, 9);
+        data_3.setIndex(1, 3, 7);
+
+        image_6.setIndex(0, 0, 1);
+        image_6.setIndex(1, 0, 8);
+        image_6.setIndex(2, 0, 10);
+        image_6.setIndex(3, 0, 7);
+
+        data_4.setIndex(0, 0, 1);
+        data_4.setIndex(0, 1, 1);
+        data_4.setIndex(0, 2, 1);
+        data_4.setIndex(0, 3, 1);
+
+        data_4.setIndex(1, 0, 9);
+        data_4.setIndex(1, 1, 9);
+        data_4.setIndex(1, 2, 9);
+        data_4.setIndex(1, 3, 9);
+
+        image_7.setIndex(0, 0, 5);
+        image_7.setIndex(1, 0, 5);
+        image_7.setIndex(2, 0, 5);
+        image_7.setIndex(3, 0, 5);
+
+
+
 
 
     }
@@ -204,6 +252,19 @@ protected:
     Matrix image_2 = Matrix(7,1);
 
     Matrix image_3 = Matrix(7,1);
+
+
+    Matrix image_4 = Matrix(6,1);
+
+    Matrix image_5 = Matrix(7,1);
+
+    Matrix data_3 = Matrix(2,4);
+
+    Matrix image_6 = Matrix(4,1);
+
+    Matrix data_4 = Matrix(2,4);
+
+    Matrix image_7 = Matrix(4,1);
 
     int rep1 [5] = { 2, 9, 3, 33, 4 };
     int rep2 [5] = { 2, 9, 3, 4, 3 };
@@ -228,8 +289,15 @@ TEST_F (runTest, mostAppears){
 }
 
 TEST_F (runTest, kNN){
-    ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1
-    ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 1);//data has ten images, number of people = 1, number of pictures per people = 10
-    ASSERT_EQ( kNN(data_2,image_3, 5, 5, 2), 3);//data has ten images, number of people = 1, number of pictures per people = 10
+    ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1, k = 1
+    ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 1);//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
+    ASSERT_EQ( kNN(data_2,image_3, 5, 5, 2), 3);//data has ten images, number of people = 5, number of pictures per people = 2, k = 5
+    the next 3 are equal to the previous but with an image that's really far away.
+    ASSERT_EQ( kNN(data_1,image_4, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1, k = 1
+    ASSERT_EQ( kNN(data_2,image_5, 1, 1, 1), 1);//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
+    ASSERT_EQ( kNN(data_2,image_5, 5, 5, 2), 3);//data has ten images, number of people = 5, number of pictures per people = 2, k = 5
+    ASSERT_EQ( kNN(data_3,image_6, 1, 2, 1), 2);//data has two images, number of people = 2, number of pictures per people = 1, k = 1 the second one is nearest
+    ASSERT_EQ( kNN(data_4,image_7, 1, 2, 1), 1);//the imput image is in the middle of the data images (it shoukd return the first that appears on the data. Data has two images, number of people = 2, number of pictures per people = 1, k = 1 the second one is nearest
+    ASSERT_EQ( kNN(data_2,image_2, 7, 2, 5), 2);//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
 
 }
