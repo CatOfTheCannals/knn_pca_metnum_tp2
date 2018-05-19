@@ -60,7 +60,7 @@ bool myComparison(const tuple<int,double> a, const tuple<int,double> b) {//used 
 }
 
 int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople) {
-    assert(data.rows() <= k); //the number of neighbours must be equal or less to the number of pictures on the dataset
+    assert(data.rows() >= k); //the number of neighbours must be equal or less to the number of pictures on the dataset
     Matrix distances = distance(data, image);
     vector<tuple<int, double>> v; /*first element of tuple identifies the person on data image, second is the distance
     to the imput image. */
