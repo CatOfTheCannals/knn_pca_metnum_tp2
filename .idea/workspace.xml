@@ -19,6 +19,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libmetodos-tp2-base.a" afterPath="$PROJECT_DIR$/libmetodos-tp2-base.a" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kNN.cpp" afterPath="$PROJECT_DIR$/src/kNN.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/correrTests" afterPath="$PROJECT_DIR$/test/correrTests" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/kNN_test.cpp" afterPath="$PROJECT_DIR$/test/kNN_test.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/CMakeFiles/" />
     <ignored path="$PROJECT_DIR$/test/CMakeFiles/" />
@@ -33,11 +34,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="kNN.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="kNN.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/kNN.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="79" column="5" lean-forward="true" selection-start-line="79" selection-start-column="5" selection-end-line="79" selection-end-column="5" />
+            <state relative-caret-position="240">
+              <caret line="71" column="21" lean-forward="false" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -45,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kNN_test.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="kNN_test.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/kNN_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-369">
-              <caret line="185" column="32" lean-forward="false" selection-start-line="185" selection-start-column="32" selection-end-line="185" selection-end-column="32" />
+            <state relative-caret-position="631">
+              <caret line="231" column="46" lean-forward="false" selection-start-line="231" selection-start-column="46" selection-end-line="231" selection-end-column="46" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -162,8 +163,8 @@
         <option value="$PROJECT_DIR$/src/Svd.cpp" />
         <option value="$PROJECT_DIR$/src/Matrix.cpp" />
         <option value="$PROJECT_DIR$/src/kNN.hpp" />
-        <option value="$PROJECT_DIR$/test/kNN_test.cpp" />
         <option value="$PROJECT_DIR$/src/kNN.cpp" />
+        <option value="$PROJECT_DIR$/test/kNN_test.cpp" />
       </list>
     </option>
   </component>
@@ -493,12 +494,12 @@
       <workItem from="1526594546759" duration="1460000" />
       <workItem from="1526596988141" duration="8063000" />
       <workItem from="1526665948279" duration="14910000" />
-      <workItem from="1526758866720" duration="8031000" />
+      <workItem from="1526758866720" duration="8603000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50856000" />
+    <option name="totallyTimeSpent" value="51428000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
@@ -879,22 +880,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/kNN_test.cpp">
+    <entry file="file://$PROJECT_DIR$/src/kNN.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-369">
-          <caret line="185" column="32" lean-forward="false" selection-start-line="185" selection-start-column="32" selection-end-line="185" selection-end-column="32" />
+        <state relative-caret-position="240">
+          <caret line="71" column="21" lean-forward="false" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/kNN.cpp">
+    <entry file="file://$PROJECT_DIR$/test/kNN_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="79" column="5" lean-forward="true" selection-start-line="79" selection-start-column="5" selection-end-line="79" selection-end-column="5" />
+        <state relative-caret-position="631">
+          <caret line="231" column="46" lean-forward="false" selection-start-line="231" selection-start-column="46" selection-end-line="231" selection-end-column="46" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>

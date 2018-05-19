@@ -230,6 +230,6 @@ TEST_F (runTest, mostAppears){
 TEST_F (runTest, kNN){
     ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1
     ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 1);//data has ten images, number of people = 1, number of pictures per people = 10
-    ASSERT_EQ( kNN(data_2,image_3, 2, 5, 2), 1);//data has ten images, number of people = 1, number of pictures per people = 10
+    ASSERT_EQ( kNN(data_2,image_3, 5, 5, 2), 3);//data has ten images, number of people = 1, number of pictures per people = 10
 
 }

@@ -69,6 +69,7 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
     for (int i = 0; i < distances.rows(); ++i) { /* sets v to be as needed (a vector of tuples with the id of the person
         and the distance of his picture to the imput image) */
         v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element} else {
+        picCounter++;
         if (picCounter == numberOfPicturesPerPeople){
             person++;
             picCounter = 0;
@@ -81,7 +82,7 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
     sort(v.begin(), v.end(), myComparison); //Sorts v from the shortest distance to the largest.
     cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
     for ( const auto& i : v ) {//prints out the vector v //fixme: i don't know why it prints each element two times
-        cout << "person " << get<0>(i) << "distance " << get<1>(i) << endl;
+        cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
     int repetitions[numberOfPeople] = {}; /*this array is used to count the number on the k nearest neighbours.
     Our data set has 41 persons, so we will count as max 41 repetitions.*/
