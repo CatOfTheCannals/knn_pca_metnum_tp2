@@ -177,6 +177,13 @@ protected:
         image_2.setIndex(5, 0, 9);
         image_2.setIndex(6, 0, 7);
 
+        image_3.setIndex(0, 0, 10);
+        image_3.setIndex(1, 0, 9);
+        image_3.setIndex(2, 0, 8);
+        image_3.setIndex(3, 0, 7);
+        image_3.setIndex(4, 0, 6);
+        image_3.setIndex(5, 0, 8);
+        image_3.setIndex(6, 0, 9);
 
 
 
@@ -195,6 +202,8 @@ protected:
 
     Matrix data_2 = Matrix(10,7);
     Matrix image_2 = Matrix(7,1);
+
+    Matrix image_3 = Matrix(7,1);
 
     int rep1 [5] = { 2, 9, 3, 33, 4 };
     int rep2 [5] = { 2, 9, 3, 4, 3 };
@@ -219,6 +228,8 @@ TEST_F (runTest, mostAppears){
 }
 
 TEST_F (runTest, kNN){
-    ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);
-    ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 1);
+    ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1
+    ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 1);//data has ten images, number of people = 1, number of pictures per people = 10
+    ASSERT_EQ( kNN(data_2,image_3, 2, 5, 2), 1);//data has ten images, number of people = 1, number of pictures per people = 10
+
 }

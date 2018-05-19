@@ -16,9 +16,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c700433-0b74-41b7-941c-4a61c3f2799b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libmetodos-tp2-base.a" afterPath="$PROJECT_DIR$/libmetodos-tp2-base.a" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/CMakeFiles/correrTests.dir/kNN_test.cpp.o" afterPath="$PROJECT_DIR$/test/CMakeFiles/correrTests.dir/kNN_test.cpp.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kNN.cpp" afterPath="$PROJECT_DIR$/src/kNN.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/correrTests" afterPath="$PROJECT_DIR$/test/correrTests" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/kNN_test.cpp" afterPath="$PROJECT_DIR$/test/kNN_test.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/CMakeFiles/" />
     <ignored path="$PROJECT_DIR$/test/CMakeFiles/" />
@@ -36,8 +38,8 @@
       <file leaf-file-name="kNN.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/kNN.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="62" column="24" lean-forward="false" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
+            <state relative-caret-position="380">
+              <caret line="80" column="58" lean-forward="false" selection-start-line="80" selection-start-column="58" selection-end-line="80" selection-end-column="58" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -48,8 +50,8 @@
       <file leaf-file-name="kNN_test.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/kNN_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="671">
-              <caret line="222" column="33" lean-forward="false" selection-start-line="222" selection-start-column="33" selection-end-line="222" selection-end-column="33" />
+            <state relative-caret-position="-369">
+              <caret line="185" column="32" lean-forward="false" selection-start-line="185" selection-start-column="32" selection-end-line="185" selection-end-column="32" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -60,8 +62,8 @@
       <file leaf-file-name="svd_test.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/svd_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="711">
+              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -126,11 +128,11 @@
       <find>copy</find>
       <find>repetitions</find>
       <find>mostAppears</find>
-      <find>K</find>
       <find>data_1</find>
       <find>0</find>
       <find>5</find>
       <find>7</find>
+      <find>K</find>
     </findStrings>
     <replaceStrings>
       <replace>data_2</replace>
@@ -493,12 +495,12 @@
       <workItem from="1526594546759" duration="1460000" />
       <workItem from="1526596988141" duration="8063000" />
       <workItem from="1526665948279" duration="14910000" />
-      <workItem from="1526758866720" duration="6149000" />
+      <workItem from="1526758866720" duration="7183000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48974000" />
+    <option name="totallyTimeSpent" value="50008000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
@@ -873,8 +875,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/kNN_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="671">
-          <caret line="222" column="33" lean-forward="false" selection-start-line="222" selection-start-column="33" selection-end-line="222" selection-end-column="33" />
+        <state relative-caret-position="-369">
+          <caret line="185" column="32" lean-forward="false" selection-start-line="185" selection-start-column="32" selection-end-line="185" selection-end-column="32" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -883,16 +885,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/svd_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="711">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kNN.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="62" column="24" lean-forward="false" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
+        <state relative-caret-position="380">
+          <caret line="80" column="58" lean-forward="false" selection-start-line="80" selection-start-column="58" selection-end-line="80" selection-end-column="58" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
