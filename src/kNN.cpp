@@ -36,7 +36,7 @@ Matrix distance(const Matrix& data, const Matrix& image) { /* returns a column M
         std::cout<<"sum sub " << i <<" " << sum << endl;
         res.setIndex(i, 0, sqrt(sum)); //sets in every row of res the distance between the imput image and the
     }
-    std::cout<<"res matrix" << endl << res << endl;
+    std::cout<<"distances matrix" << endl << res << endl;
 
     return res;
 }
@@ -65,20 +65,21 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
     vector<tuple<int, double>> v; /*first element of tuple identifies the person on data image, second is the distance
     to the imput image. */
     int person = 1;
+    int picCounter = 0;
     for (int i = 0; i < distances.rows(); ++i) { /* sets v to be as needed (a vector of tuples with the id of the person
         and the distance of his picture to the imput image) */
-        if (i - person * numberOfPicturesPerPeople != 0) { //used to diferenciate between persons //fixme: numberOfPicturesPerPeople was 10
-            v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element} else {
-            v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element
+        v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element} else {
+        if (picCounter == numberOfPicturesPerPeople){
             person++;
+            picCounter = 0;
         }
     }
     cout<<"matrix distances per person: "<<endl;
     for ( const auto& i : v ) {//prints out the vector v //fixme: i don't know why it prints each element two times
-        cout << "person " << get<0>(i) << "distance " << get<1>(i) << endl;
+        cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
     sort(v.begin(), v.end(), myComparison); //Sorts v from the shortest distance to the largest.
-    cout<<"matrix distances per person ordered by distance: "<<endl;
+    cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
     for ( const auto& i : v ) {//prints out the vector v //fixme: i don't know why it prints each element two times
         cout << "person " << get<0>(i) << "distance " << get<1>(i) << endl;
     }
