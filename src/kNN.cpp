@@ -1,9 +1,5 @@
 #include "kNN.hpp"
-#include <math.h>
-#include <tuple>
-#include <vector>
 #include <algorithm>
-#include <iostream>
 
 
 
@@ -56,7 +52,7 @@ int mostAppears(const int array[], const int length){/* returns the index of the
 
 bool myComparison(const tuple<int,double> a, const tuple<int,double> b) {//used to sort v
 
-    return std::get<1>(a) < std::get<1>(b);  //fixme: check that this is the way to acces the second element of a tuple
+    return std::get<1>(a) < std::get<1>(b);
 }
 
 int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople) {
@@ -68,7 +64,7 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
     int picCounter = 0;
     for (int i = 0; i < distances.rows(); ++i) { /* sets v to be as needed (a vector of tuples with the id of the person
         and the distance of his picture to the imput image) */
-        v.push_back(std::make_tuple(person, distances(i))); //fixme: suposing that () gives you the ith element} else {
+        v.push_back(std::make_tuple(person, distances(i)));
         picCounter++;
         if (picCounter == numberOfPicturesPerPeople){
             person++;
@@ -76,12 +72,12 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
         }
     }
     std::cout<<"matrix distances per person: "<<endl;
-    for ( const auto& i : v ) {//prints out the vector v //fixme: i don't know why it prints each element two times
+    for ( const auto& i : v ) {//prints out the vector v
         std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
     sort(v.begin(), v.end(), myComparison); //Sorts v from the shortest distance to the largest.
     std::cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
-    for ( const auto& i : v ) {//prints out the vector v //fixme: i don't know why it prints each element two times
+    for ( const auto& i : v ) {//prints out the vector v
         std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
     int repetitions[numberOfPeople] = {}; /*this array is used to count the number on the k nearest neighbours.

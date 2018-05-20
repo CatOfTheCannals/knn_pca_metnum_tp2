@@ -31,10 +31,6 @@ Matrix.hpp
 /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/test/kNN_test.cpp
 iostream
 -
-fstream
--
-stdlib.h
--
 gtest/gtest.h
 /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/test/gtest/gtest.h
 ../src/Matrix.hpp
