@@ -32,7 +32,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-set(TEST_FILES Matrix_test.cpp svd_test.cpp kNN_test.cpp) #
+set(TEST_FILES Dataset_test.cpp) # kNN_test.cpp Matrix_test.cpp svd_test.cpp
 
 add_executable(correrTests ${TEST_FILES})
 
