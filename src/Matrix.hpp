@@ -47,7 +47,7 @@ public:
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
     Matrix subMatrix(int i1, int i2, int j1, int j2) const;
-    Matrix multiply(const Matrix b);
+    Matrix multiply(const Matrix b) const;
     static Matrix identity(int n);
     Matrix abs();
     std::tuple<int, int> maxCoeff();

@@ -1,3 +1,5 @@
 .idea/
 build/
 cmake-build-debug/
+casos_test/
+archivos_tp2/

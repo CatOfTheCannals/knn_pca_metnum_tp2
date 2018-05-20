@@ -51,35 +51,25 @@ TEST_F (runTest, powerG){
     epsilon *= 10; // la precision queda asi por algun motivo
     ASSERT_TRUE(g.multiply(v).isApproximate(v * lambda, epsilon)) ;
 }
-/*
+
 TEST_F (runTest, svdTest){
 
-    std::cout << g.getRow(0) << std::endl;
+    auto sim = f + f.transpose();
 
-    auto svdRes = svd(g, 3, epsilon);
-    Matrix lambdas(std::get<0>(svdRes));
-    Matrix autoVecs(std::get<1>(svdRes));
-
-    std::cout << lambdas << std::endl;
-    std::cout << autoVecs << std::endl;
-}*/
-
-TEST_F (runTest, svdTest2){
-
-    std::cout << f << std::endl;
-
-    auto svdRes = svd(f, 3, epsilon);
+    auto svdRes = svd(sim, 3, epsilon);
     Matrix autoVecs(std::get<0>(svdRes));
     Matrix lambdas(std::get<1>(svdRes));
-
-    std::cout << lambdas << std::endl;
-    std::cout << autoVecs << std::endl;
 
     for(int j = 0; j < autoVecs.cols(); j++){
         Matrix eigenVec(autoVecs.rows(), 1);
         for(int i = 0; i < autoVecs.rows(); i++){
             eigenVec.setIndex(i,0,autoVecs(i,j));
         }
-        std::cout << f.multiply(eigenVec) - eigenVec * lambdas(j,j) << std::endl;
+        ASSERT_TRUE(sim.multiply(eigenVec).isApproximate(eigenVec * lambdas(j,j), 0.00001));
     }
+}
+
+TEST_F (runTest, pca){
+    std::cout << f << std::endl;
+    std::cout << pca(f, 3, epsilon) << std::endl;
 }
