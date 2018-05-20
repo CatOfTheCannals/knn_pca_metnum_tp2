@@ -5,8 +5,15 @@
 #include <chrono>
 #include "Matrix.hpp"
 
-Matrix distance(Matrix& input, Matrix& image);
+Matrix distance(const Matrix& input, const Matrix& image);
+int mostAppears(const int array[], const int length);//fixme: check the parameters
+int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople);
 
+
+struct int_pair{
+    int key;
+    int value;
+};
 
 
 #endif //TP1_METODOS_KKN_H
