@@ -392,7 +392,7 @@ exit code, not on its stdout/stderr output; thus your `main()` function must
 return the value of `RUN_ALL_TESTS()`.
 
 Also, you should call `RUN_ALL_TESTS()` only **once**. Calling it more than once
-conflicts with some advanced Google Test features (e.g. thread-safe death
+conflicts with some advanced Google Test _target (e.g. thread-safe death
 tests) and thus is not supported.
 
 _Availability_: Linux, Windows, Mac.
@@ -488,7 +488,7 @@ There is one more pitfall, though. If you use Google Test as a static library (t
 
 Congratulations! You've learned the Google Test basics. You can start writing
 and running Google Test tests, read some [samples](V1_6_Samples.md), or continue with
-[AdvancedGuide](V1_6_AdvancedGuide.md), which describes many more useful Google Test features.
+[AdvancedGuide](V1_6_AdvancedGuide.md), which describes many more useful Google Test _target.
 
 # Known Limitations #
 

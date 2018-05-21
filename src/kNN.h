@@ -3,7 +3,7 @@
 
 #include <cassert>
 #include <chrono>
-#include "Matrix.hpp"
+#include "Matrix.h"
 
 Matrix distance(const Matrix& input, const Matrix& image);
 int mostAppears(const int array[], const int length);//fixme: check the parameters

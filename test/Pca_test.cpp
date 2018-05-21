@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include "gtest/gtest.h"
 
-#include "../src/Matrix.hpp"
-#include "../src/Svd.hpp"
+#include "../src/Matrix.h"
+#include "../src/Pca.h"
 
 // --------- SET UP --------------
 class runTest : public ::testing::Test {

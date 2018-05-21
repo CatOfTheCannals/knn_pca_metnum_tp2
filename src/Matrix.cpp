@@ -1,4 +1,4 @@
-#include "Matrix.hpp"
+#include "Matrix.h"
 
 int Matrix::rows() const{
         return _rows;

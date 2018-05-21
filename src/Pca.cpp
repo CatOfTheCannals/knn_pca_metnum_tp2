@@ -1,7 +1,7 @@
-#include "Svd.hpp"
+#include "Pca.h"
 
 
-Matrix pca(const Matrix &A, unsigned int num_components, double epsilon) {
+tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon) {
     Matrix X(A);
     Matrix mean(1, A.cols());
 
@@ -22,13 +22,17 @@ Matrix pca(const Matrix &A, unsigned int num_components, double epsilon) {
     // find the covariance matrix
     auto M = X.transpose().multiply(X);
 
+    // if we want to return eigenvalues and eigenvectors
+    return svd(M, num_components, epsilon);
+
+    /* if we wanted to return the transformed train set
     // find eigenvectors from M
     auto svdRes = svd(M, num_components, epsilon);
     Matrix autoVecs(std::get<0>(svdRes));
     Matrix lambdas(std::get<1>(svdRes));
 
     return A.multiply(M);
-
+    */
 }
 
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,

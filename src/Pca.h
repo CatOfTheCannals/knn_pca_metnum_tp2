@@ -3,9 +3,9 @@
 
 #include <cassert>
 #include <chrono>
-#include "Matrix.hpp"
+#include "Matrix.h"
 
-Matrix pca(const Matrix &A, unsigned int num_components, double epsilon);
+tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon);
 
 tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon);
 

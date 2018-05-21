@@ -14,7 +14,7 @@ be) a single best framework - you have to pick the right tool for the
 particular task you are tackling.
 
 We created Google Test because we couldn't find the right combination
-of features and conveniences in an existing framework to satisfy _our_
+of _target and conveniences in an existing framework to satisfy _our_
 needs.  The following is a list of things that _we_ like about Google
 Test.  We don't claim them to be unique to Google Test - rather, the
 combination of them makes Google Test the choice for us.  We hope this
@@ -28,7 +28,7 @@ list can help you decide whether it is for you too.
   * `SCOPED_TRACE` helps you understand the context of an assertion failure when it comes from inside a sub-routine or loop.
   * You can decide which tests to run using name patterns.  This saves time when you want to quickly reproduce a test failure.
   * Google Test can generate XML test result reports that can be parsed by popular continuous build system like Hudson.
-  * Simple things are easy in Google Test, while hard things are possible: in addition to advanced features like [global test environments](V1_7_AdvancedGuide.md#global-set-up-and-tear-down) and tests parameterized by [values](V1_7_AdvancedGuide.md#value-parameterized-tests) or [types](V1_7_AdvancedGuide.md#typed-tests), Google Test supports various ways for the user to extend the framework -- if Google Test doesn't do something out of the box, chances are that a user can implement the feature using Google Test's public API, without changing Google Test itself.  In particular, you can:
+  * Simple things are easy in Google Test, while hard things are possible: in addition to advanced _target like [global test environments](V1_7_AdvancedGuide.md#global-set-up-and-tear-down) and tests parameterized by [values](V1_7_AdvancedGuide.md#value-parameterized-tests) or [types](V1_7_AdvancedGuide.md#typed-tests), Google Test supports various ways for the user to extend the framework -- if Google Test doesn't do something out of the box, chances are that a user can implement the feature using Google Test's public API, without changing Google Test itself.  In particular, you can:
     * expand your testing vocabulary by defining [custom predicates](V1_7_AdvancedGuide.md#predicate-assertions-for-better-error-messages),
     * teach Google Test how to [print your types](V1_7_AdvancedGuide.md#teaching-google-test-how-to-print-your-values),
     * define your own testing macros or utilities and verify them using Google Test's [Service Provider Interface](V1_7_AdvancedGuide.md#catching-failures), and

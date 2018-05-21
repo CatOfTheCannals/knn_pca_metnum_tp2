@@ -14,7 +14,7 @@ be) a single best framework - you have to pick the right tool for the
 particular task you are tackling.
 
 We created Google Test because we couldn't find the right combination
-of features and conveniences in an existing framework to satisfy _our_
+of _target and conveniences in an existing framework to satisfy _our_
 needs.  The following is a list of things that _we_ like about Google
 Test.  We don't claim them to be unique to Google Test - rather, the
 combination of them makes Google Test the choice for us.  We hope this
@@ -883,4 +883,4 @@ not enough information in your question):
   * the name and version of your compiler,
   * the complete command line flags you give to your compiler,
   * the complete compiler error messages (if the question is about compilation),
-  * the _actual_ code (ideally, a minimal but complete program) that has the problem you encounter.
+  * the _actual_ code (ideally, a minimal but complete program) that has the problem you encounter.???
