@@ -37,12 +37,12 @@ Matrix distance(const Matrix& data, const Matrix& image) { /* returns a column M
     return res;
 }
 
-int mostAppears(const int array[], const int length){/* returns the index of the biggest element (the imput
+int mostAppears(const vector<int> repetitions){/* returns the index of the biggest element (the imput
  array has the number of repetitions of it's index. */
     int mostRepeated = 0;
-    if (length > 1) {
-        for (int i = 0; i < length; ++i) {
-            if(array[i] > array[mostRepeated]){
+    if (repetitions.size() > 1) {
+        for (int i = 0; i < (int)(repetitions.size()); ++i) {
+            if(repetitions[i] > repetitions[mostRepeated]){
                 mostRepeated = i;
             }
         }
@@ -80,10 +80,15 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
     for ( const auto& i : v ) {//prints out the vector v
         std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
-    int repetitions[numberOfPeople] = {}; /*this array is used to count the number on the k nearest neighbours.
+    std::vector<int> repetitions(numberOfPeople);/*this vector is used to count the number on the k nearest neighbours.
     Our data set has 41 persons, so we will count as max 41 repetitions.*/
-    for (int i = 0; i < k; k++) {
-        repetitions[get<0>(v[i]) - 1]++; /*ads one to the number of repetitions of the person
+    //int repetitions[numberOfPeople] = {}; /*this array is used to count the number on the k nearest neighbours.
+    //Our data set has 41 persons, so we will count as max 41 repetitions.*/
+    for (int i = 0; i < 40; ++i) {
+        repetitions.push_back(0);
+    }
+    for (int i = 0; i < k; ++i) {
+        repetitions.at(get<0>(v[i]) - 1) = repetitions.at(get<0>(v[i]) - 1) +1; /*ads one to the number of repetitions of the person
 // * on the ith nearest position */// substraction of one is due to repetitions index from 0
     }
 //    std::cout<<endl<< "number of appearences of each person on the kNN: ";
@@ -91,5 +96,5 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
 //        std::cout << repetitions[i]<<endl; //fixme: don't know why this returns 2147483647 instead of the elements of repetitions
 
 //    }
-        return mostAppears(repetitions, numberOfPeople); //returns the person that appears the most on the kNN.
+        return mostAppears(repetitions); //returns the person that appears the most on the kNN.
 }
