@@ -2,6 +2,7 @@
 #define TP2_METODOS_DATASET_H
 
 #include "Matrix.h"
+#include "Pca.h"
 #include "ppmloader.h"
 #include <fstream>
 #include <string>
@@ -38,11 +39,11 @@ public:
 
 
         _images =  Matrix(imagePaths.size(), width * height);
-        _target = Matrix(person_ids.size(), 1);
+        _targets = Matrix(person_ids.size(), 1);
 
         // initialize feature and taget matrices
         for(int i = 0; i < _images.rows(); i ++){
-            _target.setIndex(i, 0, person_ids[i]);
+            _targets.setIndex(i, 0, person_ids[i]);
 
             // this shit below is done just to initialize a matrix row
             width = 0;
@@ -64,10 +65,16 @@ public:
     };
 
     Matrix getImages() const;
+    Matrix getTargets() const;
+    Matrix getPcaVecs() const;
+    Matrix getPcaLambdas() const;
+    void Dataset::trainPca(int alpha, double epsilon);
 
 private:
     Matrix _images;
-    Matrix _target;
+    Matrix _targets;
+    Matrix _pcaVecs;
+    Matrix _pcaLambdas;
 };
 
 

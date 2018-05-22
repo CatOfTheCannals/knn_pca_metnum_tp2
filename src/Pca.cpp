@@ -38,9 +38,6 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
                           double epsilon) {
 
-    auto start = chrono::steady_clock::now();
-
-
     Matrix X(A);
     Matrix A_copy(A);
 
@@ -89,7 +86,7 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
     assert(input.rows() == x_0.rows());
     assert(1 == x_0.cols());
 
-    int max_iters = 100000;
+    int max_iters = 1000;
 
     Matrix x(x_0 / x_0.norm());
     Matrix A(input);

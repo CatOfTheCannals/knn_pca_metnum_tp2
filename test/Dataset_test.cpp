@@ -16,11 +16,11 @@ protected:
     virtual void SetUp() {
 
     }
-    Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
+    Dataset reduced = Dataset("../../test/casos_test/", "testBig.in");
 
 };
 
-
+// este test tarda banda en correr, agrandar el epsilon o disminuir max iters
 TEST_F (datasetTest, pcaReducedImages){
     std::cout << reduced.getImages().rows() << " " <<    reduced.getImages().cols() << std::endl;
 
