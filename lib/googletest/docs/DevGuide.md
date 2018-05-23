@@ -116,9 +116,9 @@ Test.
 We follow a typical release process:
 
   1. A release branch named `release-X.Y` is created.
-  1. Bugs are fixed and features are added in trunk; those individual patches are merged into the release branch until it's stable.
+  1. Bugs are fixed and _target are added in trunk; those individual patches are merged into the release branch until it's stable.
   1. An individual point release (the `Z` in `X.Y.Z`) is made by creating a tag from the branch.
-  1. Repeat steps 2 and 3 throughout one release cycle (as determined by features or time).
+  1. Repeat steps 2 and 3 throughout one release cycle (as determined by _target or time).
   1. Go back to step 1 to create another release branch and so on.
 
 ---

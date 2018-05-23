@@ -1,6 +1,6 @@
 If you're like us, you'd like to look at some Google Test sample code.  The
 [samples folder](../samples) has a number of well-commented samples showing how to use a
-variety of Google Test features.
+variety of Google Test _target.
 
   * [Sample #1](../samples/sample1_unittest.cc) shows the basic steps of using Google Test to test C++ functions.
   * [Sample #2](../samples/sample2_unittest.cc) shows a more complex unit test for a class with multiple member functions.

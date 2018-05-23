@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "gtest/gtest.h"
 
-#include "../src/Matrix.hpp"
+#include "../src/Matrix.h"
 
 // --------- SET UP --------------
 class mockMatrices : public ::testing::Test {

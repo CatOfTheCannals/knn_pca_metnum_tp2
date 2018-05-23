@@ -1,4 +1,4 @@
-#include "Matrix.hpp"
+#include "Matrix.h"
 
 int Matrix::rows() const{
         return _rows;
@@ -151,7 +151,7 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ) const{
     return res;
 }
 
-Matrix Matrix::multiply(const Matrix b) {
+Matrix Matrix::multiply(const Matrix b) const{
     assert(this->_cols == b.rows());
     Matrix result = Matrix(this->_rows, b.cols());
     for (int i = 0; i < this->rows(); ++i) {

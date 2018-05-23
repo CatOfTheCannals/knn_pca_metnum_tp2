@@ -240,7 +240,7 @@ $for j [[
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
-// Helper classes providing Combine() with polymorphic features. They allow
+// Helper classes providing Combine() with polymorphic _target. They allow
 // casting CartesianProductGeneratorN<T> to ParamGenerator<U> if T is
 // convertible to U.
 //

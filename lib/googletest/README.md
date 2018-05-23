@@ -140,7 +140,7 @@ see file [include/gtest/internal/gtest-port.h](include/gtest/internal/gtest-port
 
 ### Choosing a TR1 Tuple Library ###
 
-Some Google Test features require the C++ Technical Report 1 (TR1)
+Some Google Test _target require the C++ Technical Report 1 (TR1)
 tuple library, which is not yet available with all compilers.  The
 good news is that Google Test implements a subset of TR1 tuple that's
 enough for its own need, and will automatically use this when the
@@ -165,7 +165,7 @@ If you don't want Google Test to use tuple at all, add
 
     -DGTEST_HAS_TR1_TUPLE=0
 
-and all features using tuple will be disabled.
+and all _target using tuple will be disabled.
 
 ### Multi-threaded Tests ###
 

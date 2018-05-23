@@ -1,4 +1,4 @@
-#include "kNN.hpp"
+#include "kNN.h"
 #include <algorithm>
 
 
@@ -71,16 +71,14 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
             picCounter = 0;
         }
     }
-    std::cout<<"matrix distances per person: "<<endl;
-    for ( const auto& i : v ) {//prints out the vector v
-        std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
-    }
+
     sort(v.begin(), v.end(), myComparison); //Sorts v from the shortest distance to the largest.
     std::cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
     for ( const auto& i : v ) {//prints out the vector v
         std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
     std::vector<int> repetitions(numberOfPeople);/*this vector is used to count the number on the k nearest neighbours.
+
     Our data set has 41 persons, so we will count as max 41 repetitions.*/
     //int repetitions[numberOfPeople] = {}; /*this array is used to count the number on the k nearest neighbours.
     //Our data set has 41 persons, so we will count as max 41 repetitions.*/

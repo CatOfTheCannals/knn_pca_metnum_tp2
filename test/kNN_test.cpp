@@ -1,8 +1,8 @@
 #include <iostream>
 #include "gtest/gtest.h"
 
-#include "../src/Matrix.hpp"
-#include "../src/kNN.hpp"
+#include "../src/Matrix.h"
+#include "../src/kNN.h"
 
 // --------- SET UP --------------
 class runTest : public ::testing::Test {

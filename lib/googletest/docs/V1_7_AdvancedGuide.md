@@ -633,7 +633,7 @@ On POSIX systems (e.g. Linux, Cygwin, and Mac), Google Test uses the
 syntax in death tests. To learn about this syntax, you may want to read this [Wikipedia entry](http://en.wikipedia.org/wiki/Regular_expression#POSIX_Extended_Regular_Expressions).
 
 On Windows, Google Test uses its own simple regular expression
-implementation. It lacks many features you can find in POSIX extended
+implementation. It lacks many _target you can find in POSIX extended
 regular expressions.  For example, we don't support union (`"x|y"`),
 grouping (`"(xy)"`), brackets (`"[xy]"`), and repetition count
 (`"x{5,7}"`), among others. Below is what we do support (Letter `A` denotes a
@@ -705,7 +705,7 @@ arrange that kind of environment. For example, statically-initialized modules
 may start threads before main is ever reached. Once threads have been created,
 it may be difficult or impossible to clean them up.
 
-Google Test has three features intended to raise awareness of threading issues.
+Google Test has three _target intended to raise awareness of threading issues.
 
   1. A warning is emitted if multiple threads are running when a death test is encountered.
   1. Test cases with a name ending in "DeathTest" are run before all other tests.
