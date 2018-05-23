@@ -80,6 +80,10 @@ int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k){//f
     }
     sort(personDistances.begin(), personDistances.end(), orderedByIndex); //Sorts personDistances to count how many different persons are on the dataset.
     std::cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
+    for ( const auto& i : personDistances ) {//prints out the vector personDistances
+        std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
+    }
+
     int numberOfPeople = 1;
     if (personDistances.size() > 1) { //counts how many people are on the dataset that is been used.
         for (int i = 0; i < (int)(personDistances.size()) - 1; ++i) {
@@ -105,14 +109,16 @@ int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k){//f
     for (int i = 0; i < 40; ++i) {
         repetitions.push_back(0);
     }
+    for ( const auto& i : repetitions ) {//prints out repetitions with 41 positions all set to 0
+        std::cout << i << endl;
+    }
     for (int i = 0; i < k; ++i) {
         repetitions.at(get<0>(personDistances[i]) - 1) = repetitions.at(get<0>(personDistances[i]) - 1) +1; /*ads one to the number of repetitions of the person
 // * on the ith nearest position */// substraction of one is due to repetitions index from 0
     }
-//    std::cout<<endl<< "number of appearences of each person on the kNN: ";
-//    for (int i = 0; i < numberOfPeople; ++i) {
-//        std::cout << repetitions[i]<<endl; //fixme: don't know why this returns 2147483647 instead of the elements of repetitions
+    for ( const auto& i : repetitions ) {//prints out repetitions with 41 positions all set to 0
+        std::cout << i << endl;
+    }
 
-//    }
-        return mostAppears(repetitions); //returns the person that appears the most on the kNN.
+    return mostAppears(repetitions); //returns the person that appears the most on the kNN.
 }

@@ -1,0 +1,35 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_4f076/fast"
+/usr/bin/make -f CMakeFiles/cmTC_4f076.dir/build.make CMakeFiles/cmTC_4f076.dir/build
+make[1]: se entra en el directorio '/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4f076.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_4f076.dir/CheckSymbolExists.c.o   -c /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_4f076
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4f076.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_4f076.dir/CheckSymbolExists.c.o  -o cmTC_4f076 
+CMakeFiles/cmTC_4f076.dir/CheckSymbolExists.c.o: En la función `main':
+CheckSymbolExists.c:(.text+0x16): referencia a `pthread_create' sin definir
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_4f076.dir/build.make:86: fallo en las instrucciones para el objetivo 'cmTC_4f076'
+make[1]: *** [cmTC_4f076] Error 1
+make[1]: se sale del directorio '/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp'
+Makefile:126: fallo en las instrucciones para el objetivo 'cmTC_4f076/fast'
+make: *** [cmTC_4f076/fast] Error 2
+
+File /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly/knn_pca_metnum_tp2/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

@@ -7,8 +7,7 @@
 
 Matrix distance(const Matrix& input, const Matrix& image);
 int mostAppears(const vector<int> repetitions);//fixme: check the parameters
-int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople);
-
+int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k);
 
 struct int_pair{
     int key;
