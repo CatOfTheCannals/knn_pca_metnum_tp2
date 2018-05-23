@@ -50,33 +50,53 @@ int mostAppears(const vector<int> repetitions){/* returns the index of the bigge
     return mostRepeated+1;
 }
 
-bool myComparison(const tuple<int,double> a, const tuple<int,double> b) {//used to sort v
+bool shortestDistance(const tuple<int,double> a, const tuple<int,double> b) {//used to sort v
 
     return std::get<1>(a) < std::get<1>(b);
 }
 
-int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople, const int numberOfPicturesPerPeople) {
+
+bool orderedByIndex(const tuple<int,double> a, const tuple<int,double> b) {//used to sort v
+
+    return std::get<0>(a) < std::get<0>(b);
+}
+int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k){//fixme: delete the rest of this line, const int numberOfPeople, const int numberOfPicturesPerPeople) {
     assert(data.rows() >= k && k > 0); //the number of neighbours must be equal or less to the number of pictures on the dataset
+    assert(data.rows() == index.rows());
+    assert(data.rows() > 0);
     Matrix distances = distance(data, image);
-    vector<tuple<int, double>> v; /*first element of tuple identifies the person on data image, second is the distance
+    vector<tuple<int, double>> personDistances; /*first element of tuple identifies the person on data image, second is the distance
     to the imput image. */
-    int person = 1;
-    int picCounter = 0;
-    for (int i = 0; i < distances.rows(); ++i) { /* sets v to be as needed (a vector of tuples with the id of the person
+    //int person = 1;
+    //int picCounter = 0;
+    for (int i = 0; i < distances.rows(); ++i) { /* sets personDistances to be as needed (a vector of tuples with the id of the person
         and the distance of his picture to the imput image) */
-        v.push_back(std::make_tuple(person, distances(i)));
-        picCounter++;
-        if (picCounter == numberOfPicturesPerPeople){
-            person++;
-            picCounter = 0;
+        personDistances.push_back(std::make_tuple(index(i), distances(i)));
+//        picCounter++;
+//        if (picCounter == numberOfPicturesPerPeople){
+//           // person++;
+//            picCounter = 0;
+//        }
+    }
+    sort(personDistances.begin(), personDistances.end(), orderedByIndex); //Sorts personDistances to count how many different persons are on the dataset.
+    std::cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
+    int numberOfPeople = 1;
+    if (personDistances.size() > 1) { //counts how many people are on the dataset that is been used.
+        for (int i = 0; i < (int)(personDistances.size()) - 1; ++i) {
+            if (std::get<0>(personDistances[i]) != std::get<0>(personDistances[i + 1])){
+                numberOfPeople++;
+            }
         }
     }
 
-    sort(v.begin(), v.end(), myComparison); //Sorts v from the shortest distance to the largest.
+    sort(personDistances.begin(), personDistances.end(), shortestDistance); //Sorts personDistances from the shortest distance to the largest.
     std::cout<<endl<<"matrix distances per person ordered by distance: "<<endl;
-    for ( const auto& i : v ) {//prints out the vector v
+
+
+    for ( const auto& i : personDistances ) {//prints out the vector personDistances
         std::cout << "person " << get<0>(i) << " distance " << get<1>(i) << endl;
     }
+
     std::vector<int> repetitions(numberOfPeople);/*this vector is used to count the number on the k nearest neighbours.
 
     Our data set has 41 persons, so we will count as max 41 repetitions.*/
@@ -86,7 +106,7 @@ int kNN(const Matrix& data, const Matrix& image, int k, const int numberOfPeople
         repetitions.push_back(0);
     }
     for (int i = 0; i < k; ++i) {
-        repetitions.at(get<0>(v[i]) - 1) = repetitions.at(get<0>(v[i]) - 1) +1; /*ads one to the number of repetitions of the person
+        repetitions.at(get<0>(personDistances[i]) - 1) = repetitions.at(get<0>(personDistances[i]) - 1) +1; /*ads one to the number of repetitions of the person
 // * on the ith nearest position */// substraction of one is due to repetitions index from 0
     }
 //    std::cout<<endl<< "number of appearences of each person on the kNN: ";

@@ -278,33 +278,33 @@ protected:
     std::vector<int> rep4 = { 2, 1, 1, 1, 2, 2 };
 
 };
-
-
-TEST_F (runTest, distance){
-    ASSERT_EQ( distance(g, x_1), res_0);//Negative
-    ASSERT_EQ( distance(g, x_2), res_1);//Positive
-    ASSERT_EQ( distance(f, x_0), res_2); //Null matrix
-
-}
-
-TEST_F (runTest, mostAppears){
-    ASSERT_EQ( mostAppears(rep1), 4);//Negative
-    ASSERT_EQ( mostAppears(rep2), 2);//Negative
-    ASSERT_EQ( mostAppears(rep3), 1);//Negative
-    ASSERT_EQ( mostAppears(rep4), 1);//Negative
-
-}
-
-TEST_F (runTest, kNN){
-    ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1, k = 1
-    ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 7);// fixme: check if the result should be this//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
-    ASSERT_EQ( kNN(data_2,image_3, 5, 5, 2), 3);//data has ten images, number of people = 5, number of pictures per people = 2, k = 5
-////   // the next 3 are equal to the previous but with an image that's really far away.
-    ASSERT_EQ( kNN(data_1,image_4, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1, k = 1
-    ASSERT_EQ( kNN(data_2,image_5, 1, 1, 1), 5);// fixme: check if the result should be this//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
-    ASSERT_EQ( kNN(data_2,image_5, 5, 5, 2), 3);//data has ten images, number of people = 5, number of pictures per people = 2, k = 5
-    ASSERT_EQ( kNN(data_3,image_6, 1, 2, 1), 2);//data has two images, number of people = 2, number of pictures per people = 1, k = 1 the second one is nearest
-    ASSERT_EQ( kNN(data_4,image_7, 1, 2, 1), 1);//the imput image is in the middle of the data images (it shoukd return the first that appears on the data. Data has two images, number of people = 2, number of pictures per people = 1, k = 1 the second one is nearest
-    ASSERT_EQ( kNN(data_2,image_2, 7, 2, 5), 2);//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
-
-}
+//
+//
+//TEST_F (runTest, distance){
+//    ASSERT_EQ( distance(g, x_1), res_0);//Negative
+//    ASSERT_EQ( distance(g, x_2), res_1);//Positive
+//    ASSERT_EQ( distance(f, x_0), res_2); //Null matrix
+//
+//}
+//
+//TEST_F (runTest, mostAppears){
+//    ASSERT_EQ( mostAppears(rep1), 4);//Negative
+//    ASSERT_EQ( mostAppears(rep2), 2);//Negative
+//    ASSERT_EQ( mostAppears(rep3), 1);//Negative
+//    ASSERT_EQ( mostAppears(rep4), 1);//Negative
+//
+//}
+//
+//TEST_F (runTest, kNN){
+//    ASSERT_EQ( kNN(data_1,image_1, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1, k = 1
+//    ASSERT_EQ( kNN(data_2,image_2, 1, 1, 1), 7);// fixme: check if the result should be this//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
+//    ASSERT_EQ( kNN(data_2,image_3, 5, 5, 2), 3);//data has ten images, number of people = 5, number of pictures per people = 2, k = 5
+//////   // the next 3 are equal to the previous but with an image that's really far away.
+//    ASSERT_EQ( kNN(data_1,image_4, 1, 1, 1), 1);//data has one image, number of people = 1, number of pictures per people = 1, k = 1
+//    ASSERT_EQ( kNN(data_2,image_5, 1, 1, 1), 5);// fixme: check if the result should be this//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
+//    ASSERT_EQ( kNN(data_2,image_5, 5, 5, 2), 3);//data has ten images, number of people = 5, number of pictures per people = 2, k = 5
+//    ASSERT_EQ( kNN(data_3,image_6, 1, 2, 1), 2);//data has two images, number of people = 2, number of pictures per people = 1, k = 1 the second one is nearest
+//    ASSERT_EQ( kNN(data_4,image_7, 1, 2, 1), 1);//the imput image is in the middle of the data images (it shoukd return the first that appears on the data. Data has two images, number of people = 2, number of pictures per people = 1, k = 1 the second one is nearest
+//    ASSERT_EQ( kNN(data_2,image_2, 7, 2, 5), 2);//data has ten images, number of people = 1, number of pictures per people = 10, k = 1
+//
+//}
