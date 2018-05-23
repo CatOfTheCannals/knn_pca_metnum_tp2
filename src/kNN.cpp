@@ -8,32 +8,22 @@ Matrix distance(const Matrix& data, const Matrix& image) { /* returns a column M
  of every image on data with the one that enters as a parameter //The image is taken as a col vector*/
     assert(data.cols() == image.rows());
     Matrix res(data.rows(),1);
-    std::cout<<"res matrix"<< endl << res;
-    std::cout<<"data matrix"<< endl << data;
-    std::cout<<"image matrix"<< endl <<image;
     Matrix aux = Matrix(data.rows(),image.rows());
-    std::cout<<"aux matrix" << endl << aux;
     for (int i = 0; i < data.rows(); ++i) {
         for (int j = 0; j < image.rows(); ++j) {
             aux.setIndex(i, j, image(j));
         }
     }
-    std::cout<<"aux matrix" << endl << aux <<endl;
     Matrix difference = Matrix(data.rows(),data.rows());
     difference = data-aux;
-    std::cout<<"data - aux" << endl <<difference<< endl;
-    for (int i = 0; i < difference.rows(); ++i){
+    for (int i = 0; i < difference.rows(); ++i) {
         double sum = 0;
         for (int j = 0; j < difference.cols(); ++j) {
-            int value = difference(i,j);
-            std::cout <<"value is " << value << endl;
+            int value = difference(i, j);
             sum = sum + (value * value);
         }
-        std::cout<<"sum sub " << i <<" " << sum << endl;
         res.setIndex(i, 0, sqrt(sum)); //sets in every row of res the distance between the imput image and the
     }
-    std::cout<<"distances matrix" << endl << res << endl;
-
     return res;
 }
 
@@ -119,6 +109,5 @@ int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k){//f
     for ( const auto& i : repetitions ) {//prints out repetitions with 41 positions all set to 0
         std::cout << i << endl;
     }
-
     return mostAppears(repetitions); //returns the person that appears the most on the kNN.
 }
