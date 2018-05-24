@@ -1,2 +1,0 @@
-/usr/bin/ar qc libmetodos-tp2-base.a  CMakeFiles/metodos-tp2-base.dir/src/Matrix.cpp.o CMakeFiles/metodos-tp2-base.dir/src/empty_file.cpp.o CMakeFiles/metodos-tp2-base.dir/src/Pca.cpp.o CMakeFiles/metodos-tp2-base.dir/src/ppmloader.cpp.o CMakeFiles/metodos-tp2-base.dir/src/kNN.cpp.o
-/usr/bin/ranlib libmetodos-tp2-base.a

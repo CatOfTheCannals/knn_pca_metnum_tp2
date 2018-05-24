@@ -295,7 +295,6 @@ protected:
 
     Matrix image_3 = Matrix(7,1);
 
-
     Matrix image_4 = Matrix(6,1);
 
     Matrix image_5 = Matrix(7,1);

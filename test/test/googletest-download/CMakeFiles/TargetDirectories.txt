@@ -1,3 +1,0 @@
-/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/test/test/googletest-download/CMakeFiles/rebuild_cache.dir
-/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/test/test/googletest-download/CMakeFiles/edit_cache.dir
-/home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/test/test/googletest-download/CMakeFiles/googletest.dir
