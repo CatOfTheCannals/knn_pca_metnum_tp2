@@ -268,10 +268,6 @@ protected:
         image_7.setIndex(2, 0, 5);
         image_7.setIndex(3, 0, 5);
 
-
-
-
-
     }
     Matrix f = Matrix(4,4);
     Matrix g = Matrix(4,4);
@@ -321,7 +317,6 @@ protected:
     std::vector<int> rep4 = { 2, 1, 1, 1, 2, 2 };
 
 };
-
 
 TEST_F (runTest, distance){
     ASSERT_EQ( distance(g, x_1), res_0);//Negative

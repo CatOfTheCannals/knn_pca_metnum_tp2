@@ -5,6 +5,8 @@
 #include <chrono>
 #include "Matrix.h"
 
+
+
 Matrix distance(const Matrix& input, const Matrix& image);
 int mostAppears(const vector<int> repetitions);
 int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k);

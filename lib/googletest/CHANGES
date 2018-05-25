@@ -68,7 +68,7 @@ Changes for 1.5.0:
  * New feature: prints help when encountering unrecognized Google Test flags.
  * Experimental feature: CMake build script (requires CMake 2.6.4+).
  * Experimental feature: the Pump script for meta programming.
- * double values streamed to an assertion are printed with enough precision
+ * double values streamed to an assertion are printed with enough accuracy
    to differentiate any two different values.
  * Google Test now works on Solaris and AIX.
  * Build and test script improvements.

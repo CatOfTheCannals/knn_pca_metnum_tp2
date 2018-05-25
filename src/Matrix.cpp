@@ -104,7 +104,7 @@ void Matrix::swapRows(int i1, int i2) {
     }
 }
 
-Matrix Matrix::getRow(int index) {
+Matrix Matrix::getRow(int index) const{
     Matrix row(1, _cols);
     for (int i= 0; i < _cols; ++i) {
         row._matrix[i] = _matrix[index * _cols + i];

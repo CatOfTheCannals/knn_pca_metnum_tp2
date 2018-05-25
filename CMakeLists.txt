@@ -7,9 +7,10 @@ set(SOURCE_FILES
         src/Matrix.cpp
         src/empty_file.cpp
         src/Pca.cpp
-        #src/Dataset.cpp
+        src/Dataset.cpp
         src/ppmloader.cpp
-	src/kNN.cpp)
+		src/kNN.cpp
+		src/Metrics.cpp )
 
 add_library(metodos-tp2-base ${SOURCE_FILES})
 

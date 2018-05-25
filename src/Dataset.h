@@ -1,17 +1,26 @@
 #ifndef TP2_METODOS_DATASET_H
 #define TP2_METODOS_DATASET_H
 
-#include "Matrix.h"
-#include "Pca.h"
-#include "ppmloader.h"
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
+
+#include "Matrix.h"
+#include "Pca.h"
+#include "kNN.h"
+#include "Metrics.h"
+
+#include "ppmloader.h"
 
 class Dataset {
 public:
-    Dataset() : _images() {}
+
+    Dataset() : _images(), _targets(){}
+
+    Dataset(const Matrix& _images, const Matrix& _targets) : _images(_images), _targets(_targets){}
 
     Dataset(string filePath, string fileName) {
         ifstream f_test(filePath + fileName);
@@ -55,8 +64,6 @@ public:
 
             for (int h = 0; h < height; ++h){
                 for (int w = 0; w < width; ++w){
-                    // %90 shure that get_pixel_average is not necessary
-                    // std::cout << get_pixel_average(data, h, w, height, width) << " ";
                     int colIndex = h * width + w;
                     _images.setIndex(i, colIndex, (unsigned int)data[colIndex]);
                 }
@@ -68,13 +75,21 @@ public:
     Matrix getTargets() const;
     Matrix getPcaVecs() const;
     Matrix getPcaLambdas() const;
-    void Dataset::trainPca(int alpha, double epsilon);
+
+    void shuffle();
+    void trainPca(int alpha, double epsilon);
+    Matrix kNN_predict(int k) const;
+    void splitTrainFromTest(double testPercentage);
 
 private:
     Matrix _images;
     Matrix _targets;
     Matrix _pcaVecs;
     Matrix _pcaLambdas;
+    Matrix _testImages;
+    Matrix _testLabels;
+    Matrix _trainImages;
+    Matrix _trainLabels;
 };
 
 

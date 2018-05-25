@@ -46,15 +46,15 @@ protected:
         l.setIndex(0, 2, 1);
         l.setIndex(0, 0, 1);
 
-            g.setIndex(0, 0, 1);
-            g.setIndex(0, 1, 2);
-            g.setIndex(0, 2, 3);
-            g.setIndex(1, 1, 4);
-            g.setIndex(1, 2, 5);
-            g.setIndex(1, 0, 6);
-            g.setIndex(2, 1, 7);
-            g.setIndex(2, 2, 8);
-            g.setIndex(2, 0, 9);
+        g.setIndex(0, 0, 1);
+        g.setIndex(0, 1, 2);
+        g.setIndex(0, 2, 3);
+        g.setIndex(1, 1, 4);
+        g.setIndex(1, 2, 5);
+        g.setIndex(1, 0, 6);
+        g.setIndex(2, 1, 7);
+        g.setIndex(2, 2, 8);
+        g.setIndex(2, 0, 9);
 
         /*
         std::cout << "Test Matrix initialized:" << std::endl;

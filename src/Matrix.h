@@ -43,7 +43,7 @@ public:
     Matrix operator/(const double& scalar) const; //scalar division
     Matrix transpose() ;
     void swapRows(int i1, int i2);
-    Matrix getRow(int index);
+    Matrix getRow(int index) const;
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
     Matrix subMatrix(int i1, int i2, int j1, int j2) const;

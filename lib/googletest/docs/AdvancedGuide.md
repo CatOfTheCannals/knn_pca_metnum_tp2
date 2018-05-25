@@ -299,7 +299,7 @@ very unlikely that two floating-points will match exactly. Therefore,
 `ASSERT_EQ` 's naive comparison usually doesn't work. And since floating-points
 can have a wide value range, no single fixed error bound works. It's better to
 compare by a fixed relative error bound, except for values close to 0 due to
-the loss of precision there.
+the loss of accuracy there.
 
 In general, for floating-point comparison to make sense, the user needs to
 carefully choose the error bound. If they don't want or care to, comparing in

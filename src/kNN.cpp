@@ -1,16 +1,13 @@
 #include "kNN.h"
 #include <algorithm>
 
-
-
-
 Matrix distance(const Matrix& data, const Matrix& image) { /* returns a column Matrix with the distance
- of every image on data with the one that enters as a parameter //The image is taken as a col vector*/
-    assert(data.cols() == image.rows());
+ of every image on data with the one that enters as a parameter //The image is taken as a row vector*/
+    assert(data.cols() == image.cols());
     Matrix res(data.rows(),1);
-    Matrix aux = Matrix(data.rows(),image.rows());
+    Matrix aux = Matrix(data.rows(),image.cols());
     for (int i = 0; i < data.rows(); ++i) {
-        for (int j = 0; j < image.rows(); ++j) {
+        for (int j = 0; j < image.cols(); ++j) {
             aux.setIndex(i, j, image(j));
         }
     }
@@ -50,6 +47,7 @@ bool orderedByIndex(const tuple<int,double> a, const tuple<int,double> b) {//use
 
     return std::get<0>(a) < std::get<0>(b);
 }
+
 int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k){
     assert(data.rows() >= k && k > 0); //the number of neighbours must be equal or less to the number of pictures on the dataset
     assert(data.rows() == index.rows());
@@ -82,3 +80,4 @@ int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k){
     }
     return mostAppears(repetitions); //returns the person that appears the most on the kNN.
 }
+
