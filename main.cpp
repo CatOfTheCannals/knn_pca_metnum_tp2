@@ -23,8 +23,10 @@ using namespace std;
 //bool map_of_rows = false; // indica si la matriz está guardada por filas o por columnas.
 //double epsilon = 0.00001;
 
+#include <iostream>
 
-int main(int argc, char** argv){
+
+int main(int argc, char* argv[]){ //(0: kNN , 1: PCA + kN N ,... etc)
 
 	if (argc < 4){
 		cout << endl <<"	Unable to run program" << endl;
@@ -33,10 +35,15 @@ int main(int argc, char** argv){
 	} else {
         cout<<"dale campeon";
     }
-//
+
 //	// leo el archivo de test -->la entrada i,j indica un 1 en la posicion [j][i]
-//
-//	string inFile(argv[1]);
+    if (*argv[0] == 0) {
+        cout << endl << "execute kNN"<<endl;
+    } else if (*argv[0] == 1) {
+        cout << endl << "execute PCA + kNN"<<endl;
+    }
+	//string inFile(argv[1]);
+
 //	string outFile (strcat(argv[1], ".out"));
 //	double p = atof(argv[2]);
 //

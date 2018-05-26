@@ -27,6 +27,8 @@ src/Pca.h
 /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/src/Pca.h
 src/ppmloader.h
 /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/src/ppmloader.h
+iostream
+-
 
 /home/juan/Documentos/CienciasDeLaComputacion/MetodosNumericos/TP2/entregaVersionCharly2/knn_pca_metnum_tp2/src/Matrix.h
 iostream
