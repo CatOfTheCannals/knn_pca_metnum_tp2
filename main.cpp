@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "src/kNN.h"
+#include "src/Dataset.h"
 #include "src/Matrix.h"
 #include "src/Pca.h"
 #include "src/ppmloader.h"
@@ -31,8 +32,18 @@ int main(int argc, char* argv[]){ //(0: kNN , 1: PCA + kN N ,... etc)
 	if (argc < 4){
 		cout << endl <<"	Unable to run program" << endl;
 		cout << "	At least three parameters are expected:    program_name.exe  in_file.txt  p_number" << endl;
-	} else {
+    } else {
+        Dataset reduced = Dataset(*argv[4]); //creates a dataset with the input parameter
         cout << "dale campeon";
+        cout << argv[1] << endl;
+        cout << argv[2] << endl;
+        cout << argv[3] << endl;
+        cout << argv[4] << endl;
+        cout << argv[5] << endl;
+        cout << argv[6] << endl;
+        cout << argv[7] << endl;
+        cout << argv[8] << endl;
+
         if (*argv[1] == '0') {   //*argv[0] is './main' //check which parameter the user wants to execute
             cout << endl << "execute kNN" << endl;
         } else if (*argv[1] == '1') {
@@ -40,6 +51,8 @@ int main(int argc, char* argv[]){ //(0: kNN , 1: PCA + kN N ,... etc)
         }
         //string inFile(argv[1]);
     }
+
+    //imput example $ ./tp2 -m 1 -i train.csv -q test.csv -o result.csv
 //	string outFile (strcat(argv[1], ".out"));
 //	double p = atof(argv[2]);
 //
