@@ -31,19 +31,15 @@ int main(int argc, char* argv[]){ //(0: kNN , 1: PCA + kN N ,... etc)
 	if (argc < 4){
 		cout << endl <<"	Unable to run program" << endl;
 		cout << "	At least three parameters are expected:    program_name.exe  in_file.txt  p_number" << endl;
-		return 1;
 	} else {
-        cout<<"dale campeon";
+        cout << "dale campeon";
+        if (*argv[1] == '0') {   //*argv[0] is './main' //check which parameter the user wants to execute
+            cout << endl << "execute kNN" << endl;
+        } else if (*argv[1] == '1') {
+            cout << endl << "execute PCA + kNN" << endl;
+        }
+        //string inFile(argv[1]);
     }
-
-//	// leo el archivo de test -->la entrada i,j indica un 1 en la posicion [j][i]
-    if (*argv[0] == 0) {
-        cout << endl << "execute kNN"<<endl;
-    } else if (*argv[0] == 1) {
-        cout << endl << "execute PCA + kNN"<<endl;
-    }
-	//string inFile(argv[1]);
-
 //	string outFile (strcat(argv[1], ".out"));
 //	double p = atof(argv[2]);
 //
