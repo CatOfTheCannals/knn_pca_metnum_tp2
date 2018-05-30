@@ -20,7 +20,57 @@ public:
 
     Dataset() : _images(), _targets(){}
 
-    Dataset(const Matrix& _images, const Matrix& _targets) : _images(_images), _targets(_targets){}
+    Dataset(const Matrix& _trainImages, const Matrix& _trainLabels) : _trainImages(_trainImages), _trainLabels(_trainLabels){}
+
+    Dataset(string filePath, string trainFileName, string testFileName) : Dataset(Dataset(filePath, trainFileName)){
+
+        ifstream f_test(filePath + testFileName);
+        assert(f_test.is_open());
+        string line, imagePath, personNumber;
+        std::vector<string> imagePaths;
+        std::vector<int> person_ids;
+        // parse whole file
+        while( getline(f_test, line) ){
+            istringstream lineStream(line);
+            lineStream >> imagePath >> personNumber;
+            imagePath.pop_back();
+            personNumber.pop_back();
+            imagePaths.push_back(imagePath);
+            person_ids.push_back(stoi(personNumber));
+        }
+
+        // use last parsed so as to know the amount of samples and image size
+        uchar* data = NULL;
+        int width = 0, height = 0;
+        string filename(filePath + imagePath);
+        PPM_LOADER_PIXEL_TYPE pt = PPM_LOADER_PIXEL_TYPE_INVALID;
+        bool ret = LoadPPMFile(&data, &width, &height, &pt, filename.c_str());
+        assert(ret || width != 0|| height != 0);
+
+
+        _testImages =  Matrix(imagePaths.size(), width * height);
+        _testLabels = Matrix(person_ids.size(), 1);
+
+        // initialize feature and taget matrices
+        for(int i = 0; i < _testImages.rows(); i ++){
+            _testLabels.setIndex(i, 0, person_ids[i]);
+
+            // this shit below is done just to initialize a matrix row
+            width = 0;
+            height = 0;
+            filename = filePath + imagePaths[i];
+            pt = PPM_LOADER_PIXEL_TYPE_INVALID;
+            bool ret = LoadPPMFile(&data, &width, &height, &pt, filename.c_str());
+            assert(ret || width != 0|| height != 0);
+
+            for (int h = 0; h < height; ++h){
+                for (int w = 0; w < width; ++w){
+                    int colIndex = h * width + w;
+                    _testImages.setIndex(i, colIndex, (unsigned int)data[colIndex]);
+                }
+            }
+        }
+    }
 
     Dataset(string filePath, string fileName) {
         ifstream f_test(filePath + fileName);
@@ -47,12 +97,12 @@ public:
         assert(ret || width != 0|| height != 0);
 
 
-        _images =  Matrix(imagePaths.size(), width * height);
-        _targets = Matrix(person_ids.size(), 1);
+        _trainImages =  Matrix(imagePaths.size(), width * height);
+        _trainLabels = Matrix(person_ids.size(), 1);
 
         // initialize feature and taget matrices
-        for(int i = 0; i < _images.rows(); i ++){
-            _targets.setIndex(i, 0, person_ids[i]);
+        for(int i = 0; i < _trainImages.rows(); i ++){
+            _trainLabels.setIndex(i, 0, person_ids[i]);
 
             // this shit below is done just to initialize a matrix row
             width = 0;
@@ -65,7 +115,7 @@ public:
             for (int h = 0; h < height; ++h){
                 for (int w = 0; w < width; ++w){
                     int colIndex = h * width + w;
-                    _images.setIndex(i, colIndex, (unsigned int)data[colIndex]);
+                    _trainImages.setIndex(i, colIndex, (unsigned int)data[colIndex]);
                 }
             }
         }
@@ -78,6 +128,7 @@ public:
 
     void shuffle();
     void trainPca(int alpha, double epsilon);
+    Matrix pca_kNN_predict(int k, int alpha, double epsilon) const;
     Matrix kNN_predict(int k) const;
     void splitTrainFromTest(double testPercentage);
 

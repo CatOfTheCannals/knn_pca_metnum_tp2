@@ -33,7 +33,7 @@ protected:
 
         littleMock = Dataset(g, l);
     }
-    Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
+    Dataset reduced = Dataset("../../test/casos_test/", "testRed.in","testRed.in");
 
     Matrix l = Matrix(3,1);
     Matrix g = Matrix(3,3);
@@ -75,9 +75,10 @@ TEST_F (datasetTest, littlePca) {
 
 }
 */
+
 TEST_F (datasetTest, reducedKnn) {
     reduced.shuffle();
-    reduced.splitTrainFromTest(0.3);
+    //reduced.splitTrainFromTest(0.3);
     reduced.kNN_predict(10);
 }
 
@@ -87,4 +88,12 @@ TEST_F (datasetTest, reducedPca) {
     std::cout << reduced.getPcaVecs() << std::endl;
     std::cout << reduced.getPcaLambdas() << std::endl;
 
-}*/
+}
+*/
+
+TEST_F (datasetTest, reducedPcaKnn) {
+    reduced.shuffle();
+    //reduced.splitTrainFromTest(0.3);
+    reduced.trainPca(3, 0.0001);
+    std::cout << reduced.pca_kNN_predict(10, 3, 0.0001) << std::endl;
+}

@@ -20,29 +20,43 @@ Matrix Dataset::getPcaLambdas() const {
 }
 
 void Dataset::shuffle() {
-    int n = _images.rows();
+    int n = _trainImages.rows();
     srand (time(NULL));
     for(int i = 0; i < n; i++) {
         int swap_index = rand() % n - i ;
-        _images.swapRows(i, i + swap_index);
-        _targets.swapRows(i, i + swap_index);
+        _trainImages.swapRows(i, i + swap_index);
+        _trainLabels.swapRows(i, i + swap_index);
     }
 }
 
 void Dataset::trainPca(int alpha, double epsilon) {
-
-    auto pca_eigenvectors_and_eigenvalues = pca(getImages(), alpha, epsilon);
-
+    assert(_trainImages.rows() > 0);
+    auto pca_eigenvectors_and_eigenvalues = pca(_trainImages, alpha, epsilon);
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
 }
 
 void Dataset::splitTrainFromTest(double testPercentage) {
-    int testRows = _images.rows() * testPercentage;
-    _testImages = _images.subMatrix(0, testRows, 0, _images.cols() - 1);
-    _testLabels = _targets.subMatrix(0, testRows, 0, _targets.cols() - 1);
-    _trainImages = _images.subMatrix(testRows + 1, _images.rows() - 1, 0, _images.cols() - 1);
-    _trainLabels = _targets.subMatrix(testRows + 1, _images.rows() - 1, 0, _targets.cols() - 1);
+    int testRows = _trainImages.rows() * testPercentage;
+    _testImages = _trainImages.subMatrix(0, testRows, 0, _trainImages.cols() - 1);
+    _testLabels = _trainLabels.subMatrix(0, testRows, 0, _trainLabels.cols() - 1);
+    _trainImages = _trainImages.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
+    _trainLabels = _trainLabels.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainLabels.cols() - 1);
+}
+
+
+Matrix Dataset::pca_kNN_predict(int k, int alpha, double epsilon) const {
+    Matrix testLabels = Matrix(_testImages.rows(), 1);
+
+    Matrix transformedTrainImages = _trainImages.multiply(_pcaVecs);
+    Matrix transformedTestImages = _testImages.multiply(_pcaVecs);
+
+    for(int i = 0; i < transformedTestImages.rows(); i++) {
+        int ith_label = kNN(transformedTrainImages, _trainLabels, transformedTestImages.getRow(i), k);
+        testLabels.setIndex(i ,0 , ith_label);
+    }
+
+    return testLabels;
 }
 
 
@@ -54,14 +68,12 @@ Matrix Dataset::kNN_predict(int k) const {
         testLabels.setIndex(i ,0 , ith_label);
     }
 
-
     std::cout << "accuracy is: " << accuracy(_testLabels, testLabels) << std::endl;
     for(int i = 0; i < 1; i++) {
         std::cout << "person: " << i << std::endl;
         std::cout << "recall at " << i << " is: " << recallPerPerson(_testLabels, testLabels, i) << std::endl;
         std::cout << "precision at " << i << " is: " << precisionPerPerson(_testLabels, testLabels, i) << std::endl;
         std::cout << std::endl;
-
     }
 
     return testLabels;
