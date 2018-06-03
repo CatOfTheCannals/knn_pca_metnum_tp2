@@ -27,18 +27,45 @@ protected:
         g.setIndex(2, 1, 7);
         g.setIndex(2, 2, 8);
 
+        e.setIndex(0, 0, 1);
+        e.setIndex(0, 1, 2);
+        e.setIndex(0, 2, 3);
+        e.setIndex(1, 0, 4);
+        e.setIndex(1, 1, 5);
+        e.setIndex(1, 2, 6);
+        e.setIndex(2, 0, 7);
+        e.setIndex(2, 1, 8);
+        e.setIndex(2, 2, 9);
+        e.setIndex(3, 0, 10);
+        e.setIndex(3, 1, 11);
+        e.setIndex(3, 2, 12);
+        e.setIndex(4, 0, 13);
+        e.setIndex(4, 1, 14);
+        e.setIndex(4, 2, 15);
+
         l.setIndex(1, 0, 2);
         l.setIndex(2, 0, 1);
         l.setIndex(0, 0, 1);
 
         littleMock = Dataset(g, l);
     }
-    Dataset reduced = Dataset("../../test/casos_test/", "testRed.in","testRed.in");
+
+    Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
 
     Matrix l = Matrix(3,1);
     Matrix g = Matrix(3,3);
+    Matrix e = Matrix(5,3);
     Dataset littleMock;
 };
+
+TEST_F (datasetTest, lab) {
+
+    int first_row, last_row;
+    int k = 3;
+    reduced.shuffle();
+    reduced.kFold(first_row, last_row, k);
+}
+
 
 /*
 TEST_F (datasetTest, shuffle) {
@@ -75,13 +102,15 @@ TEST_F (datasetTest, littlePca) {
 
 }
 */
-
+/*
 TEST_F (datasetTest, reducedKnn) {
     reduced.shuffle();
     //reduced.splitTrainFromTest(0.3);
-    reduced.kNN_predict(10);
+    auto predicted_labels = reduced.kNN_predict(10);
+    auto avg = allMetricsAveraged(reduced.getTestLabels(), predicted_labels);
+    std::cout << "accuracy: " << std::get<0>(avg) << ", recall: " << std::get<1>(avg) << ", precision: " << std::get<2>(avg) << std::endl;
 }
-
+*/
 /*
 TEST_F (datasetTest, reducedPca) {
     reduced.trainPca(3, 0.0001);
@@ -91,9 +120,10 @@ TEST_F (datasetTest, reducedPca) {
 }
 */
 
+/*
 TEST_F (datasetTest, reducedPcaKnn) {
     reduced.shuffle();
     //reduced.splitTrainFromTest(0.3);
     reduced.trainPca(3, 0.0001);
-    std::cout << reduced.pca_kNN_predict(10, 3, 0.0001) << std::endl;
-}
+    reduced.pca_kNN_predict(10, 3, 0.0001);
+}*/

@@ -22,6 +22,9 @@ public:
 
     Dataset(const Matrix& _trainImages, const Matrix& _trainLabels) : _trainImages(_trainImages), _trainLabels(_trainLabels){}
 
+    Dataset(const Matrix& _trainImages, const Matrix& _trainLabels, const Matrix& _testImages, const Matrix& _testLabels)
+            : _trainImages(_trainImages), _trainLabels(_trainLabels), _testImages(_testImages), _testLabels(_testLabels){}
+
     Dataset(string filePath, string trainFileName, string testFileName) : Dataset(Dataset(filePath, trainFileName)){
 
         ifstream f_test(filePath + testFileName);
@@ -121,8 +124,7 @@ public:
         }
     };
 
-    Matrix getImages() const;
-    Matrix getTargets() const;
+    Matrix getTestLabels() const;
     Matrix getPcaVecs() const;
     Matrix getPcaLambdas() const;
 
@@ -131,8 +133,12 @@ public:
     Matrix pca_kNN_predict(int k, int alpha, double epsilon) const;
     Matrix kNN_predict(int k) const;
     void splitTrainFromTest(double testPercentage);
+    std::tuple<Matrix, Matrix> getFold(const Matrix& input_matrix, int first_row, int second_row) const;
+    void kFold(int first_row, int last_row, int k) const;
+
 
 private:
+
     Matrix _images;
     Matrix _targets;
     Matrix _pcaVecs;
