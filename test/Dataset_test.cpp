@@ -51,13 +51,14 @@ protected:
     }
 
     Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
+    Dataset big = Dataset("../../test/casos_test/", "testBig.in");
 
     Matrix l = Matrix(3,1);
     Matrix g = Matrix(3,3);
     Matrix e = Matrix(5,3);
     Dataset littleMock;
 };
-
+/*
 TEST_F (datasetTest, lab) {
 
     int first_row, last_row;
@@ -65,8 +66,7 @@ TEST_F (datasetTest, lab) {
     reduced.shuffle();
     reduced.kFold(first_row, last_row, k);
 }
-
-
+*/
 /*
 TEST_F (datasetTest, shuffle) {
     int n = 20;
@@ -120,6 +120,12 @@ TEST_F (datasetTest, reducedPca) {
 }
 */
 
+TEST_F (datasetTest, bigPca) {
+    big.trainPca(15, 0.0001);
+    //std::cout << big.getPcaVecs() << std::endl;
+    std::cout << big.getPcaLambdas() << std::endl;
+
+}
 /*
 TEST_F (datasetTest, reducedPcaKnn) {
     reduced.shuffle();
