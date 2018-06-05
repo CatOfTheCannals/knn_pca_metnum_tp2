@@ -1,0 +1,17 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}Evaluaci\IeC {\'o}n}{2}{subsection.1.1}
+\contentsline {section}{\numberline {2}Desarrollo}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}kNN}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}PCA}{3}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Data augmentation}{3}{subsection.2.3}
+\contentsline {section}{\numberline {3}Resultados}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}K-fold}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Tiempo de ejecuci\IeC {\'o}n}{5}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}K de kNN}{6}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Alfa de PCA}{7}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Data augmentation}{9}{subsection.3.5}
+\contentsline {section}{\numberline {4}Conclusiones}{10}{section.4}
+\contentsline {section}{\numberline {5}Ap\IeC {\'e}ndice}{11}{section.5}
+\contentsline {subsection}{\numberline {5.1}Ap\IeC {\'e}ndice I: detalles de implementaci\IeC {\'o}n}{11}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Ap\IeC {\'e}ndice II: c\IeC {\'o}digo complementario en MATLAB}{11}{subsection.5.2}
