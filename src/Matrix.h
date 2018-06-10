@@ -49,6 +49,7 @@ public:
     Matrix subMatrix(int i1, int i2, int j1, int j2) const;
     Matrix multiply(const Matrix b) const;
     static Matrix identity(int n);
+    static Matrix random(int height, int width);
     Matrix abs();
     std::tuple<int, int> maxCoeff();
     friend std::ostream& operator<<(std::ostream& o, const Matrix& a);

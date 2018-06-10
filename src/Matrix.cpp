@@ -176,6 +176,18 @@ Matrix Matrix::identity(int n){
     return res;
 }
 
+Matrix Matrix::random(int height, int width){
+    Matrix random_matrix(height, width);
+    for(int i = 0; i < random_matrix.rows(); i++){
+        for(int j = 0; j < random_matrix.cols(); j++){
+            random_matrix.setIndex(i, j, rand() % 255);
+        }
+    }
+    return random_matrix;
+}
+
+
+
 std::tuple<int, int> Matrix::maxCoeff() {
     int res_x, res_y;
     double max = (*this)(0,0);

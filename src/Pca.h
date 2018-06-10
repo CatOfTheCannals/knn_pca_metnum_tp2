@@ -5,6 +5,10 @@
 #include <chrono>
 #include "Matrix.h"
 
+#define GET_TIME std::chrono::high_resolution_clock::now()
+#define     GET_TIME_DELTA(begin, end) \
+     std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
+
 tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon);
 
 tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon);

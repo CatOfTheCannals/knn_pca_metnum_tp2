@@ -14,11 +14,7 @@
 #include <string.h>
 #include <vector>
 
-#include "src/kNN.h"
 #include "src/Dataset.h"
-#include "src/Matrix.h"
-#include "src/Pca.h"
-#include "src/ppmloader.h"
 using namespace std;
 
 //bool map_of_rows = false; // indica si la matriz está guardada por filas o por columnas.
@@ -28,7 +24,7 @@ using namespace std;
 
 
 int main(int argc, char* argv[]){ //(0: kNN , 1: PCA + kN N ,... etc)
-
+    /*
 	if (argc < 4){
 		cout << endl <<"	Unable to run program" << endl;
 		cout << "	At least three parameters are expected:    program_name.exe  in_file.txt  p_number" << endl;
@@ -51,7 +47,7 @@ int main(int argc, char* argv[]){ //(0: kNN , 1: PCA + kN N ,... etc)
         }
         //string inFile(argv[1]);
     }
-
+    */
     //imput example $ ./tp2 -m 1 -i train.csv -q test.csv -o result.csv
 //	string outFile (strcat(argv[1], ".out"));
 //	double p = atof(argv[2]);

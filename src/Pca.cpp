@@ -1,7 +1,7 @@
 #include "Pca.h"
 
 
-tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon) {
+tuple<Matrix, Matrix>   pca(const Matrix &A, unsigned int num_components, double epsilon) {
     Matrix X(A);
     Matrix mean(1, A.cols());
 
@@ -52,9 +52,13 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
 
         Matrix eigen_vector(A.rows(), 1);
         double eigen_value;
+
+        auto begin = GET_TIME;
         tie(eigen_vector, eigen_value) =
                 power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
+        auto end = GET_TIME;
 
+        // std::cout << "time between iterations: " << GET_TIME_DELTA(begin, end) << std::endl;
         // cout << "eigen_vector: " << endl << eigen_vector << endl;
 
         // cout << "eigen_value: " << eigen_value << endl;
@@ -86,7 +90,7 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
     assert(input.rows() == x_0.rows());
     assert(1 == x_0.cols());
 
-    int max_iters = 1000;
+    int max_iters = 100;
 
     Matrix x(x_0 / x_0.norm());
     Matrix A(input);

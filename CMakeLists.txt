@@ -10,7 +10,7 @@ set(SOURCE_FILES
         src/Dataset.cpp
         src/ppmloader.cpp
 		src/kNN.cpp
-		src/Metrics.cpp )
+		src/Metrics.cpp data/pca_cuantitative.cpp)
 
 add_library(metodos-tp2-base ${SOURCE_FILES})
 
@@ -19,6 +19,7 @@ target_link_libraries(main metodos-tp2-base)
 
 add_subdirectory(test)
 
+add_subdirectory(data)
 #Cosas importantes:
 #   1) Google test genera su propio main, dejar main.cpp por afuera de SOURCE_FILES para evitar problemas
 #   2) Al compilar "main", agregar el archivo main.cpp para que lo ejecute
