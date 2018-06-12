@@ -121,10 +121,12 @@ TEST_F (datasetTest, reducedPca) {
 */
 
 TEST_F (datasetTest, bigPca) {
-    big.trainPca(15, 0.0001);
-    //std::cout << big.getPcaVecs() << std::endl;
-    std::cout << big.getPcaLambdas() << std::endl;
-
+    //big.trainPca(15, 0.0001);
+    // std::cout << big.getPcaVecs() << std::endl;
+    // std::cout << big.getPcaLambdas() << std::endl;
+    std::cout << "pija" << std::endl;
+    std::cout << big.getTrainImages() << std::endl;
+    std::cout << big.getTrainImages().cols() << std::endl;
 }
 /*
 TEST_F (datasetTest, reducedPcaKnn) {

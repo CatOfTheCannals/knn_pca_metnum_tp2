@@ -125,6 +125,7 @@ public:
     };
 
     Matrix getTestLabels() const;
+    Matrix getTrainImages() const;
     Matrix getPcaVecs() const;
     Matrix getPcaLambdas() const;
 

@@ -5,6 +5,11 @@ Matrix Dataset::getTestLabels() const{
     return output;
 }
 
+Matrix Dataset::getTrainImages() const{
+    Matrix output(_trainImages);
+    return output;
+}
+
 Matrix Dataset::getPcaVecs() const {
     Matrix output(_pcaVecs);
     return output;
