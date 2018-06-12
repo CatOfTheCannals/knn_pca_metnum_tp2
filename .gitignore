@@ -2,7 +2,6 @@
 build/
 cmake-build-debug/
 lib/
-casos_test/
 archivos_tp2/
 CMakeFiles/
 Makefile/
