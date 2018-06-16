@@ -27,11 +27,19 @@ double Matrix::operator()(std::size_t idx) const
     return this->_matrix[idx];
 }
 
+void Matrix::operator=(const Matrix& other) {
+    _rows = other._rows;
+    _cols = other._cols;
+    if(_matrix != nullptr) delete[] _matrix;
+    const int arr_size = _rows * _cols;
+    _matrix = new double[arr_size];
+    std::copy(other._matrix, other._matrix + arr_size, _matrix);
+}
 
 void Matrix::setIndex(int i, int j, double value){
-    assert(0 <= i && i < this->_rows && 0 <= j && j < this->_cols);
-    int position = this->_cols * i + j;
-    this->_matrix[position] = value;
+    assert(0 <= i && i < _rows && 0 <= j && j < _cols);
+    int position = _cols * i + j;
+    _matrix[position] = value;
 
 }
 
@@ -151,7 +159,7 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ) const{
     return res;
 }
 
-Matrix Matrix::multiply(const Matrix b) const{
+Matrix Matrix::multiply(const Matrix& b) const{
     assert(this->_cols == b.rows());
     Matrix result = Matrix(this->_rows, b.cols());
     for (int i = 0; i < this->rows(); ++i) {

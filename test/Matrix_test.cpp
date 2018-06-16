@@ -56,7 +56,7 @@ protected:
         g.setIndex(2, 2, 8);
         g.setIndex(2, 0, 9);
 
-        /*
+
         std::cout << "Test Matrix initialized:" << std::endl;
         std::cout << "e:" << std::endl;
         std::cout << e << std::endl;
@@ -64,8 +64,9 @@ protected:
         std::cout << m << std::endl;
         std::cout << "l:" << std::endl;
         std::cout << l << std::endl;
-        */
+
     }
+    
     Matrix e = Matrix(5,3);
     Matrix m = Matrix(3,3);
     Matrix l = Matrix(3,3);
@@ -73,7 +74,7 @@ protected:
 };
 
 TEST_F (mockMatrices, getIndex){
-        ASSERT_EQ(1, e(1,1));
+    ASSERT_EQ(1, e(1,1));
 }
 
 TEST_F (mockMatrices, copyConstructor){

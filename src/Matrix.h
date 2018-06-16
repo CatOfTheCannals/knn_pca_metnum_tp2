@@ -12,22 +12,19 @@ using namespace std;
 
 class Matrix {
 public:
-    Matrix() : _rows(0), _cols(0) {}
+    Matrix() : _rows(0), _cols(0), _matrix(nullptr){}
 
     // Constructor of Matrix Class initallized with 0 on every position.
-    Matrix(int rows, int columns) : _rows(rows), _cols(columns){ //fixme: no se para que hago lo que hago dps de los dos puntos, creo que con las sgtes dos líneas,  no es necesario.
-        _rows = rows;
-        _cols = columns;
-        _matrix = new double[_rows*_cols]();  // dynamically allocates memory using new
+    Matrix(int rows, int columns) : _rows(rows), _cols(columns){
+        _matrix = new double[_rows*_cols];  // dynamically allocates memory using new
         for (int i= 0; i < _rows*_cols; ++i) {
             _matrix[i] = 0;
         }
     }
 
     ~Matrix(void) {
-        delete[] _matrix;
+        if(_matrix != nullptr) delete[] _matrix;
     }
-
 
     Matrix(const Matrix & other) : _rows(other._rows), _cols(other._cols)
     {
@@ -42,6 +39,7 @@ public:
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
     void setIndex(int i, int j, double value); //fixme: completaro
+    void operator=(const Matrix& matrix);
     Matrix operator+(const Matrix& matrix) const;
     Matrix operator-(const Matrix& matrix) const;
     Matrix operator*(const double& scalar) const; //scalar multiplication
@@ -52,7 +50,7 @@ public:
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
     Matrix subMatrix(int i1, int i2, int j1, int j2) const;
-    Matrix multiply(const Matrix b) const;
+    Matrix multiply(const Matrix& b) const;
     static Matrix identity(int n);
     static Matrix random(int height, int width);
     Matrix abs();
@@ -65,7 +63,7 @@ public:
 private:
     int _rows;
     int _cols;
-    double *_matrix; //pointer of type int to the location of the matrix.
+    double *_matrix;
 };
 
 #endif //__DYN_MATRIX_HPP__}

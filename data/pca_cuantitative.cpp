@@ -26,12 +26,10 @@ int main(int argc, char** argv) {
 
     Matrix images = reduced.getTrainImages();
 
-
-
     for(int rows = 2; rows < images.rows(); rows += images.rows() / 10){
         for(int alpha = 1; alpha < images.cols(); alpha += images.cols() / 10){
 
-            Matrix images_sub_sample = images.subMatrix(0, rows, 0, images.cols());
+            Matrix images_sub_sample = images.subMatrix(0, rows, 0, images.cols() - 1);
 
             auto begin = GET_TIME;
             auto vectors_and_lambdas = pca(images_sub_sample, alpha, epsilon);
