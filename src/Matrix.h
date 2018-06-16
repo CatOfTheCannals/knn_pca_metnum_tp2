@@ -24,6 +24,11 @@ public:
         }
     }
 
+    ~Matrix(void) {
+        delete[] _matrix;
+    }
+
+
     Matrix(const Matrix & other) : _rows(other._rows), _cols(other._cols)
     {
         const int arr_size = _rows * _cols;

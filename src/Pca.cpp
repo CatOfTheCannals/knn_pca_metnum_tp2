@@ -1,7 +1,7 @@
 #include "Pca.h"
 
 
-tuple<Matrix, Matrix>   pca(const Matrix &A, unsigned int num_components, double epsilon) {
+tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon) {
     Matrix X(A);
     Matrix mean(1, A.cols());
 
