@@ -1,19 +1,6 @@
-#include <iostream>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include "chrono"
-#include <stdlib.h>
-#include <tuple>
+#include "pca_cuantitative.h"
 
-#include "../src/Pca.h"
-#include "../src/Dataset.h"
-
-#define GET_TIME std::chrono::high_resolution_clock::now()
-#define GET_TIME_DELTA(begin, end) \
-     std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
-
-int main(int argc, char** argv) {
+void pca_cuantitative() {
     double epsilon = 0.0001;
 
     std::ostringstream filename;
@@ -24,7 +11,7 @@ int main(int argc, char** argv) {
 
     Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
 
-    Matrix images = reduced.getTrainImages();
+    Matrix images = reduced.getTrainImages().subMatrix(0, images.rows() - 1, 0, 10);
 
     for(int rows = 2; rows < images.rows(); rows += images.rows() / 10){
         for(int alpha = 1; alpha < images.cols(); alpha += images.cols() / 10){
