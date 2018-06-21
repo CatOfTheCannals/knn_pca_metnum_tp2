@@ -10,6 +10,11 @@ Matrix Dataset::getTrainImages() const{
     return output;
 }
 
+Matrix Dataset::getTrainLabels() const{
+    Matrix output(_trainLabels);
+    return output;
+}
+
 Matrix Dataset::getPcaVecs() const {
     Matrix output(_pcaVecs);
     return output;
@@ -69,7 +74,7 @@ Matrix Dataset::kNN_predict(int k) const {
     return testLabels;
 }
 
-    std::tuple<Matrix, Matrix> Dataset::getFold(const Matrix& input_matrix, int first_row, int second_row) const{
+std::tuple<Matrix, Matrix> Dataset::getFold(const Matrix& input_matrix, int first_row, int second_row) const{
     auto data = Matrix(input_matrix);
     int chunk_size = second_row - first_row;
     for(int index_to_put_row_in = 0; index_to_put_row_in < chunk_size; index_to_put_row_in++) {

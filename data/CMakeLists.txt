@@ -1,5 +1,7 @@
-set(DATA_FILES pca_cuantitative.cpp)
+set(DATA_FILES pca_cuantitative.cpp knn_cuantitative.cpp)
 
-add_executable(correrExp ${DATA_FILES})
+add_library(exp_library ${DATA_FILES})
 
-target_link_libraries(correrExp metodos-tp2-base)
+add_executable(correrExp correrExp.cpp)
+
+target_link_libraries(correrExp exp_library metodos-tp2-base)

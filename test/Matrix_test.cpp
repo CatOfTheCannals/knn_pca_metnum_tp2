@@ -66,7 +66,7 @@ protected:
         std::cout << l << std::endl;
 
     }
-    
+
     Matrix e = Matrix(5,3);
     Matrix m = Matrix(3,3);
     Matrix l = Matrix(3,3);
