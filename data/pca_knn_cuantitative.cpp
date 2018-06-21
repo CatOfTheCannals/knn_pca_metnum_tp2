@@ -25,7 +25,7 @@ void pca_knn_cuantitative() {
         auto train_time = GET_TIME_DELTA(begin, end);
 
         for(int k = 1; k < rows; k++){
-            std::cout << std::endl << "alpha: " << alpha << std::endl;
+            std::cout << std::endl << "k: " << k << std::endl;
             for(int repetitions = 0; repetitions < 20; repetitions++){
 
                 auto begin = GET_TIME;
