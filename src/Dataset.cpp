@@ -1,5 +1,10 @@
 #include "Dataset.h"
 
+Matrix Dataset::getTestImages() const{
+    Matrix output(_testImages);
+    return output;
+}
+
 Matrix Dataset::getTestLabels() const{
     Matrix output(_testLabels);
     return output;
@@ -34,30 +39,30 @@ void Dataset::shuffle() {
     }
 }
 
-void Dataset::trainPca(int alpha, double epsilon) {
-    assert(_trainImages.rows() > 0);
-    auto pca_eigenvectors_and_eigenvalues = pca(_trainImages, alpha, epsilon);
-    _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
-    _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
-}
-
 void Dataset::splitTrainFromTest(double testPercentage) {
     int testRows = _trainImages.rows() * testPercentage;
     _testImages = _trainImages.subMatrix(0, testRows, 0, _trainImages.cols() - 1);
     _testLabels = _trainLabels.subMatrix(0, testRows, 0, _trainLabels.cols() - 1);
     _trainImages = _trainImages.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
-    _trainLabels = _trainLabels.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainLabels.cols() - 1);
+    _trainLabels = _trainLabels.subMatrix(testRows + 1, _trainLabels.rows() - 1, 0, _trainLabels.cols() - 1);
+}
+
+
+void Dataset::trainPca(int alpha, double epsilon) {
+    assert(_trainImages.rows() > 0);
+    auto pca_eigenvectors_and_eigenvalues = pca(_trainImages, alpha, epsilon);
+    _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
+    _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
+    _transformedTrainImages = _trainImages.multiply(_pcaVecs);
+    _transformedTestImages = _testImages.multiply(_pcaVecs);
 }
 
 
 Matrix Dataset::pca_kNN_predict(int k, int alpha, double epsilon) const {
-    Matrix testLabels = Matrix(_testImages.rows(), 1);
+    Matrix testLabels = Matrix(_transformedTrainImages.rows(), 1);
 
-    Matrix transformedTrainImages = _trainImages.multiply(_pcaVecs);
-    Matrix transformedTestImages = _testImages.multiply(_pcaVecs);
-
-    for(int i = 0; i < transformedTestImages.rows(); i++) {
-        int ith_label = kNN(transformedTrainImages, _trainLabels, transformedTestImages.getRow(i), k);
+    for(int i = 0; i < _transformedTestImages.rows(); i++) {
+        int ith_label = kNN(_transformedTrainImages, _trainLabels, _transformedTestImages.getRow(i), k);
         testLabels.setIndex(i ,0 , ith_label);
     }
 

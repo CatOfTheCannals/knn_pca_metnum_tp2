@@ -123,7 +123,7 @@ public:
             }
         }
     };
-
+    Matrix getTestImages() const;
     Matrix getTestLabels() const;
     Matrix getTrainImages() const;
     Matrix getTrainLabels() const;
@@ -143,12 +143,16 @@ private:
 
     Matrix _images;
     Matrix _targets;
-    Matrix _pcaVecs;
-    Matrix _pcaLambdas;
+
     Matrix _testImages;
     Matrix _testLabels;
     Matrix _trainImages;
     Matrix _trainLabels;
+
+    Matrix _pcaVecs;
+    Matrix _pcaLambdas;
+    Matrix _transformedTrainImages;
+    Matrix _transformedTestImages;
 };
 
 
