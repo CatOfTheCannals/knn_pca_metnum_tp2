@@ -1,5 +1,5 @@
-#ifndef TP2_METODOS_KNN_CUANTITATIVE_H
-#define TP2_METODOS_KNN_CUANTITATIVE_H
+#ifndef TP2_METODOS_PCA_KNN_CUANTITATIVE_H
+#define TP2_METODOS_PCA_KNN_CUANTITATIVE_H
 
 #include <iostream>
 #include <iostream>
@@ -15,6 +15,6 @@
 #define GET_TIME_DELTA(begin, end) \
      std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
 
-void knn_cuantitative();
+void pca_knn_cuantitative();
 
-#endif //TP2_METODOS_KNN_CUANTITATIVE_H
+#endif //TP2_METODOS_PCA_KNN_CUANTITATIVE_H
