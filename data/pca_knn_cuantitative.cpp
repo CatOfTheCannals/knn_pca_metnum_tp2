@@ -19,13 +19,10 @@ void pca_knn_cuantitative() {
 
         std::cout << std::endl << "alpha: " << alpha << std::endl;
 
-        auto begin = GET_TIME;
         d.trainPca(alpha, epsilon);
-        auto end = GET_TIME;
-        auto train_time = GET_TIME_DELTA(begin, end);
 
         for(int k = 1; k < rows; k++){
-            std::cout << std::endl << "alpha: " << alpha << std::endl;
+            std::cout << std::endl << "k: " << k << std::endl;
             for(int repetitions = 0; repetitions < 20; repetitions++){
 
                 auto begin = GET_TIME;
@@ -33,8 +30,8 @@ void pca_knn_cuantitative() {
                 auto end = GET_TIME;
                 auto predict_time = GET_TIME_DELTA(begin, end);
 
-                file << alpha << "," << k << "," << train_time + predict_time << std::endl;
-                std::cout << "time: " << train_time + predict_time << std::endl;
+                file << alpha << "," << k << "," << predict_time << std::endl;
+                std::cout << "time: " << predict_time << std::endl;
             }
         }
     }
