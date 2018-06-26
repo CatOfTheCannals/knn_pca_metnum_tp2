@@ -132,12 +132,16 @@ public:
 
     void shuffle();
     void trainPca(int alpha, double epsilon);
-    Matrix pca_kNN_predict(int k, int alpha, double epsilon) const;
+    Matrix pca_kNN_predict(int k, double epsilon) const;
     Matrix kNN_predict(int k) const;
     void splitTrainFromTest(double testPercentage);
-    std::tuple<Matrix, Matrix> getFold(const Matrix& input_matrix, int first_row, int second_row) const;
-    void kFold(int first_row, int last_row, int k) const;
-
+    std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
+        knnEquitativeSamplingKFold(int neighbours);
+    std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
+        pcaKnnEquitativeSamplingKFold(int alpha, int neighbours);
+    void shuffleSamePersonPicks(int amount_of_people, int picks_per_person);
+    std::tuple<Matrix, Matrix> getEquitativeSampligFold(
+            const Matrix& input_matrix, int iteration, int amount_of_people, int picks_per_person) const;
 
 private:
 

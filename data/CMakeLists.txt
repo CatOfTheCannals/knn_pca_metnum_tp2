@@ -1,4 +1,7 @@
-set(DATA_FILES pca_cuantitative.cpp knn_cuantitative.cpp pca_knn_cuantitative.cpp pca_knn_cuantitative.h)
+set(DATA_FILES pca_cuantitative.cpp
+        knn_cuantitative.cpp
+        pca_knn_cuantitative.cpp
+        kfold_exp.cpp)
 
 add_library(exp_library ${DATA_FILES})
 
