@@ -50,7 +50,7 @@ protected:
         littleMock = Dataset(g, l);
     }
 
-    Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
+    Dataset reduced = Dataset("../../test/casos_test/", "testFullRed.in");
     Dataset big = Dataset("../../test/casos_test/", "testBig.in");
 
     Matrix l = Matrix(3,1);
@@ -58,37 +58,15 @@ protected:
     Matrix e = Matrix(5,3);
     Dataset littleMock;
 };
-/*
+
 TEST_F (datasetTest, lab) {
 
-    int first_row, last_row;
-    int k = 3;
-    reduced.shuffle();
-    reduced.kFold(first_row, last_row, k);
+    auto scores_per_fold = reduced.knnEquitativeSamplingKFold(5);
+    std::cout << std::get<0>(scores_per_fold[0]) << std::endl;
+
 }
-*/
-/*
-TEST_F (datasetTest, shuffle) {
-    int n = 20;
 
-    std::vector<int> numbers;
-    for(int i = 0; i < n; i++) {
-        numbers.push_back(i);
-    }
 
-    srand (time(NULL));
-    for(int i = 0; i < n; i++) {
-
-        int swap_index = rand() % n - i ;
-        iter_swap(numbers.begin() + i, numbers.begin() + i + swap_index);
-    }
-    for(int i = 0; i < n; i++) {
-        std::cout << numbers[i] << ", ";
-
-    }
-    std::cout << std::endl;
-}
-*/
 /*
 TEST_F (datasetTest, littleKnn) {
     littleMock.splitTrainFromTest(0.3);
@@ -107,7 +85,7 @@ TEST_F (datasetTest, reducedKnn) {
     reduced.shuffle();
     //reduced.splitTrainFromTest(0.3);
     auto predicted_labels = reduced.kNN_predict(10);
-    auto avg = allMetricsAveraged(reduced.getTestLabels(), predicted_labels);
+    auto avg = allMetricsWrapper(reduced.getTestLabels(), predicted_labels);
     std::cout << "accuracy: " << std::get<0>(avg) << ", recall: " << std::get<1>(avg) << ", precision: " << std::get<2>(avg) << std::endl;
 }
 */
@@ -119,16 +97,15 @@ TEST_F (datasetTest, reducedPca) {
 
 }
 */
-
+/*
 TEST_F (datasetTest, bigPca) {
     //big.trainPca(15, 0.0001);
-    // std::cout << big.getPcaVecs() << std::endl;
-    // std::cout << big.getPcaLambdas() << std::endl;
-    std::cout << "pija" << std::endl;
+    std::cout << big.getPcaVecs() << std::endl;
+    std::cout << big.getPcaLambdas() << std::endl;
     std::cout << big.getTrainImages() << std::endl;
     std::cout << big.getTrainImages().cols() << std::endl;
 }
-/*
+
 TEST_F (datasetTest, reducedPcaKnn) {
     reduced.shuffle();
     //reduced.splitTrainFromTest(0.3);

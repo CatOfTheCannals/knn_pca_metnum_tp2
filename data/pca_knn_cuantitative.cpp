@@ -26,7 +26,7 @@ void pca_knn_cuantitative() {
             for(int repetitions = 0; repetitions < 20; repetitions++){
 
                 auto begin = GET_TIME;
-                d.pca_kNN_predict(k, alpha, epsilon);
+                d.pca_kNN_predict(k, epsilon);
                 auto end = GET_TIME;
                 auto predict_time = GET_TIME_DELTA(begin, end);
 
