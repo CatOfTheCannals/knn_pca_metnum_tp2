@@ -25,17 +25,19 @@ void kfold_knn(int neighbours) {
 }
 
 void run_diff_kfold_knn_pca() {
-    std::vector<int> neighbourhood_sizes = {1,2,3,5,8,10,15,20,25,30};
-    for(int alpha = 1; alpha < 411; alpha += 82) {
+    std::vector<int> neighbourhood_sizes = {1,3,8,10,15,25};
+    std::vector<int> alphas = {3,10,25,40,60};
+    
+    for(std::vector<int>::iterator alpha = alphas.begin(); alpha != alphas.end(); ++alpha){
 	for(std::vector<int>::iterator neighbours = neighbourhood_sizes.begin(); neighbours != neighbourhood_sizes.end(); ++neighbours) {
-            kfold_knn_with_pca(*neighbours, alpha);
+            kfold_knn_with_pca(*neighbours, *alpha);
         }
     }
 }
 
 void kfold_knn_with_pca(int neighbours, int alpha) {
     std::ostringstream filename;
-    filename << "../../data/results/knn_pca_metrics/kfold_knn_" << neighbours << "_pca_" << alpha << ".csv";
+    filename << "../../data/results/knn_pca_metrics_hacked_kfold/kfold_knn_" << neighbours << "_pca_" << alpha << ".csv";
     ofstream file;
     file.open(filename.str());
     file << "accuracy" << "," << "recall_at_k" << "," << "precision_at_k" << std::endl;
