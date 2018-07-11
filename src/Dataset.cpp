@@ -145,7 +145,6 @@ std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
 
     auto data = Matrix(input_matrix);
 
-    amount_of_people *= 2; // this value doubles the size of the fold
     for(int i = 0; i < amount_of_people; i++) {
         data.swapRows(i , i * picks_per_person + iteration * 2);
         data.swapRows(i , i * picks_per_person + 1 + iteration * 2);
