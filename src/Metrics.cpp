@@ -28,9 +28,15 @@ allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation) {
     std::vector<double> recallAtK(amount_of_persons);
     std::vector<double> precisionAtK(amount_of_persons);
 
+    std::vector<double> vecGroundTruth(amount_of_persons);
+    std::vector<double> vecEstimation(amount_of_persons);
+
     for(int i = 1; i < amount_of_persons; i++) {
         recallAtK[i] = recallPerPerson(groundTruth, estimation, i);
         precisionAtK[i] = precisionPerPerson(groundTruth, estimation, i);
+
+        vecGroundTruth[i] = groundTruth(i);
+        vecEstimation[i] = estimation(i);
     }
 
     double acc = accuracy(groundTruth, estimation);
@@ -38,7 +44,7 @@ allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation) {
     std::cout << "accuracy: " << acc << " | recall: " << mean(recallAtK)
               << " | precision: " << mean(precisionAtK) << std::endl;
 
-    return std::make_tuple(acc, recallAtK, precisionAtK);
+    return std::make_tuple(acc, vecGroundTruth, vecEstimation);
 }
 
 double mean(std::vector<double> series) {
