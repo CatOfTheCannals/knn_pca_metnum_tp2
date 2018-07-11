@@ -1,8 +1,9 @@
 #include "kfold_exp.h"
 
 void run_diff_kfold_knn() {
-    for(int neighbours = 1; neighbours < 20; neighbours++) {
-        kfold_knn(neighbours);
+    std::vector<int> neighbourhood_sizes = {1,3,8,10,15,25};
+    for(std::vector<int>::iterator neighbours = neighbourhood_sizes.begin(); neighbours != neighbourhood_sizes.end(); ++neighbours) {
+        kfold_knn(*neighbours);
     }
 }
 

@@ -10,6 +10,7 @@ int main(){
     // pca_knn_cuantitative();
     // kfold_knn(5);
     // kfold_knn_with_pca(5, 15);
-    run_diff_kfold_knn_pca();
+    // run_diff_kfold_knn_pca();
+    run_diff_kfold_knn();
     std::cout << std::endl << "Finished exp." << std::endl;
 }
