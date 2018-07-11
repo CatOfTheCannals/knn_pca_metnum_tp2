@@ -41,7 +41,7 @@ void kfold_knn_with_pca(int neighbours, int alpha) {
     filename << "../../data/results/knn_pca_metrics_hacked_kfold/kfold_knn_" << neighbours << "_pca_" << alpha << ".csv";
     ofstream file;
     file.open(filename.str());
-    file << "accuracy" << "," << "recall_at_k" << "," << "precision_at_k" << std::endl;
+    file << "accuracy" << "," << "groundTruth" << "," << "predictionx" << std::endl;
 
     Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>

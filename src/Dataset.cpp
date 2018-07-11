@@ -88,7 +88,7 @@ Dataset::knnEquitativeSamplingKFold(int neighbours)  {
         scores_per_fold;
 
     shuffleSamePersonPicks(amount_of_people, picks_per_person);
-    for(int k = 0; k < picks_per_person; k++) {
+    for(int k = 0; k < 3; k++) {
         auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person);
         auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person);
 

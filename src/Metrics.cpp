@@ -6,14 +6,14 @@ string vecOfDoublesToString(std::vector<double> vec) {
 
     if (!vec.empty())
     {
-        oss << "[";
+        oss << "\"[";
         // Convert all but the last element to avoid a trailing ","
         std::copy(vec.begin(), vec.end()-1,
                   std::ostream_iterator<double>(oss, ","));
 
         // Now add the last element with no delimiter
         oss << vec.back();
-        oss << "]";
+        oss << "]\"";
     }
 
     return oss.str() ;
