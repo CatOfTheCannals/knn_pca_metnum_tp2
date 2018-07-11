@@ -89,8 +89,8 @@ Dataset::knnEquitativeSamplingKFold(int neighbours)  {
 
     shuffleSamePersonPicks(amount_of_people, picks_per_person);
     for(int k = 0; k < picks_per_person; k++) {
-        auto imageFold = getEquitativeSampligFold(_trainImages, k, amount_of_people, picks_per_person);
-        auto labelFold = getEquitativeSampligFold(_trainLabels, k, amount_of_people, picks_per_person);
+        auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person);
+        auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person);
 
         Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                             std::get<1>(imageFold), std::get<1>(labelFold));
@@ -111,9 +111,10 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha) {
             scores_per_fold;
 
     shuffleSamePersonPicks(amount_of_people, picks_per_person);
-    for(int k = 0; k < picks_per_person; k++) {
-        auto imageFold = getEquitativeSampligFold(_trainImages, k, amount_of_people, picks_per_person);
-        auto labelFold = getEquitativeSampligFold(_trainLabels, k, amount_of_people, picks_per_person);
+
+    for(int k = 0; k < 3; k++) {
+        auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person);
+        auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person);
 
         Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                             std::get<1>(imageFold), std::get<1>(labelFold));
@@ -139,13 +140,15 @@ void Dataset::shuffleSamePersonPicks(int amount_of_people, int picks_per_person)
     }
 }
 
-std::tuple<Matrix, Matrix> Dataset::getEquitativeSampligFold
-        (const Matrix& input_matrix, int iteration, int amount_of_people, int picks_per_person) const {
+std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
+        (const Matrix &input_matrix, int iteration, int amount_of_people, int picks_per_person) const {
 
     auto data = Matrix(input_matrix);
 
+    amount_of_people *= 2; // this value doubles the size of the fold
     for(int i = 0; i < amount_of_people; i++) {
-        data.swapRows(i , i * picks_per_person + iteration);
+        data.swapRows(i , i * picks_per_person + iteration * 2);
+        data.swapRows(i , i * picks_per_person + 1 + iteration * 2);
     }
 
     auto trainSamples = data.subMatrix(amount_of_people, data.rows() - 1, 0, data.cols() - 1);
