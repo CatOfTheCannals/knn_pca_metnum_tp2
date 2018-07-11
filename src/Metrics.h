@@ -4,6 +4,7 @@
 #include <cassert>
 #include "Matrix.h"
 #include <sstream>
+#include <iterator>
 
 string vecOfDoublesToString(std::vector<double> vec);
 std::tuple<double, std::vector<double>, std::vector<double>>

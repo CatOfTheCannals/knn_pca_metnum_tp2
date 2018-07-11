@@ -1,7 +1,7 @@
 #include "kfold_exp.h"
 
 void run_diff_kfold_knn() {
-    for(int neighbours = 1; neighbours < 30; neighbours++) {
+    for(int neighbours = 1; neighbours < 20; neighbours++) {
         kfold_knn(neighbours);
     }
 }
@@ -13,7 +13,7 @@ void kfold_knn(int neighbours) {
     file.open(filename.str());
     file << "accuracy" << "," << "recall_at_k" << "," << "precision_at_k" << std::endl;
 
-    Dataset d = Dataset("../../test/casos_test/", "testRed.in");
+    Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
             scores_per_fold = d.knnEquitativeSamplingKFold(neighbours);
 
@@ -25,9 +25,10 @@ void kfold_knn(int neighbours) {
 }
 
 void run_diff_kfold_knn_pca() {
-    for(int alpha = 1; alpha < 411; alpha += 41) {
-        for(int neighbours = 1; neighbours < 30; neighbours++) {
-            kfold_knn_with_pca(neighbours, alpha);
+    std::vector<int> neighbourhood_sizes = {1,2,3,5,8,10,15,20,25,30};
+    for(int alpha = 1; alpha < 411; alpha += 82) {
+	for(std::vector<int>::iterator neighbours = neighbourhood_sizes.begin(); neighbours != neighbourhood_sizes.end(); ++neighbours) {
+            kfold_knn_with_pca(*neighbours, alpha);
         }
     }
 }
@@ -39,7 +40,7 @@ void kfold_knn_with_pca(int neighbours, int alpha) {
     file.open(filename.str());
     file << "accuracy" << "," << "recall_at_k" << "," << "precision_at_k" << std::endl;
 
-    Dataset d = Dataset("../../test/casos_test/", "testRed.in");
+    Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
             scores_per_fold = d.pcaKnnEquitativeSamplingKFold(neighbours, alpha);
 
