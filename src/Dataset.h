@@ -140,8 +140,8 @@ public:
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
         pcaKnnEquitativeSamplingKFold(int alpha, int neighbours);
     void shuffleSamePersonPicks(int amount_of_people, int picks_per_person);
-    std::tuple<Matrix, Matrix> getEquitativeSampligFold(
-            const Matrix& input_matrix, int iteration, int amount_of_people, int picks_per_person) const;
+    std::tuple<Matrix, Matrix> getEquitativeSamplingFold(
+            const Matrix &input_matrix, int iteration, int amount_of_people, int picks_per_person) const;
 
 private:
 
