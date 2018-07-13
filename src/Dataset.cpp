@@ -86,9 +86,9 @@ Dataset::knnEquitativeSamplingKFold(int neighbours)  {
     int picks_per_person = amount_of_picks / amount_of_people;
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
         scores_per_fold;
-
     shuffleSamePersonPicks(amount_of_people, picks_per_person);
-    for(int k = 0; k < 3; k++) {
+
+    for(int k = 0; k < 5; k++) {
         auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person);
         auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person);
 
@@ -112,7 +112,7 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha) {
 
     shuffleSamePersonPicks(amount_of_people, picks_per_person);
 
-    for(int k = 0; k < 3; k++) {
+    for(int k = 0; k < 5; k++) {
         auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person);
         auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person);
 
@@ -138,19 +138,45 @@ void Dataset::shuffleSamePersonPicks(int amount_of_people, int picks_per_person)
             _trainLabels.swapRows(i + person * picks_per_person, i + person * picks_per_person + swap_index);
         }
     }
+
 }
 
 std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
         (const Matrix &input_matrix, int iteration, int amount_of_people, int picks_per_person) const {
 
-    auto data = Matrix(input_matrix);
-
-    for(int i = 0; i < amount_of_people; i++) {
-        data.swapRows(i , i * picks_per_person + iteration * 2);
-        data.swapRows(i , i * picks_per_person + 1 + iteration * 2);
+    /* distribute dataset
+     * it is assumed that the dataset will have labels increasingly ordered
+     */
+    std::vector<std::vector<Matrix>> personBuckets;
+    int amountOfPersons = 41;
+    int picksPerPerson = 10;
+    for(int person = 0; person < amountOfPersons ; person++) {
+        std::vector<Matrix> bucket;
+        for(int pick = 0; pick < picksPerPerson; pick++) {
+            bucket.push_back(input_matrix.getRow(person * picksPerPerson + pick));
+        }
+        personBuckets.push_back(bucket);
     }
 
-    auto trainSamples = data.subMatrix(amount_of_people, data.rows() - 1, 0, data.cols() - 1);
-    auto testSamples = data.subMatrix(0, amount_of_people - 1, 0, data.cols() - 1);
+    // separe test from train
+    std::vector<Matrix> testSamplesVec;
+    for(int person = 0; person < amountOfPersons ; person++) {
+        testSamplesVec.push_back(personBuckets[person][iteration]);
+        testSamplesVec.push_back(personBuckets[person][iteration+1]);
+        personBuckets[person].erase(personBuckets[person].begin() + iteration + 1);
+        personBuckets[person].erase(personBuckets[person].begin() + iteration);
+    }
+
+    // flatten the remaining rows from personBuckets
+    std::vector<Matrix> trainSamplesVec;
+    for(auto it = personBuckets.begin(); it != personBuckets.end(); it++) {
+        auto bucket = *it;
+        trainSamplesVec.insert(end(trainSamplesVec),begin(bucket), end(bucket));
+    }
+
+    auto trainSamples = Matrix::vecOfRowsToMatrix(trainSamplesVec);
+    auto testSamples = Matrix::vecOfRowsToMatrix(testSamplesVec);
+
     return std::make_tuple(trainSamples, testSamples);
+
 }

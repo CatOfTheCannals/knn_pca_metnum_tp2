@@ -9,10 +9,10 @@ void run_diff_kfold_knn() {
 
 void kfold_knn(int neighbours) {
     std::ostringstream filename;
-    filename << "../../data/results/knn_metrics/kfold_knn_" << neighbours << ".csv";
+    filename << "../../data/results/pija/kfold_knn_" << neighbours << ".csv";
     ofstream file;
     file.open(filename.str());
-    file << "accuracy" << "," << "recall_at_k" << "," << "precision_at_k" << std::endl;
+    file << "accuracy" << "," << "groundTruth" << "," << "prediction" << std::endl;
 
     Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>

@@ -47,6 +47,7 @@ public:
     Matrix transpose() ;
     void swapRows(int i1, int i2);
     Matrix getRow(int index) const;
+    void setRow(int index, const Matrix& row);
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
     Matrix subMatrix(int i1, int i2, int j1, int j2) const;
@@ -59,12 +60,15 @@ public:
     bool isApproximate(const Matrix b, double epsilon) const;
     double squared_norm() const;
     double norm() const;
+    static Matrix vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows);
 
 private:
     int _rows;
     int _cols;
     double *_matrix;
 };
+
+
 
 #endif //__DYN_MATRIX_HPP__}
 

@@ -120,6 +120,13 @@ Matrix Matrix::getRow(int index) const{
     return row;
 }
 
+void Matrix::setRow(int index, const Matrix& row) {
+    assert(row.rows() ==1 && row.cols() < _cols);
+    for (int j= 0; j < _cols; ++j) {
+        (*this).setIndex(index, j, row(j));
+    }
+}
+
 std::tuple<int, int> Matrix::shape() const {
     return std::make_tuple(this->_rows, this->_cols);
 }
@@ -273,3 +280,14 @@ double Matrix::norm() const {
     return sqrt(this->squared_norm());
 }
 
+Matrix Matrix::vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows) {
+    assert(vecOfRows.size() > 0);
+    Matrix hstack(vecOfRows.size(), vecOfRows[0].cols());
+    for(int i = 0; i < hstack.rows(); i++) {
+        for(int j = 0; j < hstack.cols(); j++) {
+            hstack.setIndex(i, j, vecOfRows[i](j));
+        }
+    }
+
+    return hstack;
+}

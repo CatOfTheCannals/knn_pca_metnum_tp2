@@ -7,6 +7,7 @@
 #include <iterator>
 
 string vecOfDoublesToString(std::vector<double> vec);
+std::vector<double> matrixToVec(const Matrix &m);
 std::tuple<double, std::vector<double>, std::vector<double>>
     allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation);
 double mean(std::vector<double> series);

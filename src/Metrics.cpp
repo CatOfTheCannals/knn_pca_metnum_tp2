@@ -19,6 +19,15 @@ string vecOfDoublesToString(std::vector<double> vec) {
     return oss.str() ;
 }
 
+std::vector<double> matrixToVec(const Matrix &m) {
+    assert(m.cols() == 1);
+    std::vector<double> v(m.rows());
+    for(int i = 0; i < m.rows(); i++) {
+        v[i] = m(i);
+    }
+    return v;
+}
+
 std::tuple<double, std::vector<double>, std::vector<double>>
 allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation) {
     assert(groundTruth.rows() == estimation.rows());
@@ -28,15 +37,12 @@ allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation) {
     std::vector<double> recallAtK(amount_of_persons);
     std::vector<double> precisionAtK(amount_of_persons);
 
-    std::vector<double> vecGroundTruth(amount_of_persons);
-    std::vector<double> vecEstimation(amount_of_persons);
+    std::vector<double> vecGroundTruth = matrixToVec(groundTruth);
+    std::vector<double> vecEstimation = matrixToVec(estimation);
 
     for(int i = 1; i < amount_of_persons; i++) {
         recallAtK[i] = recallPerPerson(groundTruth, estimation, i);
         precisionAtK[i] = precisionPerPerson(groundTruth, estimation, i);
-
-        vecGroundTruth[i] = groundTruth(i);
-        vecEstimation[i] = estimation(i);
     }
 
     double acc = accuracy(groundTruth, estimation);
