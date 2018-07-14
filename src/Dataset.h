@@ -156,7 +156,7 @@ private:
     Matrix _pcaVecs;
     Matrix _pcaLambdas;
     Matrix _transformedTrainImages;
-    Matrix _transformedTestImages;
+    // Matrix _transformedTestImages;
 };
 
 

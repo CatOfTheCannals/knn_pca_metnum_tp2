@@ -20,11 +20,10 @@ void pca_knn_cuantitative() {
         std::cout << std::endl << "alpha: " << alpha << std::endl;
 
         d.trainPca(alpha, epsilon);
-
-        for(int k = 1; k < rows; k++){
-            std::cout << std::endl << "k: " << k << std::endl;
-            for(int repetitions = 0; repetitions < 20; repetitions++){
-
+        
+        for(int repetitions = 0; repetitions < 20; repetitions++){
+            for(int k = 1; k < rows; k++){
+                std::cout << std::endl << "k: " << k << std::endl;
                 auto begin = GET_TIME;
                 d.pca_kNN_predict(k, epsilon);
                 auto end = GET_TIME;

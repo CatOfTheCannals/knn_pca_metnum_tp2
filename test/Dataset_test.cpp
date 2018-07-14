@@ -51,23 +51,36 @@ protected:
     }
 
     Dataset reduced = Dataset("../../test/casos_test/", "testFullRed.in");
-    Dataset big = Dataset("../../test/casos_test/", "testBig.in");
+    // Dataset big = Dataset("../../test/casos_test/", "testFullBig.in");
 
     Matrix l = Matrix(3,1);
     Matrix g = Matrix(3,3);
     Matrix e = Matrix(5,3);
     Dataset littleMock;
 };
-
+/*
 TEST_F (datasetTest, lab) {
 
-    auto scores_per_fold = reduced.knnEquitativeSamplingKFold(5);
-    std::cout << std::get<0>(scores_per_fold[0]) << std::endl;
+
+    std::vector<int> a { 1,2,3 },
+            b {9,0,-7};
+
+    std::vector<int> c;
+    c.insert(end(c),begin(a), end(a));
+    c.insert(end(c), begin(b), end(b));
+
+    for(auto it = c.begin(); it != c.end(); it++) {
+        std::cout << *it << std::endl;
+    }
+
+    // big.knnEquitativeSamplingKFold(5);
+    // auto scores_per_fold = reduced.;
+    // std::cout << std::get<0>(scores_per_fold[0]) << std::endl;
 
 }
 
 
-/*
+
 TEST_F (datasetTest, littleKnn) {
     littleMock.splitTrainFromTest(0.3);
     std::cout << littleMock.kNN_predict(1) << std::endl;
@@ -105,10 +118,18 @@ TEST_F (datasetTest, bigPca) {
     std::cout << big.getTrainImages() << std::endl;
     std::cout << big.getTrainImages().cols() << std::endl;
 }
-
+*/
 TEST_F (datasetTest, reducedPcaKnn) {
-    reduced.shuffle();
-    //reduced.splitTrainFromTest(0.3);
-    reduced.trainPca(3, 0.0001);
-    reduced.pca_kNN_predict(10, 3, 0.0001);
-}*/
+
+    int k = 0;
+    int amount_of_people = 41;
+    int picks_per_person = 10;
+    auto imageFold = reduced.getEquitativeSamplingFold(reduced.getTrainImages(), k, amount_of_people, picks_per_person);
+    auto labelFold = reduced.getEquitativeSamplingFold(reduced.getTrainLabels(), k, amount_of_people, picks_per_person);
+
+    Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
+                        std::get<1>(imageFold), std::get<1>(labelFold));
+    d.trainPca(10, 0.0001);
+    allMetricsWrapper(std::get<1>(labelFold),d.pca_kNN_predict(3, 0.0001));
+
+}

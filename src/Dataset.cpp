@@ -54,15 +54,15 @@ void Dataset::trainPca(int alpha, double epsilon) {
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
     _transformedTrainImages = _trainImages.multiply(_pcaVecs);
-    _transformedTestImages = _testImages.multiply(_pcaVecs);
 }
 
 
 Matrix Dataset::pca_kNN_predict(int k, double epsilon) const {
-    Matrix testLabels = Matrix(_transformedTestImages.rows(), 1);
 
-    for(int i = 0; i < _transformedTestImages.rows(); i++) {
-        int ith_label = kNN(_transformedTrainImages, _trainLabels, _transformedTestImages.getRow(i), k);
+    Matrix testLabels = Matrix(_testImages.rows(), 1);
+    for(int i = 0; i < _testImages.rows(); i++) {
+        auto characteristic_transformation = _testImages.getRow(i).multiply(_pcaVecs);
+        int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
         testLabels.setIndex(i ,0 , ith_label);
     }
 
