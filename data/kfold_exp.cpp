@@ -9,7 +9,7 @@ void run_diff_kfold_knn() {
 
 void kfold_knn(int neighbours) {
     std::ostringstream filename;
-    filename << "../../data/results/pija/kfold_knn_" << neighbours << ".csv";
+    filename << "../../data/results/knn_metrics/kfold_knn_" << neighbours << ".csv";
     ofstream file;
     file.open(filename.str());
     file << "accuracy" << "," << "groundTruth" << "," << "prediction" << std::endl;

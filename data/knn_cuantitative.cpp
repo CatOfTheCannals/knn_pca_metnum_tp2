@@ -16,20 +16,15 @@ void knn_cuantitative() {
 
     Matrix input_image = images.getRow(0);
 
-    for(int k = 1; k < images.rows(); k++){
-        for(int repetitions = 0; repetitions < 20; repetitions++){
+    for(int repetitions = 0; repetitions < 200; repetitions++) {
+        for (int k = 1; k < images.rows(); k++) {
             auto begin = GET_TIME;
-
             kNN(images, labels, input_image, k);
-
             auto end = GET_TIME;
-
             auto time = GET_TIME_DELTA(begin, end);
 
             file << k << "," << time << std::endl;
-
             std::cout << k << "," << time << std::endl;
         }
-
     }
 }
