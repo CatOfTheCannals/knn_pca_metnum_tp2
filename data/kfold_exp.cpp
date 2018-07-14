@@ -38,7 +38,7 @@ void run_diff_kfold_knn_pca() {
 
 void kfold_knn_with_pca(int neighbours, int alpha) {
     std::ostringstream filename;
-    filename << "../../data/results/knn_pca_metrics_hacked_kfold/kfold_knn_" << neighbours << "_pca_" << alpha << ".csv";
+    filename << "../../data/results/knn_pca_metrics_test_82_kfold/kfold_knn_" << neighbours << "_pca_" << alpha << ".csv";
     ofstream file;
     file.open(filename.str());
     file << "accuracy" << "," << "groundTruth" << "," << "prediction" << std::endl;

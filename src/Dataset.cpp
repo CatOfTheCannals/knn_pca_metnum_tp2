@@ -126,7 +126,6 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha) {
     return scores_per_fold;
 }
 
-
 void Dataset::shuffleSamePersonPicks(int amount_of_people, int picks_per_person) {
 
     srand (time(NULL));
