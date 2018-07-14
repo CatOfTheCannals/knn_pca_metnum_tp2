@@ -12,3 +12,11 @@ gtest_main.pc
 libmetodos-tp2-base.a
 main
 tp2_metodos.cbp
+
+*.aux
+*.bcf
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc

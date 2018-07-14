@@ -13,7 +13,29 @@ Los parámetros $k$ (cantidad de vecinos en \textit{kNN}) y $\alpha$ (dimensión
 
 \subsection{K-fold}
 
-La validación cruzada \textit{K-fold} consiste en particionar la base de entrenamiento en $K$ partes del mismo tamaño. Luego se realiza $K$ iteraciones, cada una de ellas reteniendo uno de los conjuntos para validación y utilizando los restantes $K - 1s$ para entrenamiento. Este método puede ser aleatorio, es decir, tomar las particiones sin cuidado alguno. Hicimos uso del método de MATLAB cvpartition, la cual tiene como define las particiones aleatoriamente de la cross-validation para un $n$ y un $K$.
+La validación cruzada \textit{K-fold} consiste en particionar la base de entrenamiento en $K$ partes del mismo tamaño. Luego se realiza $K$ iteraciones, cada una de ellas reteniendo uno de los conjuntos para validación y utilizando los restantes $K - 1s$ para entrenamiento. Este método usualmente permite tomar las particiones sin cuidado alguno, pero en nuestro caso de uso tal cosa no es conveniente. Esto se debe a que en nuestra base de entrenamiento cada persona está representada por diez imágenes, con lo cual dividir las muestras de forma aleatoria puede desbalancear que tan representadas estan algunas personas en el training set. Esto puede significar que el algoritmo se entrena poco para algunas personas y mucho para otras. Yendo mas lejos, este desbalance en el train set siempre tiene su contraparte en el test set, impactando de forma negativa las métricas.
+Para resolver este problema, se propuso el uso de un k-fold que respete las proporciones de imágenes de cada persona. Como el test set siempre tiene que tener la misma cantidad de fotos para cada persona. Como nuestro dataset cuenta con cuarenta y un personas diferentes, la cantidad de rows del test set será un multiplo de ese número. Esto implica que k será multiplo de diez. Se realizó un shuffle de las imágenes y se eligieron los folds respetando las proporciones mencionadas.
+
+\subsection{Tiempo de ejecución PCA}
+
+Con el objetivo de entender el costo de calcular una matriz de covarianzas para una muestra X, probamos con diferentes cantidades de imagenes reducidas y con diferentes valores del alfa de PCA. 
+
+Para visualizar los resultados de los experimentos para cada X, se creó un gráfico donde la variable independiente es el alpha y la variable dependiente es el tiempo de cómputo. 
+
+En los gráficos Observamos que el tiempo de cómputo se comporta de forma lineal en ralción al alpha para distintos segmentos de alpha, pero la pendiente es discontinua.
+
+\begin{figure}[H]
+	\begin{center}
+      \includegraphics[width=0.4\columnwidth]{imagenes/charuli-des/pca_cuantitative_redImg_3_rows.png}
+      \caption{Costo temporal de PCA para tres imágenes reducidas}
+      \end{center}
+\end{figure}
+\begin{figure}
+	\begin{center}
+    	\includegraphics[width=0.4\columnwidth]{imagenes/charuli-des/pca_cuantitative_redImg_83_rows.png}
+     \caption{Costo temporal de PCA para ochenta y tres imágenes reducidas}
+     \end{center}
+\end{figure}
 
 \subsection{Tiempo de ejecución}
 
@@ -31,7 +53,7 @@ Sin embargo, debe recordarse que el costo de PCA es elevado. Esto debe tenerse e
 
 \subsection{K de kNN}
 
-Para analizar el comportamiento al cambiar el K de kNN fijamos alfa de PCA en 2 valores 15 y 30. Corrimos experimentos para distintos estos K: 1, 2, 3, 4, 5, 7, 8, 8, 10, 15, 20, 30.
+Para analizar el comportamiento al cambiar el K de kNN fijamos alpha de PCA en 2 valores 15 y 30. Corrimos experimentos para distintos estos K: 1, 2, 3, 4, 5, 7, 8, 8, 10, 15, 20, 30.
 
 Nuestra hipótesis previo a correr los experimentos fue que para $k$s chicos, la posibilidad de que nuestro vecino más cercano sea un outlier representando otro dígito son más altas y para los $k$s grandes, pensamos que los dígitos que se encuentran en las fronteras, osea que se parecen a otros dígitos, se verían perjudicadas ya que por como funciona knn, pordía ocurrir que el más cercano sea, por ejemplo, 5 pero todos los siguientes sean 2. Por lo tanto, supusimos que los $k$s intermedios serían los que mejor funcionarían.
 
