@@ -9,14 +9,18 @@ void run_diff_kfold_knn() {
 
 void kfold_knn(int neighbours) {
     std::ostringstream filename;
-    filename << "../../data/results/knn_metrics/kfold_knn_" << neighbours << ".csv";
+    filename << "../../data/results/knn_metrics/kfold_bigTestSet_knn_" << neighbours << ".csv";
     ofstream file;
     file.open(filename.str());
     file << "accuracy" << "," << "groundTruth" << "," << "prediction" << std::endl;
 
-    Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
+
+    Dataset d = Dataset("../../test/casos_test/", "testFullRed.in");
+    //Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
+    bool bigTestSet = true;
+
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
-            scores_per_fold = d.knnEquitativeSamplingKFold(neighbours);
+            scores_per_fold = d.knnEquitativeSamplingKFold(neighbours, bigTestSet);
 
     for(int i = 0; i < scores_per_fold.size(); i++) {
         file << std::get<0>(scores_per_fold[i]) << "," << vecOfDoublesToString(std::get<1>(scores_per_fold[i]))
@@ -38,14 +42,18 @@ void run_diff_kfold_knn_pca() {
 
 void kfold_knn_with_pca(int neighbours, int alpha) {
     std::ostringstream filename;
-    filename << "../../data/results/knn_pca_metrics_test_82_kfold/kfold_knn_" << neighbours << "_pca_" << alpha << ".csv";
+    filename << "../../data/results/knn_pca_metrics/kfold_bigTestSet_knn_" << neighbours << "_pca_" << alpha << ".csv";
     ofstream file;
     file.open(filename.str());
     file << "accuracy" << "," << "groundTruth" << "," << "prediction" << std::endl;
 
-    Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
+    // Dataset d = Dataset("../../test/casos_test/", "testFullBig.in");
+    Dataset d = Dataset("../../test/casos_test/", "testFullRed.in");
+
+    bool bigTestSet = true;
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
-            scores_per_fold = d.pcaKnnEquitativeSamplingKFold(neighbours, alpha);
+            scores_per_fold = d.pcaKnnEquitativeSamplingKFold(neighbours, alpha, bigTestSet);
+
 
     for(int i = 0; i < scores_per_fold.size(); i++) {
         file << std::get<0>(scores_per_fold[i]) << "," << vecOfDoublesToString(std::get<1>(scores_per_fold[i]))

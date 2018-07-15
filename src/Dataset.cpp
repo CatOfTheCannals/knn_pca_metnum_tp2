@@ -47,25 +47,31 @@ void Dataset::splitTrainFromTest(double testPercentage) {
     _trainLabels = _trainLabels.subMatrix(testRows + 1, _trainLabels.rows() - 1, 0, _trainLabels.cols() - 1);
 }
 
-
 void Dataset::trainPca(int alpha, double epsilon) {
     assert(_trainImages.rows() > 0);
     auto pca_eigenvectors_and_eigenvalues = pca(_trainImages, alpha, epsilon);
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
     _transformedTrainImages = _trainImages.multiply(_pcaVecs);
-}
+    std::cout << "_pcaVecs" << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
+    std::cout << "_transformedTrainImages " << _transformedTrainImages.rows() << ", " << _transformedTrainImages.cols() << std::endl;
 
+}
 
 Matrix Dataset::pca_kNN_predict(int k, double epsilon) const {
 
     Matrix testLabels = Matrix(_testImages.rows(), 1);
+    // std::cout << "rows " << _testImages.rows() << std::endl;
     for(int i = 0; i < _testImages.rows(); i++) {
+        // std::cout << "entro " << i << std::endl;
         auto characteristic_transformation = _testImages.getRow(i).multiply(_pcaVecs);
+        // std::cout << "char trans ok " << std::endl;
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
+        // std::cout << "knn pred  ok " << std::endl;
         testLabels.setIndex(i ,0 , ith_label);
+        // std::cout << "set index ok " << std::endl;
     }
-
+    std::cout << " salio del loop" << std::endl;
     return testLabels;
 }
 
@@ -79,7 +85,7 @@ Matrix Dataset::kNN_predict(int k) const {
     return testLabels;
 }
 std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
-Dataset::knnEquitativeSamplingKFold(int neighbours)  {
+Dataset::knnEquitativeSamplingKFold(int neighbours, bool bigTestSet = false)  {
 
     int amount_of_people = 41;
     int amount_of_picks = _trainImages.rows();
@@ -89,11 +95,13 @@ Dataset::knnEquitativeSamplingKFold(int neighbours)  {
     shuffleSamePersonPicks(amount_of_people, picks_per_person);
 
     for(int k = 0; k < 5; k++) {
-        auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person);
-        auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person);
+        auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person, bigTestSet);
+        auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person, bigTestSet);
 
         Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                             std::get<1>(imageFold), std::get<1>(labelFold));
+
+
         scores_per_fold.push_back(allMetricsWrapper(std::get<1>(labelFold), d.kNN_predict(neighbours)));
 
     }
@@ -101,7 +109,7 @@ Dataset::knnEquitativeSamplingKFold(int neighbours)  {
     return scores_per_fold;
 }
 std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
-Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha) {
+Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSet = false) {
 
     double epsilon = 0.0001;
     int amount_of_people = 41;
@@ -113,11 +121,12 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha) {
     shuffleSamePersonPicks(amount_of_people, picks_per_person);
 
     for(int k = 0; k < 5; k++) {
-        auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person);
-        auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person);
+        auto imageFold = getEquitativeSamplingFold(_trainImages, k, amount_of_people, picks_per_person, bigTestSet);
+        auto labelFold = getEquitativeSamplingFold(_trainLabels, k, amount_of_people, picks_per_person, bigTestSet);
 
         Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                             std::get<1>(imageFold), std::get<1>(labelFold));
+        std::cout << "train_pca" << std::endl;
         d.trainPca(alpha, epsilon);
         scores_per_fold.push_back(allMetricsWrapper(std::get<1>(labelFold),
                                                     d.pca_kNN_predict(neighbours, epsilon)));
@@ -140,8 +149,9 @@ void Dataset::shuffleSamePersonPicks(int amount_of_people, int picks_per_person)
 
 }
 
+
 std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
-        (const Matrix &input_matrix, int iteration, int amount_of_people, int picks_per_person) const {
+        (const Matrix &input_matrix, int iteration, int amount_of_people, int picks_per_person, bool bigTestSet = false) const {
 
     /* distribute dataset
      * it is assumed that the dataset will have labels increasingly ordered
@@ -176,6 +186,11 @@ std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
     auto trainSamples = Matrix::vecOfRowsToMatrix(trainSamplesVec);
     auto testSamples = Matrix::vecOfRowsToMatrix(testSamplesVec);
 
-    return std::make_tuple(trainSamples, testSamples);
+    if(bigTestSet){
+        return std::make_tuple(testSamples, trainSamples);
+    } else {
+        return std::make_tuple(trainSamples, testSamples);
+    }
+
 
 }

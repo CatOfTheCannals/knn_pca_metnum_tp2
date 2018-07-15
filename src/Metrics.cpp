@@ -30,6 +30,7 @@ std::vector<double> matrixToVec(const Matrix &m) {
 
 std::tuple<double, std::vector<double>, std::vector<double>>
 allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation) {
+
     assert(groundTruth.rows() == estimation.rows());
     assert(groundTruth.cols() == 1 && estimation.cols() == 1);
 

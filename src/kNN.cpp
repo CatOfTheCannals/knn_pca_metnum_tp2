@@ -42,7 +42,6 @@ bool shortestDistance(const tuple<int,double> a, const tuple<int,double> b) {//u
     return std::get<1>(a) < std::get<1>(b);
 }
 
-
 bool orderedByIndex(const tuple<int,double> a, const tuple<int,double> b) {//used to sort v
 
     return std::get<0>(a) < std::get<0>(b);

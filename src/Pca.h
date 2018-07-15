@@ -17,4 +17,6 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components, double e
 
 Matrix ones(int rows, int cols);
 
+Matrix random(int rows, int cols);
+
 #endif //TP1_METODOS_SVD_H

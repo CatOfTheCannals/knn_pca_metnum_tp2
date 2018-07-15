@@ -44,7 +44,7 @@ public:
     Matrix operator-(const Matrix& matrix) const;
     Matrix operator*(const double& scalar) const; //scalar multiplication
     Matrix operator/(const double& scalar) const; //scalar division
-    Matrix transpose() ;
+    Matrix transpose() const;
     void swapRows(int i1, int i2);
     Matrix getRow(int index) const;
     void setRow(int index, const Matrix& row);

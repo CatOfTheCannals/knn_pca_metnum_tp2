@@ -87,7 +87,7 @@ Matrix Matrix::operator/(const double& scalar) const{
     return res;
 }
 
-Matrix Matrix::transpose() {
+Matrix Matrix::transpose() const{
     Matrix res(this->cols(), this->rows());
     for(int i = 0; i < this->rows() ; i++){
         for(int j = 0; j < this->cols() ; j++){

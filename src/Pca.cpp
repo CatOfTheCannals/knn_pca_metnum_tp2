@@ -18,21 +18,38 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
             X.setIndex(i,j, centered_row(j));
         }
     }
+        /*
+        // find the covariance matrix
+        auto big_M = X.transpose().multiply(X);
 
-    // find the covariance matrix
-    auto M = X.transpose().multiply(X);
-
-    // if we want to return eigenvalues and eigenvectors
-    return svd(M, num_components, epsilon);
-
-    /* if we wanted to return the transformed train set
-    // find eigenvectors from M
-    auto svdRes = svd(M, num_components, epsilon);
-    Matrix autoVecs(std::get<0>(svdRes));
-    Matrix lambdas(std::get<1>(svdRes));
-
-    return A.multiply(M);
+        auto big_eigenvectors_and_eigenvalues = svd(big_M, num_components, epsilon);
+        auto big_m_eigenvectors = std::get<0>(big_eigenvectors_and_eigenvalues);
+        auto big_lambdas = std::get<1>(big_eigenvectors_and_eigenvalues);
     */
+
+        // new covariance matrix peque
+        auto M = X.multiply(X.transpose());
+
+        auto eigenvectors_and_eigenvalues = svd(M, num_components, epsilon);
+        auto m_eigenvectors = std::get<0>(eigenvectors_and_eigenvalues);
+        auto lambdas = std::get<1>(eigenvectors_and_eigenvalues);
+
+        auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
+
+        // std::cout << M_eigenvectors.rows() << ", " << M_eigenvectors.cols() << std::endl;
+        // std::cout << X.rows() << ", " << X.cols() << std::endl;
+
+        std::cout << "difference between U's:" << std::endl ;
+        //std::cout << big_m_eigenvectors - M_eigenvectors << std::endl;
+        std::cout << M_eigenvectors << std::endl;
+
+        //std::cout << "BIG: " << big_M.multiply(big_m_eigenvectors) -big_m_eigenvectors.multiply(big_lambdas) << std::endl;
+        //std::cout << std::endl << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl;
+        //std::cout << "SMALL: " << M.multiply(m_eigenvectors) - m_eigenvectors.multiply(lambdas) << std::endl;
+
+        // std::cout << "lambdas:" << std::endl << lambdas << std::endl;
+
+        return make_tuple(M_eigenvectors, lambdas);
 }
 
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
@@ -48,7 +65,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
 
     for (auto i = 0; i < num_components; i++) {
 
-        Matrix x_0( ones(A.rows(), 1));
+        Matrix x_0( random(A.rows(), 1));
 
         Matrix eigen_vector(A.rows(), 1);
         double eigen_value;
@@ -79,7 +96,6 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         // cout << "pos-deflation X: " << endl << X << endl;
 
     }
-
 
     return make_tuple(k_eigen_vectors, lambdas);
 }
@@ -114,14 +130,22 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
     return make_tuple(x, lambda(0));
 }
 
-
-
-
 Matrix ones(int rows, int cols)  {
     Matrix res(rows, cols);
     for (std::size_t i = 0; i < rows; i++) {
         for (std::size_t j = 0; j < cols; j++) {
             res.setIndex(i, j, 1);
+        }
+    }
+    return res;
+}
+
+Matrix random(int rows, int cols) {
+    Matrix res(rows, cols);
+    srand (time(NULL));
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = 0; j < cols; j++) {
+            res.setIndex(i, j, rand() % 100);
         }
     }
     return res;

@@ -25,9 +25,13 @@ public:
     Dataset(const Matrix& _trainImages, const Matrix& _trainLabels, const Matrix& _testImages, const Matrix& _testLabels)
             : _trainImages(_trainImages), _trainLabels(_trainLabels), _testImages(_testImages), _testLabels(_testLabels){}
 
-    Dataset(string filePath, string trainFileName, string testFileName) : Dataset(Dataset(filePath, trainFileName)){
+    Dataset(string filePath, string trainFileName,  string testFileName) {
+        Dataset(filePath, trainFileName, filePath, testFileName);
+    }
 
-        ifstream f_test(filePath + testFileName);
+    Dataset(string trainFilePath, string trainFileName, string testFilePath, string testFileName) : Dataset(Dataset(trainFilePath, trainFileName)){
+
+        ifstream f_test(testFilePath + testFileName);
         assert(f_test.is_open());
         string line, imagePath, personNumber;
         std::vector<string> imagePaths;
@@ -45,7 +49,7 @@ public:
         // use last parsed so as to know the amount of samples and image size
         uchar* data = NULL;
         int width = 0, height = 0;
-        string filename(filePath + imagePath);
+        string filename(testFilePath + imagePath);
         PPM_LOADER_PIXEL_TYPE pt = PPM_LOADER_PIXEL_TYPE_INVALID;
         bool ret = LoadPPMFile(&data, &width, &height, &pt, filename.c_str());
         assert(ret || width != 0|| height != 0);
@@ -61,7 +65,7 @@ public:
             // this shit below is done just to initialize a matrix row
             width = 0;
             height = 0;
-            filename = filePath + imagePaths[i];
+            filename = testFilePath + imagePaths[i];
             pt = PPM_LOADER_PIXEL_TYPE_INVALID;
             bool ret = LoadPPMFile(&data, &width, &height, &pt, filename.c_str());
             assert(ret || width != 0|| height != 0);
@@ -136,12 +140,17 @@ public:
     Matrix kNN_predict(int k) const;
     void splitTrainFromTest(double testPercentage);
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
-        knnEquitativeSamplingKFold(int neighbours);
+        knnEquitativeSamplingKFold(int neighbours, bool bigTestSet);
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
-        pcaKnnEquitativeSamplingKFold(int alpha, int neighbours);
+        pcaKnnEquitativeSamplingKFold(int alpha, int neighbours, bool bigTestSet);
     void shuffleSamePersonPicks(int amount_of_people, int picks_per_person);
-    std::tuple<Matrix, Matrix> getEquitativeSamplingFold(
-            const Matrix &input_matrix, int iteration, int amount_of_people, int picks_per_person) const;
+
+    std::tuple<Matrix, Matrix> getEquitativeSamplingFold(const Matrix &input_matrix,
+                                                         int iteration,
+                                                         int amount_of_people,
+                                                         int picks_per_person,
+                                                         bool bigTestSet) const;
+
 
 private:
 
