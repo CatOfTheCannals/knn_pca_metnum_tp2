@@ -34,14 +34,14 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
         auto m_eigenvectors = std::get<0>(eigenvectors_and_eigenvalues);
         auto lambdas = std::get<1>(eigenvectors_and_eigenvalues);
 
-        auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
+        // auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
 
         // std::cout << M_eigenvectors.rows() << ", " << M_eigenvectors.cols() << std::endl;
         // std::cout << X.rows() << ", " << X.cols() << std::endl;
 
-        std::cout << "difference between U's:" << std::endl ;
+        //std::cout << "difference between U's:" << std::endl ;
         //std::cout << big_m_eigenvectors - M_eigenvectors << std::endl;
-        std::cout << M_eigenvectors << std::endl;
+        //std::cout << M_eigenvectors << std::endl;
 
         //std::cout << "BIG: " << big_M.multiply(big_m_eigenvectors) -big_m_eigenvectors.multiply(big_lambdas) << std::endl;
         //std::cout << std::endl << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl;
@@ -49,7 +49,7 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
 
         // std::cout << "lambdas:" << std::endl << lambdas << std::endl;
 
-        return make_tuple(M_eigenvectors, lambdas);
+        return make_tuple(m_eigenvectors, lambdas);
 }
 
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
