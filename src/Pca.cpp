@@ -28,7 +28,7 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     */
 
         // new covariance matrix peque
-        auto M = X.multiply(X.transpose());
+        auto M = X.transpose().multiply(X);
 
         auto eigenvectors_and_eigenvalues = svd(M, num_components, epsilon);
         auto m_eigenvectors = std::get<0>(eigenvectors_and_eigenvalues);

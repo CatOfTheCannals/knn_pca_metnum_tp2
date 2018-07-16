@@ -16,6 +16,21 @@ Los parámetros $k$ (cantidad de vecinos en \textit{kNN}) y $\alpha$ (dimensión
 La validación cruzada \textit{K-fold} consiste en particionar la base de entrenamiento en $K$ partes del mismo tamaño. Luego se realiza $K$ iteraciones, cada una de ellas reteniendo uno de los conjuntos para validación y utilizando los restantes $K - 1s$ para entrenamiento. Este método usualmente permite tomar las particiones sin cuidado alguno, pero en nuestro caso de uso tal cosa no es conveniente. Esto se debe a que en nuestra base de entrenamiento cada persona está representada por diez imágenes, con lo cual dividir las muestras de forma aleatoria puede desbalancear que tan representadas estan algunas personas en el training set. Esto puede significar que el algoritmo se entrena poco para algunas personas y mucho para otras. Yendo mas lejos, este desbalance en el train set siempre tiene su contraparte en el test set, impactando de forma negativa las métricas.
 Para resolver este problema, se propuso el uso de un k-fold que respete las proporciones de imágenes de cada persona. Como el test set siempre tiene que tener la misma cantidad de fotos para cada persona. Como nuestro dataset cuenta con cuarenta y un personas diferentes, la cantidad de rows del test set será un multiplo de ese número. Esto implica que k será multiplo de diez. Se realizó un shuffle de las imágenes y se eligieron los folds respetando las proporciones mencionadas.
 
+\subsection{Tiempo de ejecución Knn}
+
+Dado que el costo temporal de knn no depende del parámetro k, lo que nos interesa es entender el costo fijo por predicción. En un dataset de 205 imágenes reducidas, el costo promedio de clasificación de una imágen fue de 0.00042. Comparamos ese resultado con el costo promedio para la misma cantidad de imágenes de tamaño completo y el resultado fue 0.11738, varios órdenes de magnitud mayor. 
+
+\subsection{Tiempo de ejecución PCA+Knn}
+
+Para evaluar el costo temporal de las predicciones de Knn al utilizar PCA, es necesario tener en cuenta el costo de la transformación característica, que se realiza a cada imágen a predecir para poder compararla con las imágenes de entrenamiento transformadas gracias al PCA. Otro factor a tener en cuenta es que el alpha de PCA define la dimensión de las imágenes que compara el Knn, esto impacta directamente a la cantidad de operaciones necesarias y consecuentemente al tiempo de cómputo.
+
+\begin{figure}[H]
+	\begin{center}
+      \includegraphics[width=0.4\columnwidth]{imagenes/charuli-des/pca_knn_cuantitative_reduced.png}
+      \caption{Costo temporal de tc + predicción de knn}
+      \end{center}
+\end{figure}
+
 \subsection{Tiempo de ejecución PCA}
 
 Con el objetivo de entender el costo de calcular una matriz de covarianzas para una muestra X, probamos con diferentes cantidades de imagenes reducidas y con diferentes valores del alfa de PCA. 
@@ -52,6 +67,33 @@ Por último, cabe destacar que PCA en sí es un proceso costoso. Sin embargo, co
 Sin embargo, debe recordarse que el costo de PCA es elevado. Esto debe tenerse en cuenta junto con la precisión obtenida para sets de datos más pequeños, ya que podría no justificarse.
 
 \subsection{K de kNN}
+
+Utilizamos las imagenes de tamaño completo, sin transformaciones. Llamamos k a la constante que define cuantos vecinos se tienen en cuenta a la hora de decidir la categoría de la muestra a clasificar. Los valores probados para k fueron 1, 3, 8, 10, 15 y 25. Se observó consistentemente que todas las métricas decrecen a medida que se incrementa el valor de k. Siendo $k = 1$ el valor óptimo. 
+
+\begin{figure}[H]
+    \begin{center}
+      \includegraphics[width=0.8\columnwidth]{imagenes/charuli-des/k_vs_metricas.png}
+      \caption{Metricas para distintos valores de k}
+    \end{center}
+\end{figure}
+
+La diferencia en la calidad de las predicciones tambien puede observarse  visualizando matrices de confusión.
+
+\begin{figure}[H]
+    \begin{center}
+      \includegraphics[width=0.8\columnwidth]{imagenes/charuli-des/Confusion_matrix_for_k_1.png}
+      \caption{Metricas para distintos valores de k}
+    \end{center}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+      \includegraphics[width=0.8\columnwidth]{imagenes/charuli-des/Confusion_matrix_for_k_25.png}
+      \caption{Metricas para distintos valores de k}
+    \end{center}
+\end{figure}
+
+\subsection{K de kNN old}
 
 Para analizar el comportamiento al cambiar el K de kNN fijamos alpha de PCA en 2 valores 15 y 30. Corrimos experimentos para distintos estos K: 1, 2, 3, 4, 5, 7, 8, 8, 10, 15, 20, 30.
 

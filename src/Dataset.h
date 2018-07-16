@@ -32,6 +32,7 @@ public:
     Dataset(string trainFilePath, string trainFileName, string testFilePath, string testFileName) : Dataset(Dataset(trainFilePath, trainFileName)){
 
         ifstream f_test(testFilePath + testFileName);
+        std::cout << testFilePath + testFileName << std::endl;
         assert(f_test.is_open());
         string line, imagePath, personNumber;
         std::vector<string> imagePaths;
@@ -80,6 +81,8 @@ public:
     }
 
     Dataset(string filePath, string fileName) {
+
+        std::cout << filePath + fileName << std::endl;
         ifstream f_test(filePath + fileName);
         assert(f_test.is_open());
         string line, imagePath, personNumber;

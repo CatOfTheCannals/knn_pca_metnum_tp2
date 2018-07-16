@@ -41,7 +41,7 @@ protected:
     double epsilon = 0.0000001;
 };
 
-
+/*
 TEST_F (runTest, powerG){
     Matrix v = Matrix(3,1);
     double lambda;
@@ -54,7 +54,7 @@ TEST_F (runTest, powerG){
 
 TEST_F (runTest, svdTest){
 
-    auto sim = f + f.transpose();
+    auto sim = f * f.transpose();
 
     auto svdRes = svd(sim, 3, epsilon);
     Matrix autoVecs(std::get<0>(svdRes));
@@ -68,8 +68,33 @@ TEST_F (runTest, svdTest){
         ASSERT_TRUE(sim.multiply(eigenVec).isApproximate(eigenVec * lambdas(j,j), 0.00001));
     }
 }
+*/
+
+
+/*
+TEST_F (runTest, svdTest){
+    auto sim = f.multiply(f.transpose());
+
+    auto svdRes = svd(sim, 3, epsilon);
+    Matrix autoVecs(std::get<0>(svdRes));
+    Matrix lambdas(std::get<1>(svdRes));
+
+    std::cout << "lambdas x * x^t :" << std::endl;
+    std::cout << lambdas << std::endl;
+
+    auto simt = f.transpose().multiply(f);
+
+    auto svdRest = svd(sim, 3, epsilon);
+    Matrix autoVecst(std::get<0>(svdRes));
+    Matrix lambdast(std::get<1>(svdRes));
+
+    std::cout << "lambdas x^t * x :" << std::endl;
+    std::cout << lambdast << std::endl;
+
+}
+
 
 TEST_F (runTest, pca){
     std::cout << f << std::endl;
     std::cout << pca(f, 3, epsilon) << std::endl;
-}
+}*/

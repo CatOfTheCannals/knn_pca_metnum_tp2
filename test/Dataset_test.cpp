@@ -50,8 +50,8 @@ protected:
         littleMock = Dataset(g, l);
     }
 
-    Dataset reduced = Dataset("../../test/casos_test/", "testFullRed.in");
-    // Dataset big = Dataset("../../test/casos_test/", "testFullBig.in");
+    Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
+    Dataset big = Dataset("../../test/casos_test/", "testFullBig.in", "../../test/casos_test/", "testFullBig.in");
 
     Matrix l = Matrix(3,1);
     Matrix g = Matrix(3,3);
@@ -99,18 +99,16 @@ TEST_F (datasetTest, reducedKnn) {
     //reduced.splitTrainFromTest(0.3);
     auto predicted_labels = reduced.kNN_predict(10);
     auto avg = allMetricsWrapper(reduced.getTestLabels(), predicted_labels);
-    std::cout << "accuracy: " << std::get<0>(avg) << ", recall: " << std::get<1>(avg) << ", precision: " << std::get<2>(avg) << std::endl;
+    // std::cout << "accuracy: " << std::get<0>(avg) << ", recall: " << std::get<1>(avg) << ", precision: " << std::get<2>(avg) << std::endl;
 }
-*/
-/*
+
 TEST_F (datasetTest, reducedPca) {
-    reduced.trainPca(3, 0.0001);
-    std::cout << reduced.getPcaVecs() << std::endl;
-    std::cout << reduced.getPcaLambdas() << std::endl;
+    reduced.trainPca(15, 0.0001);
+    // std::cout << reduced.getPcaVecs() << std::endl;
+    // std::cout << reduced.getPcaLambdas() << std::endl;
 
 }
-*/
-/*
+
 TEST_F (datasetTest, bigPca) {
     //big.trainPca(15, 0.0001);
     std::cout << big.getPcaVecs() << std::endl;
@@ -124,12 +122,12 @@ TEST_F (datasetTest, reducedPcaKnn) {
     int k = 0;
     int amount_of_people = 41;
     int picks_per_person = 10;
-    auto imageFold = reduced.getEquitativeSamplingFold(reduced.getTrainImages(), k, amount_of_people, picks_per_person);
-    auto labelFold = reduced.getEquitativeSamplingFold(reduced.getTrainLabels(), k, amount_of_people, picks_per_person);
-
+    auto imageFold = reduced.getEquitativeSamplingFold(reduced.getTrainImages(), k, amount_of_people, picks_per_person, false);
+    auto labelFold = reduced.getEquitativeSamplingFold(reduced.getTrainLabels(), k, amount_of_people, picks_per_person, false);
     Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                         std::get<1>(imageFold), std::get<1>(labelFold));
     d.trainPca(10, 0.0001);
-    allMetricsWrapper(std::get<1>(labelFold),d.pca_kNN_predict(3, 0.0001));
+    auto the_predictions = d.pca_kNN_predict(3, 0.0001);
+    //allMetricsWrapper(std::get<1>(labelFold), std::get<1>(labelFold));
 
 }
