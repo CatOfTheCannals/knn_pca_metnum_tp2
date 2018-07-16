@@ -4,14 +4,15 @@ Este trabajo práctico tiene como objetivo el desarrollo y estudio de una herram
 
 Las imágenes de las que disponemos corresponden a cuarenta y un personas, habiendo diez imágenes diferentes por persona.
 
+Si la imagen que entra como parámetro, es de una persona que no pertenece al grupo con que se entrenó al algorítmo, entonces éste indicará a cual de los cuarenta y un se parece más.
+
 \subsection{Evaluación}
 
-Para el estudio de esta herramienta es necesaria la evaluación de los métodos y la correcta elección de sus parámetros. Una forma de evaluación es la estimación de la correctitud de la clasificación, para lo cual es necesita conocer previamente a qué dígito corresponde cada imagen. La forma de realizar esto es particionar la base de entrenamiento en dos, utilizando una parte de ella en forma completa para el entrenamiento y la restante como test, pudiendo así corroborar la clasificación realizada, al contar con el etiquetado del entrenamiento.
+Para el estudio de esta herramienta es necesaria la evaluación de los métodos y la correcta elección de sus parámetros. Una forma de evaluación es la estimación de la correctitud de la clasificación, para lo cual es necesita conocer previamente a qué persona corresponde cada imagen. La forma de realizar esto es particionar la base de entrenamiento en dos, utilizando una parte de ella en forma completa para el entrenamiento y la restante como test, pudiendo así corroborar la clasificación realizada, al contar con el etiquetado del entrenamiento.
 
-Sin embargo, realizar toda la experimentación sobre una única partición de la base podría resultar en una incorrecta estimación de parámetros, como por ejemplo el conocido caso de overfitting. Por lo tanto, se implementó la técnica de \textit{K-fold cross validation} que resulta estadísticamente más robusta.
+Sin embargo, realizar toda la experimentación sobre una única partición de la base podría resultar en una incorrecta estimación de parámetros, por ejemplo, podría dar overfitting. Por lo tanto, se implementó la técnica de \textit{K-fold cross validation} que resulta estadísticamente más robusta.
 
 El resultado del algoritmo final fue medido con distintas métricas (Accuracy, Curvas de precisión/recall).
 
 % ____________A CORREGIR_______________
-% 1 - Tiempos gramaticales
-% 2 - Introduccion Teorida? (Lo puso Nestor)
+
