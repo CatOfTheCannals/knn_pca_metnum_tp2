@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(tp2_metodos CXX)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -Wall -Wno-long-long -pedantic -Wno-variadic-macros")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wno-long-long -pedantic -Wno-variadic-macros")
 
 set(SOURCE_FILES
         src/Matrix.cpp
@@ -10,7 +10,10 @@ set(SOURCE_FILES
         src/Dataset.cpp
         src/ppmloader.cpp
 		src/kNN.cpp
-		src/Metrics.cpp data/pca_cuantitative.cpp)
+		src/Metrics.cpp
+		data/pca_cuantitative.cpp
+		src/reader.cpp
+		src/vector_builder.cpp)
 
 add_library(metodos-tp2-base ${SOURCE_FILES})
 

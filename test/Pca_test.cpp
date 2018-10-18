@@ -41,7 +41,7 @@ protected:
     double epsilon = 0.0000001;
 };
 
-/*
+
 TEST_F (runTest, powerG){
     Matrix v = Matrix(3,1);
     double lambda;
@@ -49,10 +49,10 @@ TEST_F (runTest, powerG){
     std::tie(v, lambda) = power_method(x_0, g, epsilon);
 
     epsilon *= 10; // la precision queda asi por algun motivo
-    ASSERT_TRUE(g.multiply(v).isApproximate(v * lambda, epsilon)) ;
+    ASSERT_TRUE((g*v).isApproximate(v * lambda, epsilon)) ;
 }
 
-TEST_F (runTest, svdTest){
+TEST_F (runTest, svdTest1){
 
     auto sim = f * f.transpose();
 
@@ -65,15 +65,13 @@ TEST_F (runTest, svdTest){
         for(int i = 0; i < autoVecs.rows(); i++){
             eigenVec.setIndex(i,0,autoVecs(i,j));
         }
-        ASSERT_TRUE(sim.multiply(eigenVec).isApproximate(eigenVec * lambdas(j,j), 0.00001));
+        ASSERT_TRUE((sim*eigenVec).isApproximate(eigenVec * lambdas(j,j), 0.00001));
     }
+
 }
-*/
 
-
-/*
-TEST_F (runTest, svdTest){
-    auto sim = f.multiply(f.transpose());
+TEST_F (runTest, svdTest2){
+    auto sim = f*f.transpose();
 
     auto svdRes = svd(sim, 3, epsilon);
     Matrix autoVecs(std::get<0>(svdRes));
@@ -82,7 +80,7 @@ TEST_F (runTest, svdTest){
     std::cout << "lambdas x * x^t :" << std::endl;
     std::cout << lambdas << std::endl;
 
-    auto simt = f.transpose().multiply(f);
+    auto simt = f.transpose()*f;
 
     auto svdRest = svd(sim, 3, epsilon);
     Matrix autoVecst(std::get<0>(svdRes));
@@ -93,8 +91,3 @@ TEST_F (runTest, svdTest){
 
 }
 
-
-TEST_F (runTest, pca){
-    std::cout << f << std::endl;
-    std::cout << pca(f, 3, epsilon) << std::endl;
-}*/

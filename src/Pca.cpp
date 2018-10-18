@@ -28,7 +28,7 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     */
 
         // new covariance matrix peque
-        auto M = X.transpose().multiply(X);
+        auto M = X.transpose()*X;
 
         auto eigenvectors_and_eigenvalues = svd(M, num_components, epsilon);
         auto m_eigenvectors = std::get<0>(eigenvectors_and_eigenvalues);
@@ -88,7 +88,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         }
         lambdas.setIndex(i, i, eigen_value);
 
-        auto external = eigen_vector.multiply(eigen_vector.transpose());
+        auto external = eigen_vector*eigen_vector.transpose();
 
         // cout << "pre-deflation X: " << endl << X << endl;
         // cout << "external * eigen_value: " << endl << external * eigen_value<< endl;
@@ -113,12 +113,12 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
 
     double prev_norm = 0;
 
-    auto Ax = A.multiply(x);
+    auto Ax = A*x;
 
     for(int i = 0; i < max_iters; i++) {
         auto Ax_norm = Ax.norm();
         x = Ax / Ax_norm;
-        Ax = A.multiply(x);
+        Ax = A*x;
         if( fabs(Ax_norm) < epsilon ) {
             break;
         }
@@ -126,7 +126,7 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
 
     }
 
-    auto lambda = x.transpose().multiply(Ax);
+    auto lambda = x.transpose()*Ax;
     return make_tuple(x, lambda(0));
 }
 

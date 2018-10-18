@@ -77,6 +77,22 @@ Matrix Matrix::operator*(const double& scalar) const{
     return res;
 }
 
+Matrix Matrix::operator*(const Matrix& b) const{
+    assert(this->_cols == b.rows());
+    Matrix result = Matrix(this->_rows, b.cols());
+    for (int i = 0; i < this->rows(); ++i) {
+        for (int j = 0; j < b.cols(); ++j) {
+            double temp = 0;
+            for (int k = 0; k < this->_cols; ++k) {
+                temp = temp + (*this)(i, k) * b(k, j);
+            }
+            result.setIndex(i, j, temp);
+            temp = 0;
+        }
+    }
+    return result;
+}
+
 Matrix Matrix::operator/(const double& scalar) const{
     Matrix res = (*this);
     for(int i=0; i < res.rows(); ++i){
@@ -166,21 +182,6 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ) const{
     return res;
 }
 
-Matrix Matrix::multiply(const Matrix& b) const{
-    assert(this->_cols == b.rows());
-    Matrix result = Matrix(this->_rows, b.cols());
-    for (int i = 0; i < this->rows(); ++i) {
-        for (int j = 0; j < b.cols(); ++j) {
-            double temp = 0;
-            for (int k = 0; k < this->_cols; ++k) {
-                temp = temp + (*this)(i, k) * b(k, j);
-            }
-            result.setIndex(i, j, temp);
-            temp = 0;
-        }
-    }
-    return result;
-}
 
 Matrix Matrix::identity(int n){
     assert(0 < n);

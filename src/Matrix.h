@@ -43,6 +43,7 @@ public:
     Matrix operator+(const Matrix& matrix) const;
     Matrix operator-(const Matrix& matrix) const;
     Matrix operator*(const double& scalar) const; //scalar multiplication
+    Matrix operator*(const Matrix& b) const;
     Matrix operator/(const double& scalar) const; //scalar division
     Matrix transpose() const;
     void swapRows(int i1, int i2);
@@ -51,7 +52,7 @@ public:
     std::tuple<int, int> shape() const;
     bool operator==(const Matrix& other) const;
     Matrix subMatrix(int i1, int i2, int j1, int j2) const;
-    Matrix multiply(const Matrix& b) const;
+
     static Matrix identity(int n);
     static Matrix random(int height, int width);
     Matrix abs();

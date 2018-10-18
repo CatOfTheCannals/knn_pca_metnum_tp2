@@ -138,7 +138,7 @@ TEST_F (mockMatrices, subMatrixRows){ // FIXME: este test solo checkea que la fu
 }
 
 TEST_F (mockMatrices, matrixMultipOperator){
-    Matrix r = e.multiply(m);
+    Matrix r = e*m;
     ASSERT_EQ(r.rows(),e.rows()); //TODO: check if the test ends with this assertion
     ASSERT_EQ(r.cols(),m.cols());
     //ASSERT_EQ(9*6+5+6,r(0,0)); //TODO:check if this possition is calculated correctly.
@@ -147,7 +147,7 @@ TEST_F (mockMatrices, matrixMultipOperator){
     int rows, cols;
     std::tie(rows, cols) = m.shape();
     Matrix id = Matrix::identity(rows);
-    ASSERT_EQ(m, m.multiply(id));
+    ASSERT_EQ(m, m*id);
 }
 
 TEST_F (mockMatrices, maxCoeff){

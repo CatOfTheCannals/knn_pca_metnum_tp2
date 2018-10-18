@@ -14,6 +14,7 @@
 #include "Metrics.h"
 
 #include "ppmloader.h"
+#include "vector_builder.h"
 
 class Dataset {
 public:
