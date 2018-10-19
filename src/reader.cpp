@@ -8,7 +8,7 @@ void read_entries(TokenizedEntriesMap & train_entries, TokenizedEntriesMap & tes
     std::cerr << "Levantando dataset..." << '\r';
     std::string line;
     std::ifstream infile;
-    infile.open ("../datos/imdb_tokenized.txt");
+    infile.open ("../imdb/imdb_tokenized.csv");
     if (infile.fail()) throw std::runtime_error("Ocurrió un error al abrir el archivo.");
 
     while (std::getline(infile,line)) {
@@ -35,15 +35,12 @@ void read_entries(TokenizedEntriesMap & train_entries, TokenizedEntriesMap & tes
 }
 
 FrecuencyVocabularyMap read_vocabulary() {
-    /**
-     *  Parsea el archivo de vocabulario
-     *  El archivo en cuestión no debe tener una línea vacía al final
-     **/
+
     std::cerr << "Levantando vocabulario" << '\r';
     FrecuencyVocabularyMap vocabulary;
     std::string line;
     std::ifstream infile;
-    infile.open ("../datos/vocab.csv");
+    infile.open ("../imdb/vocab.csv");
     if (infile.fail()) throw std::runtime_error("Ocurrió un error al abrir el archivo.");
 
     std::getline(infile,line);  // Sacamos el header del csv

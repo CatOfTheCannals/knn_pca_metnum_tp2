@@ -1,13 +1,12 @@
 #include "vector_builder.h"
 
-void build_vectorized_datasets(
-        VectorizedEntriesMap & train_vectorized_entries,
-        VectorizedEntriesMap & test_vectorized_entries,
+std::tuple<std::tuple<Matrix, Matrix>, std::tuple<Matrix, Matrix>>  build_vectorized_datasets(
         const std::function<bool(int token, const FrecuencyVocabularyMap & vocabulary)> & filter_out) {
     /**
      * Construye las entradas vectorizadas, filtrándolas según `filter_out`.
      * Si alguna review quedara vacía luego de filtrar esta es eliminada
      **/
+
     TokenizedEntriesMap train_entries;
     TokenizedEntriesMap test_entries;
     read_entries(train_entries, test_entries);
@@ -53,24 +52,31 @@ void build_vectorized_datasets(
 
     auto translate_tokenized_entries = [&tokens_to_indexes, &N] (const TokenizedEntriesMap & entries) {
         std::cerr << "Traduciendo tokens a vectores..." << '\r';
-        VectorizedEntriesMap vectorized_entries;
-        for (auto entry = entries.begin(); entry != entries.end(); entry++) {
+        Matrix vectorized_entries(entries.size(),N);
+        Matrix labels(entries.size(),1);
+
+        auto entry = entries.begin();
+        for (int i = 0; i < entries.size(); i++) {
             const int review_id = entry->first;
             const std::vector<int> & tokens = entry->second.tokens;
-            VectorizedEntry vectorized_entry;
-            vectorized_entries[review_id].is_positive = entry->second.is_positive;
-            vectorized_entries[review_id].bag_of_words = std::vector<double>(N, 0);
+
+            labels.setIndex(i, 0, entry->second.is_positive);
 
             const double step = 1 / (double)tokens.size();
             for (const int token : tokens) {
-                vectorized_entries[review_id].bag_of_words[tokens_to_indexes[token]] += step;
+                int j = tokens_to_indexes[token];
+                auto value = vectorized_entries(i,j);
+                vectorized_entries.setIndex(i,j, value + step);
             }
+        entry++;
         }
 
         std::cerr << "                                " << '\r';
-        return vectorized_entries;
+        return std::make_tuple(vectorized_entries, labels);
     };
-    train_vectorized_entries = translate_tokenized_entries(train_entries);
-    test_vectorized_entries = translate_tokenized_entries(test_entries);
+    auto train_vectorized_entries = translate_tokenized_entries(train_entries);
+    auto test_vectorized_entries = translate_tokenized_entries(test_entries);
+
+    return std::make_tuple(train_vectorized_entries, test_vectorized_entries );
 }
 

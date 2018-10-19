@@ -30,6 +30,8 @@ public:
         Dataset(filePath, trainFileName, filePath, testFileName);
     }
 
+
+
     Dataset(string trainFilePath, string trainFileName, string testFilePath, string testFileName) : Dataset(Dataset(trainFilePath, trainFileName)){
 
         ifstream f_test(testFilePath + testFileName);
@@ -154,6 +156,8 @@ public:
                                                          int amount_of_people,
                                                          int picks_per_person,
                                                          bool bigTestSet) const;
+
+    static Dataset loadImdbVectorizedReviews();
 
 
 private:
