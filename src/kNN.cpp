@@ -48,35 +48,26 @@ bool orderedByIndex(const tuple<int,double> a, const tuple<int,double> b) {//use
     return std::get<0>(a) < std::get<0>(b);
 }
 
-int kNN(const Matrix& data, const Matrix& labels, const Matrix& image, int k){
+int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int k){
     assert(data.rows() >= k && k > 0); //the number of neighbours must be equal to or less than the number of pictures on the dataset
     assert(data.rows() == labels.rows());
     assert(data.rows() > 0);
-    Matrix distances = distance(data, image);
-    vector<tuple<int, double>> personDistances; /*first element of tuple identifies the person on data image, second is the distance
-    to the imput image. */
+    
+    int differentLabels = 2;
+    Matrix distances = distance(data, observation); //vector de distancias 
+    vector<tuple<int, double>> personDistances; /*first element of tuple identifies the person on data observation, second is the distance
+    to the imput observation. */
     for (int i = 0; i < distances.rows(); ++i) { /* sets personDistances to be as needed (a vector of tuples with the id of the person
-        and the distance of his picture to the imput image) */
+        and the distance of his picture to the imput observation) */
         personDistances.push_back(std::make_tuple(labels(i), distances(i)));
     }
-    sort(personDistances.begin(), personDistances.end(), orderedByIndex); //Sorts personDistances to count how many different persons are on the dataset.
-    int numberOfPeople = 1;
-    if (personDistances.size() > 1) { //counts how many people are on the dataset that is been used.
-        for (int i = 0; i < (int)(personDistances.size()) - 1; ++i) {
-            if (std::get<0>(personDistances[i]) != std::get<0>(personDistances[i + 1])){
-                numberOfPeople++;
-            }
-        }
-    }
+    
     sort(personDistances.begin(), personDistances.end(), shortestDistance); //Sorts personDistances from the shortest distance to the largest.
-    std::vector<int> repetitions(numberOfPeople);/*this vector is used to count the number on the k nearest neighbours.
-    Our data set has 41 persons, so we will count as max 41 repetitions.*/
-    for (int i = 0; i < 40; ++i) {
-        repetitions.push_back(0);
-    }
+    
+    std::vector<int> repetitions = vector<int>(differentLabels, 0);
+    
     for (int i = 0; i < k; ++i) {
-        repetitions.at(get<0>(personDistances[i]) - 1) = repetitions.at(get<0>(personDistances[i]) - 1) +1; /*ads one to the number of repetitions of the person
-// * on the ith nearest position */// substraction of one is due to repetitions index from 0
+        repetitions.at(get<0>(personDistances[i]))++; 
     }
     return mostAppears(repetitions); //returns the person that appears the most on the kNN.
 }
