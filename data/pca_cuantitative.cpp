@@ -10,7 +10,7 @@ void pca_cuantitative() {
     file << "rows" << "," << "cols" << "," << "alpha" << "," << "time" << std::endl;
 
     Dataset reduced = Dataset("../../test/casos_test/", "testRed.in");
-   // BIG BUG
+    // BIG BUG
     Matrix images = reduced.getTrainImages().subMatrix(0, images.rows() - 1, 0, 10);
 
     for(int rows = 2; rows < images.rows(); rows += images.rows() / 10){
