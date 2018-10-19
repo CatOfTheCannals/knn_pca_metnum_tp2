@@ -3,6 +3,7 @@
 
 Matrix distance(const Matrix& data, const Matrix& image) { /* returns a column Matrix with the distance
  of every image on data with the one that enters as a parameter //The image is taken as a row vector*/
+    cout << image.cols() << " " << data.cols() << endl ; 
     assert(data.cols() == image.cols());
     Matrix res(data.rows(),1);
     Matrix aux = Matrix(data.rows(),image.cols());
@@ -47,16 +48,16 @@ bool orderedByIndex(const tuple<int,double> a, const tuple<int,double> b) {//use
     return std::get<0>(a) < std::get<0>(b);
 }
 
-int kNN(const Matrix& data, const Matrix& index, const Matrix& image, int k){
-    assert(data.rows() >= k && k > 0); //the number of neighbours must be equal or less to the number of pictures on the dataset
-    assert(data.rows() == index.rows());
+int kNN(const Matrix& data, const Matrix& labels, const Matrix& image, int k){
+    assert(data.rows() >= k && k > 0); //the number of neighbours must be equal to or less than the number of pictures on the dataset
+    assert(data.rows() == labels.rows());
     assert(data.rows() > 0);
     Matrix distances = distance(data, image);
     vector<tuple<int, double>> personDistances; /*first element of tuple identifies the person on data image, second is the distance
     to the imput image. */
     for (int i = 0; i < distances.rows(); ++i) { /* sets personDistances to be as needed (a vector of tuples with the id of the person
         and the distance of his picture to the imput image) */
-        personDistances.push_back(std::make_tuple(index(i), distances(i)));
+        personDistances.push_back(std::make_tuple(labels(i), distances(i)));
     }
     sort(personDistances.begin(), personDistances.end(), orderedByIndex); //Sorts personDistances to count how many different persons are on the dataset.
     int numberOfPeople = 1;

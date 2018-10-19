@@ -1,5 +1,5 @@
 #ifndef __PPMPLOADER_H__
-#define __PPMLOADER_H__
+#define __PPMPLOADER_H__
 
 typedef unsigned char uchar;
 
@@ -20,4 +20,4 @@ unsigned int get_pixel_average(uchar* data, int i, int j, int height, int width)
 bool LoadPPMFile(uchar** data, int *width, int *height, PPM_LOADER_PIXEL_TYPE* pt, const char *filename);
 bool SavePPMFile(const char *filename, const void *src, int width, int height, PPM_LOADER_PIXEL_TYPE pt, const char* comments = NULL);
 
-#endif //__PPMLOADER_H__
+#endif //__PPMPLOADER_H__
