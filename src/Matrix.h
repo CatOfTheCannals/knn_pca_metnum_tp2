@@ -8,6 +8,7 @@
 #include <tuple>
 #include <math.h>
 
+
 using namespace std;
 
 class Matrix {
@@ -54,8 +55,10 @@ public:
     Matrix subMatrix(int i1, int i2, int j1, int j2) const;
 
     static Matrix identity(int n);
+    static Matrix random(int n);
     static Matrix random(int height, int width);
     Matrix abs();
+    static double mse(const Matrix& v1, const Matrix& v2);
     std::tuple<int, int> maxCoeff();
     friend std::ostream& operator<<(std::ostream& o, const Matrix& a);
     bool isApproximate(const Matrix b, double epsilon) const;

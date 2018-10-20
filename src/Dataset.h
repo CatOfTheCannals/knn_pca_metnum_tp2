@@ -16,9 +16,7 @@
 #include "ppmloader.h"
 #include "vector_builder.h"
 
-#define GET_TIME std::chrono::high_resolution_clock::now()
-#define GET_TIME_DELTA(begin, end) \
-     std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count()
+
 
 class Dataset {
 public:

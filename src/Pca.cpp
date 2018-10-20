@@ -135,7 +135,7 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
         auto Ax_norm = Ax.norm();
         x = Ax / Ax_norm;
         Ax = A*x;
-        if( fabs(Ax_norm) < epsilon ) {
+        if( fabs(Ax_norm - prev_norm) < epsilon ) {
             break;
         }
         prev_norm = Ax_norm;

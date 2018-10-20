@@ -192,6 +192,9 @@ Matrix Matrix::identity(int n){
     return res;
 }
 
+Matrix Matrix::random(int n){
+    return Matrix::random(n, n);
+}
 Matrix Matrix::random(int height, int width){
     Matrix random_matrix(height, width);
     for(int i = 0; i < random_matrix.rows(); i++){
@@ -234,6 +237,19 @@ Matrix Matrix::abs() {
     }
 
     return res;
+}
+
+double Matrix::mse(const Matrix& v1, const Matrix& v2) {
+    assert(v1.rows() == 1 || v1.cols() == 1);
+    assert(v2.rows() == 1 || v2.cols() == 1);
+    assert(v1.rows() == v2.rows()|| v1.cols() == v2.cols());
+
+    int n = std::max(v1.rows(), v1.rows());
+    double sum = 0;
+    for(int i = 1; i < n; i++) {
+        sum += pow(v1(i) - v2(i), 2);
+    }
+    return sum / n;
 }
 
 std::ostream& operator<<(std::ostream& o, const Matrix& a)
