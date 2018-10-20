@@ -39,6 +39,8 @@ public:
     int size() const;
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
+    Matrix mt_times_m() const;
+    void show_matrix();
     void setIndex(int i, int j, double value); //fixme: completaro
     void operator=(const Matrix& matrix);
     Matrix operator+(const Matrix& matrix) const;

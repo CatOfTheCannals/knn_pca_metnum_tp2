@@ -22,19 +22,12 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     std::cout << "normalize matrix time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
 
-        /*
-        // find the covariance matrix
-        auto big_M = X.transpose().multiply(X);
-
-        auto big_eigenvectors_and_eigenvalues = svd(big_M, num_components, epsilon);
-        auto big_m_eigenvectors = std::get<0>(big_eigenvectors_and_eigenvalues);
-        auto big_lambdas = std::get<1>(big_eigenvectors_and_eigenvalues);
-    */
+        
 
         // new covariance matrix peque
 
         begin = GET_TIME;
-        auto M = X.transpose()*X;
+        auto M = X.mt_times_m();
         end = GET_TIME;
         std::cout << "X^t*X time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 

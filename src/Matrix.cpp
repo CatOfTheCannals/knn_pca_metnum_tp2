@@ -93,6 +93,32 @@ Matrix Matrix::operator*(const Matrix& b) const{
     return result;
 }
 
+void Matrix::show_matrix(){
+    cout << endl;
+    for(int i = 0 ; i < _cols ; i++){
+		for(int j = 0 ; j < _rows ; j++){
+        cout << (*this)(i,j) << " ";
+		}
+		cout << endl;
+    }
+}
+
+Matrix Matrix::mt_times_m() const {
+	//X.transpose()*X
+    Matrix result = Matrix(this->_rows, this->_rows);
+    for (int i = 0; i < this->_cols; i++) {
+        for (int j = 0; j < this->_cols; j++) {
+            double temp = 0;
+            for (int k = 0; k < this->_rows; k++) {
+                temp += (*this)(k, i) * (*this)(k, j);
+            }
+            result.setIndex(i, j, temp);
+            temp = 0;
+        }
+    }
+    return result;
+}
+
 Matrix Matrix::operator/(const double& scalar) const{
     Matrix res = (*this);
     for(int i=0; i < res.rows(); ++i){
