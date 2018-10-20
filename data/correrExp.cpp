@@ -18,16 +18,16 @@
 int main(int argc, char** argv){
 
     Dataset d = Dataset::loadImdbVectorizedReviews();
-    int method = 0;
+    int method = 1;
     Matrix predictions;
     if(method == 1) {
-        predictions = d.pca_kNN_predict(1, 25);
+        d.trainPca(25, 0.0001);
+        predictions = d.pca_kNN_predict(1);
         std::cout << "k: 1, alpha: 25" << std::endl;
     } else {
     	std::cout << "entrando" << std::endl;
         predictions = d.kNN_predict(1);
-
-        std::cout << "k: 1" << std::endl;
+        std::cout << "predict done" << std::endl;
     }
 
     allMetricsWrapper(d.getTestLabels(), predictions);

@@ -113,7 +113,7 @@ TEST_F (datasetTest, reducedPcaKnn) {
     Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                         std::get<1>(imageFold), std::get<1>(labelFold));
     d.trainPca(10, 0.0001);
-    auto the_predictions = d.pca_kNN_predict(3, 0.0001);
+    auto the_predictions = d.pca_kNN_predict(3);
     //allMetricsWrapper(std::get<1>(labelFold), std::get<1>(labelFold));
 
 }*/

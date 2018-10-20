@@ -9,7 +9,7 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     for(int i = 0; i < A.rows(); i++){
         mean = mean + (X.getRow(i) / X.rows());
     }
-
+    auto begin = GET_TIME;
     // subtract mean row to every row: center them
     for(int i = 0; i < X.rows(); i++){
         auto centered_row = X.getRow(i) - mean;
@@ -18,6 +18,10 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
             X.setIndex(i,j, centered_row(j));
         }
     }
+    auto end = GET_TIME;
+    std::cout << "normalize matrix time: " <<GET_TIME_DELTA(begin, end) << std::endl;
+
+
         /*
         // find the covariance matrix
         auto big_M = X.transpose().multiply(X);
@@ -28,11 +32,14 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     */
 
         // new covariance matrix peque
-        auto M = X.transpose()*X;
 
-        auto eigenvectors_and_eigenvalues = svd(M, num_components, epsilon);
-        auto m_eigenvectors = std::get<0>(eigenvectors_and_eigenvalues);
-        auto lambdas = std::get<1>(eigenvectors_and_eigenvalues);
+        begin = GET_TIME;
+        auto M = X.transpose()*X;
+        end = GET_TIME;
+        std::cout << "X^t*X time: " <<GET_TIME_DELTA(begin, end) << std::endl;
+
+
+        return svd(M, num_components, epsilon);
 
         // auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
 
@@ -49,7 +56,7 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
 
         // std::cout << "lambdas:" << std::endl << lambdas << std::endl;
 
-        return make_tuple(m_eigenvectors, lambdas);
+        //return make_tuple(m_eigenvectors, lambdas);
 }
 
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
@@ -74,6 +81,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         tie(eigen_vector, eigen_value) =
                 power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
         auto end = GET_TIME;
+        std::cout << "power method time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
         // std::cout << "time between iterations: " << GET_TIME_DELTA(begin, end) << std::endl;
         // cout << "eigen_vector: " << endl << eigen_vector << endl;
@@ -88,11 +96,19 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         }
         lambdas.setIndex(i, i, eigen_value);
 
+        begin = GET_TIME;
         auto external = eigen_vector*eigen_vector.transpose();
+        end = GET_TIME;
+        std::cout << "externalt product ime: " <<GET_TIME_DELTA(begin, end) << std::endl;
+
 
         // cout << "pre-deflation X: " << endl << X << endl;
         // cout << "external * eigen_value: " << endl << external * eigen_value<< endl;
+        begin = GET_TIME;
         X = X - (external * eigen_value );
+        end = GET_TIME;
+        std::cout << "deflation step time: " <<GET_TIME_DELTA(begin, end) << std::endl;
+
         // cout << "pos-deflation X: " << endl << X << endl;
 
     }

@@ -11,6 +11,10 @@
 
 int main(int argc, char** argv){
 
+    std::string train_path(".");
+    std::string test_path(".");
+
+
     Dataset::loadImdbVectorizedReviews();
 
 

@@ -58,7 +58,7 @@ void Dataset::trainPca(int alpha, double epsilon) {
 
 }
 
-Matrix Dataset::pca_kNN_predict(int k, double epsilon) const {
+Matrix Dataset::pca_kNN_predict(int k) const {
 
     Matrix testLabels = Matrix(_testImages.rows(), 1);
     // std::cout << "rows " << _testImages.rows() << std::endl;
@@ -79,6 +79,7 @@ Matrix Dataset::pca_kNN_predict(int k, double epsilon) const {
 Matrix Dataset::kNN_predict(int k) const {
     Matrix testLabels = Matrix(_testImages.rows(), 1);
     for(int i = 0; i < _testImages.rows(); i++) {
+        std::cout << "call knn for row: " << i << std::endl;
         int ith_label = kNN(_trainImages, _trainLabels, _testImages.getRow(i), k);
         testLabels.setIndex(i ,0 , ith_label);
     }
@@ -129,7 +130,7 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSe
         std::cout << "train_pca" << std::endl;
         d.trainPca(alpha, epsilon);
         scores_per_fold.push_back(allMetricsWrapper(std::get<1>(labelFold),
-                                                    d.pca_kNN_predict(neighbours, epsilon)));
+                                                    d.pca_kNN_predict(neighbours)));
     }
 
     return scores_per_fold;

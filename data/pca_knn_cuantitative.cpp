@@ -24,7 +24,7 @@ void pca_knn_cuantitative() {
             for (int k = 1; k < rows; k++) {
                 std::cout << std::endl << "k: " << k << std::endl;
                 auto begin = GET_TIME;
-                d.pca_kNN_predict(k, epsilon);
+                d.pca_kNN_predict(k);
                 auto end = GET_TIME;
                 auto predict_time = GET_TIME_DELTA(begin, end);
 
