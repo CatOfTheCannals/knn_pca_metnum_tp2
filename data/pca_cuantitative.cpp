@@ -14,6 +14,7 @@ void pca_cuantitative() {
     Matrix features = Matrix::random(50);
 
     for(int rows = 2; rows < features.rows(); rows += features.rows() / 10){
+        std::cout << "Benchmark pca with %" << (100 * rows) / (double)features.rows() << " of train set." << std::endl;
         for(int alpha = 1; alpha < features.cols(); alpha += features.cols() / 10){
 
             Matrix features_sub_sample = features.subMatrix(0, rows, 0, features.cols() - 1);
