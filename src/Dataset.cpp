@@ -204,9 +204,15 @@ Dataset Dataset::loadImdbVectorizedReviews() {
     auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(filter_out);
     auto train_vectorized_matrix_and_label = std::get<0>(train_and_test_vectorized_matrices_and_labels);
     auto test_vectorized_matrix_and_label = std::get<1>(train_and_test_vectorized_matrices_and_labels);
+    
+    auto train_vector_matrix = std::get<0>(train_vectorized_matrix_and_label);
+    auto test_vector_matrix = std::get<0>(test_vectorized_matrix_and_label);
 
-    return Dataset(std::get<0>(train_vectorized_matrix_and_label), std::get<1>(train_vectorized_matrix_and_label),
-                        std::get<0>(test_vectorized_matrix_and_label), std::get<1>(test_vectorized_matrix_and_label));
+    auto train_vector_label = std::get<1>(train_vectorized_matrix_and_label);
+    auto test_vector_label = std::get<1>(test_vectorized_matrix_and_label);
+
+    return Dataset(train_vector_matrix, train_vector_label,
+                   test_vector_matrix, test_vector_label);
 
 
 }
