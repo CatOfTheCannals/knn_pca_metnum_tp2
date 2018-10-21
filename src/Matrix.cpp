@@ -119,7 +119,6 @@ Matrix Matrix::mt_times_m() const {
     	for (int k = 0; k < this->_rows; k++) {
                 i_column[k] = (*this)(k, i);
         }
-
     	
         for (int j = 0; j < this->_cols; j++) {
 
