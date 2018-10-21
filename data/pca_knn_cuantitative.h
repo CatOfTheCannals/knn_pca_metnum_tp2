@@ -13,5 +13,6 @@
 #include "../src/Dataset.h"
 
 void pca_knn_cuantitative();
+void pca_knn_qualitative();
 
 #endif //TP2_METODOS_PCA_KNN_CUANTITATIVE_H
