@@ -1,11 +1,11 @@
 #include "Matrix.h"
 
 int Matrix::rows() const{
-        return _rows;
+    return _rows;
 }
 
 int Matrix::cols() const {
-        return _cols;
+    return _cols;
 }
 
 int Matrix::size() const {
@@ -81,8 +81,6 @@ Matrix Matrix::operator*(const Matrix& b) const{
     assert(this->_cols == b.rows());
     Matrix result = Matrix(this->_rows, b.cols());
     for (int i = 0; i < this->rows(); ++i) {
-    	auto begin = GET_TIME;
-    	cout << "i: "<< i << " out of " << this->_rows << endl;
         for (int j = 0; j < b.cols(); ++j) {
             double temp = 0;
             for (int k = 0; k < this->_cols; ++k) {
@@ -92,8 +90,6 @@ Matrix Matrix::operator*(const Matrix& b) const{
             temp = 0;
         }
 
-        auto end = GET_TIME;
-        cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;
     }
     return result;
 }
@@ -101,73 +97,67 @@ Matrix Matrix::operator*(const Matrix& b) const{
 void Matrix::show_matrix(){
     cout << endl;
     for(int i = 0 ; i < _cols ; i++){
-		for(int j = 0 ; j < _rows ; j++){
-        cout << (*this)(i,j) << " ";
-		}
-		cout << endl;
+        for(int j = 0 ; j < _rows ; j++){
+            cout << (*this)(i,j) << " ";
+        }
+        cout << endl;
     }
 }
 
 Matrix Matrix::mt_times_m() const {
-	//X.transpose()*X
+    //X.transpose()*X
 
     Matrix result = Matrix(this->_cols, this->_cols);
     int index = 0;
     for (int i = 0; i < this->_cols; i++) {
-    	auto begin = GET_TIME;
-    	double* i_column = new double[this->_rows];
-    	for (int k = 0; k < this->_rows; k++) {
-                i_column[k] = (*this)(k, i);
+        double* i_column = new double[this->_rows];
+        for (int k = 0; k < this->_rows; k++) {
+            i_column[k] = (*this)(k, i);
         }
 
-    	cout << i << " out of " << this->_cols << endl;
         for (int j = 0; j < this->_cols; j++) {
 
             double temp = 0;
             //actual multiplication
-        	for (int k = 0; k < this->_rows; k++) {
-        		temp += i_column[k] * (*this)(k, j);
-        	}
-            
+            for (int k = 0; k < this->_rows; k++) {
+                temp += i_column[k] * (*this)(k, j);
+            }
+
             result._matrix[index] = temp;
             temp = 0;
             index++;
         }
         delete i_column;
-        auto end = GET_TIME;
-        cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;
     }
     return result;
 }
 
 Matrix Matrix::mt_times_m_cache() const {
-	//X.transpose()*X
+    //X.transpose()*X
 
     Matrix result = Matrix(this->_cols, this->_cols);
     for (int i = 0; i < this->_cols; i++) {
-    	auto begin = GET_TIME;
-    	double* i_column = new double[this->_rows];
-    	
-    	for (int k = 0; k < this->_rows; k++) {
-                i_column[k] = (*this)(k, i);
+        double* i_column = new double[this->_rows];
+
+        for (int k = 0; k < this->_rows; k++) {
+            i_column[k] = (*this)(k, i);
         }
 
-    	cout << i << " out of " << this->_cols << endl;
         for (int j = 0; j < this->_cols; j++) {
             double temp = 0;
             int is_new = 0;
             // more cache magic
             double* j_column = nullptr;
             if(i==j){
-            	j_column = i_column;
+                j_column = i_column;
             } else {
-            	is_new = 1;
-            	j_column = new double[this->_rows];
-            	for (int k = 0; k < this->_rows; k++) {
-                	j_column[k] = (*this)(k, j);
-            	}
+                is_new = 1;
+                j_column = new double[this->_rows];
+                for (int k = 0; k < this->_rows; k++) {
+                    j_column[k] = (*this)(k, j);
+                }
             }
-             //actual multiplication
+            //actual multiplication
             for (int k = 0; k < this->_rows; k++) {
                 temp += i_column[k] * j_column[k];
             }
@@ -177,8 +167,6 @@ Matrix Matrix::mt_times_m_cache() const {
             if(is_new==1){delete j_column;}
         }
         delete i_column;
-        auto end = GET_TIME;
-        cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;
     }
     return result;
 }

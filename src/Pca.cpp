@@ -9,7 +9,6 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     for(int i = 0; i < A.rows(); i++){
         mean = mean + (X.getRow(i) / X.rows());
     }
-    auto begin = GET_TIME;
     // subtract mean row to every row: center them
     for(int i = 0; i < X.rows(); i++){
         auto centered_row = X.getRow(i) - mean;
@@ -18,37 +17,29 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
             X.setIndex(i,j, centered_row(j));
         }
     }
-    auto end = GET_TIME;
-    std::cout << "normalize matrix time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
-        //begin = GET_TIME;
-        //Matrix trans = X.transpose();
-      //  end = GET_TIME;
-      //  std::cout << "transposing time: " <<GET_TIME_DELTA(begin, end) << std::endl;
-        begin = GET_TIME;
-        auto M = X.mt_times_m();
-        end = GET_TIME;
-        std::cout << "X^t*X time: " <<GET_TIME_DELTA(begin, end) << std::endl;
+    //Matrix trans = X.transpose();
+    auto M = X.mt_times_m();
 
 
-        return svd(M, num_components, epsilon);
+    return svd(M, num_components, epsilon);
 
-        // auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
+    // auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
 
-        // std::cout << M_eigenvectors.rows() << ", " << M_eigenvectors.cols() << std::endl;
-        // std::cout << X.rows() << ", " << X.cols() << std::endl;
+    // std::cout << M_eigenvectors.rows() << ", " << M_eigenvectors.cols() << std::endl;
+    // std::cout << X.rows() << ", " << X.cols() << std::endl;
 
-        //std::cout << "difference between U's:" << std::endl ;
-        //std::cout << big_m_eigenvectors - M_eigenvectors << std::endl;
-        //std::cout << M_eigenvectors << std::endl;
+    //std::cout << "difference between U's:" << std::endl ;
+    //std::cout << big_m_eigenvectors - M_eigenvectors << std::endl;
+    //std::cout << M_eigenvectors << std::endl;
 
-        //std::cout << "BIG: " << big_M.multiply(big_m_eigenvectors) -big_m_eigenvectors.multiply(big_lambdas) << std::endl;
-        //std::cout << std::endl << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl;
-        //std::cout << "SMALL: " << M.multiply(m_eigenvectors) - m_eigenvectors.multiply(lambdas) << std::endl;
+    //std::cout << "BIG: " << big_M.multiply(big_m_eigenvectors) -big_m_eigenvectors.multiply(big_lambdas) << std::endl;
+    //std::cout << std::endl << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl;
+    //std::cout << "SMALL: " << M.multiply(m_eigenvectors) - m_eigenvectors.multiply(lambdas) << std::endl;
 
-        // std::cout << "lambdas:" << std::endl << lambdas << std::endl;
+    // std::cout << "lambdas:" << std::endl << lambdas << std::endl;
 
-        //return make_tuple(m_eigenvectors, lambdas);
+    //return make_tuple(m_eigenvectors, lambdas);
 }
 
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
@@ -69,13 +60,9 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         Matrix eigen_vector(A.rows(), 1);
         double eigen_value;
 
-        auto begin = GET_TIME;
         tie(eigen_vector, eigen_value) =
                 power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
-        auto end = GET_TIME;
-        std::cout << "power method time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
-        // std::cout << "time between iterations: " << GET_TIME_DELTA(begin, end) << std::endl;
         // cout << "eigen_vector: " << endl << eigen_vector << endl;
 
         // cout << "eigen_value: " << eigen_value << endl;
@@ -88,18 +75,12 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         }
         lambdas.setIndex(i, i, eigen_value);
 
-        begin = GET_TIME;
         auto external = eigen_vector*eigen_vector.transpose();
-        end = GET_TIME;
-        std::cout << "external product ime: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
 
         // cout << "pre-deflation X: " << endl << X << endl;
         // cout << "external * eigen_value: " << endl << external * eigen_value<< endl;
-        begin = GET_TIME;
         X = X - (external * eigen_value );
-        end = GET_TIME;
-        std::cout << "deflation step time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
         // cout << "pos-deflation X: " << endl << X << endl;
 
