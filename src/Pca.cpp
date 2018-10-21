@@ -21,20 +21,12 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     auto end = GET_TIME;
     std::cout << "normalize matrix time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
-
-        /*
-        // find the covariance matrix
-        auto big_M = X.transpose().multiply(X);
-
-        auto big_eigenvectors_and_eigenvalues = svd(big_M, num_components, epsilon);
-        auto big_m_eigenvectors = std::get<0>(big_eigenvectors_and_eigenvalues);
-        auto big_lambdas = std::get<1>(big_eigenvectors_and_eigenvalues);
-    */
-
-        // new covariance matrix peque
-
+        //begin = GET_TIME;
+        //Matrix trans = X.transpose();
+      //  end = GET_TIME;
+      //  std::cout << "transposing time: " <<GET_TIME_DELTA(begin, end) << std::endl;
         begin = GET_TIME;
-        auto M = X.transpose()*X;
+        auto M = X.mt_times_m();
         end = GET_TIME;
         std::cout << "X^t*X time: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
@@ -99,7 +91,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         begin = GET_TIME;
         auto external = eigen_vector*eigen_vector.transpose();
         end = GET_TIME;
-        std::cout << "externalt product ime: " <<GET_TIME_DELTA(begin, end) << std::endl;
+        std::cout << "external product ime: " <<GET_TIME_DELTA(begin, end) << std::endl;
 
 
         // cout << "pre-deflation X: " << endl << X << endl;
