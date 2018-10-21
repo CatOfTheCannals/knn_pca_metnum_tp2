@@ -41,6 +41,7 @@ void Dataset::shuffle() {
 
 void Dataset::splitTrainFromTest(double testPercentage) {
     int testRows = _trainImages.rows() * testPercentage;
+    cout << " test rows: "<< testRows << "rows: "<< _trainImages.rows() << endl;
     _testImages = _trainImages.subMatrix(0, testRows, 0, _trainImages.cols() - 1);
     _testLabels = _trainLabels.subMatrix(0, testRows, 0, _trainLabels.cols() - 1);
     _trainImages = _trainImages.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
@@ -51,6 +52,7 @@ void Dataset::trainPca(int alpha, double epsilon) {
     assert(_trainImages.rows() > 0);
     auto pca_eigenvectors_and_eigenvalues = pca(_trainImages, alpha, epsilon);
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
+    _pcaAlpha = alpha;
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
     _transformedTrainImages = _trainImages*_pcaVecs;
     std::cout << "_pcaVecs" << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
@@ -61,17 +63,26 @@ void Dataset::trainPca(int alpha, double epsilon) {
 Matrix Dataset::pca_kNN_predict(int k) const {
 
     Matrix testLabels = Matrix(_testImages.rows(), 1);
-    // std::cout << "rows " << _testImages.rows() << std::endl;
+    
     for(int i = 0; i < _testImages.rows(); i++) {
-        // std::cout << "entro " << i << std::endl;
-        auto characteristic_transformation = _testImages.getRow(i)*_pcaVecs;
-        // std::cout << "char trans ok " << std::endl;
+        vector<int> projection = vector<int>(_testImages.cols(), 0);
+        //hago el producto interno usando solo las primeras alpha componentes.
+        for(int j = 0; j < _pcaAlpha; j++){
+            auto i_row = _testImages.getRow(i);
+            for(int k = 0; k < _pcaVecs.rows() ; k++){
+                projection[j] += i_row(0,k)*_pcaVecs(k,j);    
+            }
+        }
+        //paso el vector a matriz.
+        auto characteristic_transformation = Matrix(1,_testImages.cols());
+        for(int j = 0; j< projection.size(); j++ ){
+            characteristic_transformation.setIndex(0,j,projection[j]);
+        }
+        
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
-        // std::cout << "knn pred  ok " << std::endl;
-        testLabels.setIndex(i ,0 , ith_label);
-        // std::cout << "set index ok " << std::endl;
+        
+        testLabels.setIndex(i , 0, ith_label);
     }
-    std::cout << " salio del loop" << std::endl;
     return testLabels;
 }
 

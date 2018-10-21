@@ -83,6 +83,7 @@ public:
                 }
             }
         }
+        _pcaAlpha = 0;
     }
 
     Dataset(string filePath, string fileName) {
@@ -114,7 +115,7 @@ public:
 
         _trainImages =  Matrix(imagePaths.size(), width * height);
         _trainLabels = Matrix(person_ids.size(), 1);
-
+        _pcaAlpha = 0;
         // initialize feature and taget matrices
         for(int i = 0; i < _trainImages.rows(); i ++){
             _trainLabels.setIndex(i, 0, person_ids[i]);
@@ -175,6 +176,7 @@ private:
     Matrix _pcaVecs;
     Matrix _pcaLambdas;
     Matrix _transformedTrainImages;
+    int _pcaAlpha;
     // Matrix _transformedTestImages;
 };
 
