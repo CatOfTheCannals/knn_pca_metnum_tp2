@@ -1,18 +1,19 @@
 #include "pca_knn_cuantitative.h"
 
 void pca_knn_cuantitative() {
-    double epsilon = 0.0001;
+    double epsilon = 0.001;
 
     std::ostringstream filename;
     filename << "../../data/results/pca_knn_cuantitative_reduced_200_reps.csv";
     ofstream file;
+
     file.open(filename.str());
     file << "alpha" << "," << "k" << "," << "time" << std::endl;
 
-    Dataset d = Dataset("../../test/casos_test/", "testRed.in");
-
+    Dataset d = Dataset::loadImdbVectorizedReviews();
+    std::cout << std::endl << "dataset successfully loaded" << std::endl;
     d.splitTrainFromTest(0); //when we pass zero, it sets test to one row
-
+    std::cout << std::endl << "dataset successfully split" << std::endl;
     int rows = d.getTrainImages().rows();
     for (int alpha = 1; alpha < rows; alpha += rows / 10) {
 
