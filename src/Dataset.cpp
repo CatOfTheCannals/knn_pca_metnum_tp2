@@ -63,26 +63,17 @@ void Dataset::trainPca(int alpha, double epsilon) {
 Matrix Dataset::pca_kNN_predict(int k) const {
 
     Matrix testLabels = Matrix(_testImages.rows(), 1);
-    
     for(int i = 0; i < _testImages.rows(); i++) {
-        vector<int> projection = vector<int>(_testImages.cols(), 0);
-        //hago el producto interno usando solo las primeras alpha componentes.
-        for(int j = 0; j < _pcaAlpha; j++){
-            auto i_row = _testImages.getRow(i);
-            for(int k = 0; k < _pcaVecs.rows() ; k++){
-                projection[j] += i_row(0,k)*_pcaVecs(k,j);    
-            }
-        }
-        //paso el vector a matriz.
-        auto characteristic_transformation = Matrix(1,_testImages.cols());
-        for(int j = 0; j< projection.size(); j++ ){
-            characteristic_transformation.setIndex(0,j,projection[j]);
-        }
-        
+        // Esto deberia cambiarse para solo hacer el producto de los componentes no nulos
+        auto characteristic_transformation = _testImages.getRow(i)*_pcaVecs;
+        characteristic_transformation.show_matrix();
+
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
         
-        testLabels.setIndex(i , 0, ith_label);
+        testLabels.setIndex(i ,0 , ith_label);
+        
     }
+    std::cout << " salio del loop" << std::endl;
     return testLabels;
 }
 
