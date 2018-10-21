@@ -21,7 +21,9 @@ int main(int argc, char** argv){
     std::cout << std::endl << "Starting exp." << std::endl;
 
     //power_method_cuantitative(10, 4 , 25, 5);
-    pca_knn_cuantitative();
+    //pca_knn_cuantitative();
+
+    pca_cuantitative();
 
     std::cout << std::endl << "Finished exp." << std::endl;
 /*
