@@ -7,7 +7,11 @@
 #include <assert.h>
 #include <tuple>
 #include <math.h>
+#include <chrono>
 
+#define GET_TIME std::chrono::high_resolution_clock::now()
+#define     GET_TIME_DELTA(begin, end) \
+     std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
 
 using namespace std;
 
@@ -40,6 +44,7 @@ public:
     double operator()(std::size_t row_idx, std::size_t col_idx) const;
     double operator()(std::size_t idx) const;
     Matrix mt_times_m() const;
+    Matrix mt_times_m_cache() const ;
     void show_matrix();
     void setIndex(int i, int j, double value); //fixme: completaro
     void operator=(const Matrix& matrix);
