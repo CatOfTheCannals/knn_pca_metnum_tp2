@@ -36,7 +36,7 @@ void pca_knn_cuantitative() {
     }
 }
 
-void pca_knn_qualitative(){
+void pca_knn_qualitative_and_quantitative(){
     double epsilon = 0.001;
 
     std::ostringstream filename;
@@ -44,7 +44,7 @@ void pca_knn_qualitative(){
     ofstream file;
 
     file.open(filename.str());
-    file << "alpha" << "," << "k" << "," << "time" << std::endl;
+    file << "alpha" << "," << "k" << "," << "accuracy" <<","<<"time" << std::endl;
 
     Dataset d = Dataset::loadImdbVectorizedReviews();
     std::cout << std::endl << "dataset successfully loaded" << std::endl;
@@ -68,7 +68,7 @@ void pca_knn_qualitative(){
             auto end = GET_TIME;
             auto predict_time = GET_TIME_DELTA(begin, end);
 
-            file << alpha << "," << k << "," << acc << std::endl;
+            file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
            // std::cout << "time: " << predict_time << std::endl;
         }
         
