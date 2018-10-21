@@ -82,7 +82,7 @@ Matrix Matrix::operator*(const Matrix& b) const{
     Matrix result = Matrix(this->_rows, b.cols());
     for (int i = 0; i < this->rows(); ++i) {
     	auto begin = GET_TIME;
-    	cout << "i: "<< i << " out of " << this->_rows << endl;
+    	//cout << "i: "<< i << " out of " << this->_rows << endl;
         for (int j = 0; j < b.cols(); ++j) {
             double temp = 0;
             for (int k = 0; k < this->_cols; ++k) {
@@ -93,7 +93,7 @@ Matrix Matrix::operator*(const Matrix& b) const{
         }
 
         auto end = GET_TIME;
-        cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;
+        //cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;
     }
     return result;
 }
@@ -120,7 +120,7 @@ Matrix Matrix::mt_times_m() const {
                 i_column[k] = (*this)(k, i);
         }
 
-    	cout << i << " out of " << this->_cols << endl;
+    	
         for (int j = 0; j < this->_cols; j++) {
 
             double temp = 0;
@@ -135,7 +135,8 @@ Matrix Matrix::mt_times_m() const {
         }
         delete i_column;
         auto end = GET_TIME;
-        cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;
+        if(i%100==0){cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;}
+        
     }
     return result;
 }
@@ -264,13 +265,14 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ) const{
     int res_rows = i2 - i1 + 1;
     int res_cols = j2 - j1 + 1;
 
-    int index;
-
+    int src_index;
+    int dst_index = 0;
     Matrix res(res_rows, res_cols);
     for(int i = 0; i < res_rows ; i++){
         for(int j = 0; j < res_cols ; j++){
-            index = (i + i1) * _cols + j1 + j;
-            res._matrix[i * res_cols + j] = _matrix[index];
+            src_index = (i + i1) * _cols + j1 + j;
+            res._matrix[dst_index] = _matrix[src_index];
+            dst_index++;
         }
     }
 
