@@ -162,6 +162,11 @@ bool Matrix::operator==(const Matrix& other) const{
 }
 
 Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ) const{
+    /*
+     * returns the matrix between (i1, i2) rows and (j1, j2) cols
+     * indexes i2 and j2 will be part of the answer
+     */
+
     assert(i1 <= i2 && j1 <= j2);
     assert(-1 < i1 && -1 < j2);
     assert(i2 < _rows && j2 < _cols);
