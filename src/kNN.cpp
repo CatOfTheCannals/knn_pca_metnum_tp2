@@ -1,10 +1,34 @@
 #include "kNN.h"
 #include <algorithm>
 
+Matrix distance_old(const Matrix& data, const Matrix& image) { /* returns a column Matrix with the distance
+ of every image on data with the one that enters as a parameter //The image is taken as a row vector*/
+    assert(data.cols() == image.cols());
+    Matrix res(data.rows(),1);
+    Matrix aux = Matrix(data.rows(),image.cols());
+    for (int i = 0; i < data.rows(); ++i) {
+        for (int j = 0; j < image.cols(); ++j) {
+            aux.setIndex(i, j, image(j));
+        }
+    }
+    Matrix difference = Matrix(data.rows(),data.rows());
+    difference = data-aux;
+    for (int i = 0; i < difference.rows(); ++i) {
+        double sum = 0;
+        for (int j = 0; j < difference.cols(); ++j) {
+            int value = difference(i, j);
+            sum = sum + (value * value);
+        }
+        res.setIndex(i, 0, sqrt(sum)); //sets in every row of res the distance between the imput image and the
+    }
+    return res;
+}
+
 Matrix distance(const Matrix& data, const Matrix& image) { 
 /* returns a column Matrix with the distance
  of every image on data with the one that enters as a parameter 
  //The image is taken as a row vector*/
+    
     assert(data.cols() == image.rows());
     Matrix res(data.rows(),1);
 
@@ -50,7 +74,7 @@ int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int
     
     int differentLabels = 2;
 
-    Matrix distances = distance(data, observation); //vector de distancias
+    Matrix distances = distance_old(data, observation); //vector de distancias
 
     vector<tuple<int, double>> personDistances; /*first element of tuple identifies the person on data observation, second is the distance
     to the imput observation. */
