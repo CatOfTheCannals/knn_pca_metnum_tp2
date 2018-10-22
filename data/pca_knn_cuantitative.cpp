@@ -25,7 +25,7 @@ void pca_knn_cuantitative() {
             for (int k = 1; k < rows/10; k++) {
                 std::cout << std::endl << "k: " << k << std::endl;
                 auto begin = GET_TIME;
-                d.pca_kNN_predict(k);
+                d.pca_kNN_predict_old(k);
                 auto end = GET_TIME;
                 auto predict_time = GET_TIME_DELTA(begin, end);
 
@@ -48,21 +48,22 @@ void pca_knn_qualitative_and_quantitative(){
 
     Dataset d = Dataset::loadImdbVectorizedReviews();
     std::cout << std::endl << "dataset successfully loaded" << std::endl;
-    d.splitTrainFromTest(0.90); 
+    double test_ratio = 0.50;
+    d.splitTrainFromTest(test_ratio); 
     std::cout << std::endl << "dataset successfully split" << std::endl;
     int rows = d.getTrainImages().rows();
     auto test_labels = d.getTestLabels();
-    vector<int> alphas = vector<int>({1,5,10,15,20,170,170*2,170*3,170*4,170*5,170*6,170*7,170*8,170*9,1700});
+    vector<int> alphas = vector<int>({5,10,15,20,170,170*2,170*3,170*4,170*5,170*6,170*7,170*8,170*9,1700});
     for(int alpha : alphas) {
 
         std::cout << std::endl << "alpha: " << alpha << " out of " << rows << std::endl;
 
         d.trainPca(alpha, epsilon);
-        
-        for (int k = 1; k < 2 /*rows/10*/; k+=5) {
+        int iterations = rows/10 ;
+        for (int k = 1; k < iterations; k+=5) {
             std::cout << std::endl << "k: " << k << std::endl;
             auto begin = GET_TIME;
-            auto results = d.pca_kNN_predict(k);
+            auto results = d.pca_kNN_predict_old(k);
 			double acc = accuracy(test_labels, results);
 			std::cout << "accuracy: " << acc << std::endl;
             auto end = GET_TIME;
