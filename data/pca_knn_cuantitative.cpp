@@ -48,7 +48,7 @@ void pca_knn_qualitative_and_quantitative(){
 
     Dataset d = Dataset::loadImdbVectorizedReviews();
     std::cout << std::endl << "dataset successfully loaded" << std::endl;
-    d.splitTrainFromTest(0.1); 
+    d.splitTrainFromTest(0.90); 
     std::cout << std::endl << "dataset successfully split" << std::endl;
     int rows = d.getTrainImages().rows();
     auto test_labels = d.getTestLabels();
@@ -59,17 +59,17 @@ void pca_knn_qualitative_and_quantitative(){
 
         d.trainPca(alpha, epsilon);
         
-        for (int k = 1; k < rows/10; k+=5) {
+        for (int k = 1; k < 2 /*rows/10*/; k+=5) {
             std::cout << std::endl << "k: " << k << std::endl;
             auto begin = GET_TIME;
             auto results = d.pca_kNN_predict(k);
 			double acc = accuracy(test_labels, results);
-
+			std::cout << "accuracy: " << acc << std::endl;
             auto end = GET_TIME;
             auto predict_time = GET_TIME_DELTA(begin, end);
 
             file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
-           // std::cout << "time: " << predict_time << std::endl;
+            std::cout << "time: " << predict_time << std::endl;
         }
         
     }

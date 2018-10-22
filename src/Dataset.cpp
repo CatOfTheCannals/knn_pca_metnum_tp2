@@ -63,15 +63,18 @@ void Dataset::trainPca(int alpha, double epsilon) {
 Matrix Dataset::pca_kNN_predict(int k) const {
 
     Matrix testLabels = Matrix(_testImages.rows(), 1);
+    // std::cout << "rows " << _testImages.rows() << std::endl;
     for(int i = 0; i < _testImages.rows(); i++) {
-        // Esto deberia cambiarse para solo hacer el producto de los componentes no nulos
+        auto begin = GET_TIME;
+        // std::cout << "entro " << i << std::endl;
         auto characteristic_transformation = _testImages.getRow(i)*_pcaVecs;
-        characteristic_transformation.show_matrix();
-
+        // std::cout << "char trans ok " << std::endl;
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
-        
-        testLabels.setIndex(i ,0 , ith_label);
-        
+        // std::cout << "knn pred  ok " << std::endl;
+        testLabels.setIndex(i , 0 ,ith_label);
+        // std::cout << "set index ok " << std::endl;
+        auto end = GET_TIME;
+        std::cout << "i :" << i <<" tiempo" << GET_TIME_DELTA(begin,end) << endl;
     }
     std::cout << " salio del loop" << std::endl;
     return testLabels;
