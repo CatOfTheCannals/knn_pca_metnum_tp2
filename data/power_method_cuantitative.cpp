@@ -28,13 +28,14 @@ void power_method_cuantitative(int n, double max_epsilon_ceros , int max_reps, i
 
                 auto begin = GET_TIME;
                 tie(eigen_vector, eigen_value) =
-                        power_method(x_0, A, epsilon); // calculate i_th eigen vector and it's value
+                        power_method(x_0, A, epsilon, reps); // calculate i_th eigen vector and it's value
                 auto end = GET_TIME;
                 auto calculation_time = GET_TIME_DELTA(begin, end);
 
                 double result_mse = Matrix::mse(A * eigen_vector, eigen_vector * eigen_value);
 
-                file << matrix_size << "," << epsilon << "," << repetitions<< "," << calculation_time << result_mse << std::endl;
+                file << matrix_size << "," << epsilon << "," << repetitions
+                     << "," << calculation_time << "," << result_mse << std::endl;
                 std::cout << "time: " << calculation_time << std::endl;
 
             }

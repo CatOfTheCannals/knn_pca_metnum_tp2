@@ -91,11 +91,17 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
 
 tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
                                    double epsilon) {
+    return power_method(x_0, input, epsilon, 100);
+
+};
+
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
+                                   double epsilon, int max_iters) {
     assert(input.rows() == input.cols());
     assert(input.rows() == x_0.rows());
     assert(1 == x_0.cols());
 
-    int max_iters = 100;
+
 
     Matrix x(x_0 / x_0.norm());
     Matrix A(input);

@@ -11,7 +11,7 @@
 
 tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon);
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon);
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon, int max_iters);
 
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components, double epsilon);
 
