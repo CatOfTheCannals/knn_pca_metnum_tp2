@@ -39,8 +39,37 @@ void Dataset::shuffle() {
     }
 }
 
+Matrix& Dataset::get_mt_times_m() {
+    if(this->mt_times_m_is_set == 0){
+        generate_mt_times_m();
+        this->mt_times_m_is_set = 1;
+    }
+    return this->_mt_times_m;
+}
+
+void Dataset::generate_mt_times_m(){
+    Matrix X(_trainImages);
+    Matrix mean(1, _trainImages.cols());
+    // get "mean row"
+    for(int i = 0; i < _trainImages.rows(); i++){
+        mean = mean + (X.getRow(i) / X.rows());
+    }
+    // subtract mean row to every row: center them
+    for(int i = 0; i < X.rows(); i++){
+        auto centered_row = X.getRow(i) - mean;
+        centered_row = centered_row / sqrt(X.rows() - 1);
+        for (int j = 0; j < X.cols(); ++j) {
+            X.setIndex(i,j, centered_row(j));
+        }
+    }
+
+    //Matrix trans = X.transpose();
+    this->_mt_times_m = X.mt_times_m();
+
+}
 void Dataset::splitTrainFromTest(double testPercentage) {
     int testRows = _trainImages.rows() * testPercentage;
+    cout << " test rows: "<< testRows << " rows: "<< _trainImages.rows() << endl;
     _testImages = _trainImages.subMatrix(0, testRows, 0, _trainImages.cols() - 1);
     _testLabels = _trainLabels.subMatrix(0, testRows, 0, _trainLabels.cols() - 1);
     _trainImages = _trainImages.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
@@ -49,27 +78,32 @@ void Dataset::splitTrainFromTest(double testPercentage) {
 
 void Dataset::trainPca(int alpha, double epsilon) {
     assert(_trainImages.rows() > 0);
-    auto pca_eigenvectors_and_eigenvalues = pca(_trainImages, alpha, epsilon);
+    Matrix M = get_mt_times_m();
+    auto pca_eigenvectors_and_eigenvalues = svd(M, alpha, epsilon);
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
+    _pcaAlpha = alpha;
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
     _transformedTrainImages = _trainImages*_pcaVecs;
-    std::cout << "_pcaVecs" << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
+    std::cout << "_pcaVecs " << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
     std::cout << "_transformedTrainImages " << _transformedTrainImages.rows() << ", " << _transformedTrainImages.cols() << std::endl;
 
 }
 
-Matrix Dataset::pca_kNN_predict(int k) const {
+Matrix Dataset::pca_kNN_predict_old(int k) const {
 
     Matrix testLabels = Matrix(_testImages.rows(), 1);
     // std::cout << "rows " << _testImages.rows() << std::endl;
     for(int i = 0; i < _testImages.rows(); i++) {
+        auto begin = GET_TIME;
         // std::cout << "entro " << i << std::endl;
         auto characteristic_transformation = _testImages.getRow(i)*_pcaVecs;
         // std::cout << "char trans ok " << std::endl;
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
         // std::cout << "knn pred  ok " << std::endl;
-        testLabels.setIndex(i ,0 , ith_label);
+        testLabels.setIndex(i , 0 ,ith_label);
         // std::cout << "set index ok " << std::endl;
+        auto end = GET_TIME;
+        if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
     }
     std::cout << " salio del loop" << std::endl;
     return testLabels;
@@ -130,7 +164,7 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSe
         std::cout << "train_pca" << std::endl;
         d.trainPca(alpha, epsilon);
         scores_per_fold.push_back(allMetricsWrapper(std::get<1>(labelFold),
-                                                    d.pca_kNN_predict(neighbours)));
+                                                    d.pca_kNN_predict_old(neighbours)));
     }
 
     return scores_per_fold;

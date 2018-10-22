@@ -1,11 +1,11 @@
 #include "Matrix.h"
 
 int Matrix::rows() const{
-    return _rows;
+        return _rows;
 }
 
 int Matrix::cols() const {
-    return _cols;
+        return _cols;
 }
 
 int Matrix::size() const {
@@ -81,6 +81,8 @@ Matrix Matrix::operator*(const Matrix& b) const{
     assert(this->_cols == b.rows());
     Matrix result = Matrix(this->_rows, b.cols());
     for (int i = 0; i < this->rows(); ++i) {
+    	auto begin = GET_TIME;
+    	//cout << "i: "<< i << " out of " << this->_rows << endl;
         for (int j = 0; j < b.cols(); ++j) {
             double temp = 0;
             for (int k = 0; k < this->_cols; ++k) {
@@ -90,85 +92,24 @@ Matrix Matrix::operator*(const Matrix& b) const{
             temp = 0;
         }
 
+        auto end = GET_TIME;
+        //cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;
     }
     return result;
 }
 
-void Matrix::show_matrix(){
-    cout << endl;
-    for(int i = 0 ; i < _cols ; i++){
-        for(int j = 0 ; j < _rows ; j++){
-            cout << (*this)(i,j) << " ";
+std::ostream& operator<<(std::ostream& o, const Matrix& a)
+{
+    for (std::size_t i = 0; i < a.rows(); i++) {
+        for (std::size_t j = 0; j < a.cols(); j++) {
+            o << a(i, j) << ' ';
         }
-        cout << endl;
+        if (!(i / a.rows())) {
+            o << endl;
+        }
     }
-}
+    return o;
 
-Matrix Matrix::mt_times_m() const {
-    //X.transpose()*X
-
-    Matrix result = Matrix(this->_cols, this->_cols);
-    int index = 0;
-    for (int i = 0; i < this->_cols; i++) {
-        double* i_column = new double[this->_rows];
-        for (int k = 0; k < this->_rows; k++) {
-            i_column[k] = (*this)(k, i);
-        }
-
-        for (int j = 0; j < this->_cols; j++) {
-
-            double temp = 0;
-            //actual multiplication
-            for (int k = 0; k < this->_rows; k++) {
-                temp += i_column[k] * (*this)(k, j);
-            }
-
-            result._matrix[index] = temp;
-            temp = 0;
-            index++;
-        }
-        delete i_column;
-    }
-    return result;
-}
-
-Matrix Matrix::mt_times_m_cache() const {
-    //X.transpose()*X
-
-    Matrix result = Matrix(this->_cols, this->_cols);
-    for (int i = 0; i < this->_cols; i++) {
-        double* i_column = new double[this->_rows];
-
-        for (int k = 0; k < this->_rows; k++) {
-            i_column[k] = (*this)(k, i);
-        }
-
-        for (int j = 0; j < this->_cols; j++) {
-            double temp = 0;
-            int is_new = 0;
-            // more cache magic
-            double* j_column = nullptr;
-            if(i==j){
-                j_column = i_column;
-            } else {
-                is_new = 1;
-                j_column = new double[this->_rows];
-                for (int k = 0; k < this->_rows; k++) {
-                    j_column[k] = (*this)(k, j);
-                }
-            }
-            //actual multiplication
-            for (int k = 0; k < this->_rows; k++) {
-                temp += i_column[k] * j_column[k];
-            }
-            int index = result._cols * i + j;
-            result._matrix[index] = temp;
-            temp = 0;
-            if(is_new==1){delete j_column;}
-        }
-        delete i_column;
-    }
-    return result;
 }
 
 Matrix Matrix::operator/(const double& scalar) const{
@@ -179,6 +120,48 @@ Matrix Matrix::operator/(const double& scalar) const{
         }
     }
     return res;
+}
+
+void Matrix::show_matrix(){
+    cout << endl;
+    for(int i = 0 ; i < _cols ; i++){
+		for(int j = 0 ; j < _rows ; j++){
+        cout << (*this)(i,j) << " ";
+		}
+		cout << endl;
+    }
+}
+
+Matrix Matrix::mt_times_m() const {
+	//X.transpose()*X
+
+    Matrix result = Matrix(this->_cols, this->_cols);
+    int index = 0;
+    for (int i = 0; i < this->_cols; i++) {
+    	auto begin = GET_TIME;
+    	double* i_column = new double[this->_rows];
+    	for (int k = 0; k < this->_rows; k++) {
+                i_column[k] = (*this)(k, i);
+        }
+    	
+        for (int j = 0; j < this->_cols; j++) {
+
+            double temp = 0;
+            //actual multiplication
+        	for (int k = 0; k < this->_rows; k++) {
+        		temp += i_column[k] * (*this)(k, j);
+        	}
+            
+            result._matrix[index] = temp;
+            temp = 0;
+            index++;
+        }
+        delete i_column;
+        auto end = GET_TIME;
+        if(i%100==0){cout << "time for "<< i <<": " << GET_TIME_DELTA(begin, end) << endl;}
+        
+    }
+    return result;
 }
 
 Matrix Matrix::transpose() const{
@@ -252,13 +235,14 @@ Matrix Matrix::subMatrix(int i1, int i2, int j1, int j2 ) const{
     int res_rows = i2 - i1 + 1;
     int res_cols = j2 - j1 + 1;
 
-    int index;
-
+    int src_index;
+    int dst_index = 0;
     Matrix res(res_rows, res_cols);
     for(int i = 0; i < res_rows ; i++){
         for(int j = 0; j < res_cols ; j++){
-            index = (i + i1) * _cols + j1 + j;
-            res._matrix[i * res_cols + j] = _matrix[index];
+            src_index = (i + i1) * _cols + j1 + j;
+            res._matrix[dst_index] = _matrix[src_index];
+            dst_index++;
         }
     }
 
@@ -333,20 +317,6 @@ double Matrix::mse(const Matrix& v1, const Matrix& v2) {
         sum += pow(v1(i) - v2(i), 2);
     }
     return sum / n;
-}
-
-std::ostream& operator<<(std::ostream& o, const Matrix& a)
-{
-    for (std::size_t i = 0; i < a.rows(); i++) {
-        for (std::size_t j = 0; j < a.cols(); j++) {
-            o << a(i, j) << ' ';
-        }
-        if (!(i / a.rows())) {
-            o << endl;
-        }
-    }
-    return o;
-
 }
 
 bool Matrix::isApproximate(const Matrix b, double epsilon) const{

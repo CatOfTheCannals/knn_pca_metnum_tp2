@@ -114,8 +114,7 @@ public:
 
         _trainImages =  Matrix(imagePaths.size(), width * height);
         _trainLabels = Matrix(person_ids.size(), 1);
-
-        // initialize feature and taget matrices
+        // initialize feature and target matrices
         for(int i = 0; i < _trainImages.rows(); i ++){
             _trainLabels.setIndex(i, 0, person_ids[i]);
 
@@ -141,10 +140,12 @@ public:
     Matrix getTrainLabels() const;
     Matrix getPcaVecs() const;
     Matrix getPcaLambdas() const;
+    void generate_mt_times_m();
+    Matrix& get_mt_times_m() ;
 
     void shuffle();
     void trainPca(int alpha, double epsilon);
-    Matrix pca_kNN_predict(int k) const;
+    Matrix pca_kNN_predict_old(int k) const;
     Matrix kNN_predict(int k) const;
     void splitTrainFromTest(double testPercentage);
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
@@ -171,10 +172,12 @@ private:
     Matrix _testLabels;
     Matrix _trainImages;
     Matrix _trainLabels;
-
+    Matrix _mt_times_m;
+    int mt_times_m_is_set = 0;
     Matrix _pcaVecs;
     Matrix _pcaLambdas;
     Matrix _transformedTrainImages;
+    int _pcaAlpha = 0;
     // Matrix _transformedTestImages;
 };
 
