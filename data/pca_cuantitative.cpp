@@ -9,9 +9,8 @@ void pca_cuantitative() {
     file.open(filename.str());
     file << "rows"  << "," << "alpha" << "," << "time" << std::endl;
 
-    // Dataset d = Dataset::loadImdbVectorizedReviews();
-    // Matrix features = d.getTrainImages();
-    Matrix features = Matrix::random(50);
+    Dataset d = Dataset::loadImdbVectorizedReviews();
+    Matrix features = d.getTrainImages();
 
     for(int rows = 2; rows < features.rows(); rows += features.rows() / 10){
         std::cout << "Benchmark pca with %" << (100 * rows) / (double)features.rows() << " of train set." << std::endl;

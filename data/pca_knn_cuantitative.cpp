@@ -48,7 +48,7 @@ void pca_knn_qualitative_and_quantitative(){
 
     Dataset d = Dataset::loadImdbVectorizedReviews();
     std::cout << std::endl << "dataset successfully loaded" << std::endl;
-    double test_ratio = 0.50;
+    double test_ratio = 0.10;
     d.splitTrainFromTest(test_ratio); 
     std::cout << std::endl << "dataset successfully split" << std::endl;
     int rows = d.getTrainImages().rows();
