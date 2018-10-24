@@ -146,6 +146,7 @@ public:
     void shuffle();
     void trainPca(int alpha, double epsilon);
     Matrix pca_kNN_predict_old(int k) const;
+    Matrix pca_kNN_predict_old(int k, int alpha) const;
     Matrix kNN_predict(int k) const;
     void splitTrainFromTest(double testPercentage);
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>

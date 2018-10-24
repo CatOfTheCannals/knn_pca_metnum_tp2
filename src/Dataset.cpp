@@ -109,6 +109,33 @@ Matrix Dataset::pca_kNN_predict_old(int k) const {
     return testLabels;
 }
 
+Matrix Dataset::pca_kNN_predict_old(int k, int alpha) const {
+    assert(alpha <= _pcaAlpha);
+    Matrix testLabels = Matrix(_testImages.rows(), 1);
+    // std::cout << "rows " << _testImages.rows() << std::endl;
+    for(int i = 0; i < _testImages.rows(); i++) {
+        auto begin = GET_TIME;
+        // std::cout << "entro " << i << std::endl;
+        Matrix characteristic_transformation = Matrix(1, _testImages.cols());
+        for(int j = 0; j < alpha; j++){
+            double acum = 0.0;
+            for(int k = 0; k < _pcaVecs.rows() ; k++){
+                acum+=_testImages(i,k)*_pcaVecs(k,j);
+            }
+            characteristic_transformation[j] = acum;
+        }
+        // std::cout << "char trans ok " << std::endl;
+        int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
+        // std::cout << "knn pred  ok " << std::endl;
+        testLabels.setIndex(i , 0 ,ith_label);
+        // std::cout << "set index ok " << std::endl;
+        auto end = GET_TIME;
+        if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
+    }
+    std::cout << " salio del loop" << std::endl;
+    return testLabels;
+}
+
 
 Matrix Dataset::kNN_predict(int k) const {
     Matrix testLabels = Matrix(_testImages.rows(), 1);
