@@ -28,7 +28,7 @@ void power_method_cuantitative(int n, double max_epsilon_ceros , int max_reps, i
 
                 auto begin = GET_TIME;
                 tie(eigen_vector, eigen_value) =
-                        power_method(x_0, A, epsilon, reps); // calculate i_th eigen vector and it's value
+                        power_method(x_0, A, epsilon, repetitions); // calculate i_th eigen vector and it's value
                 auto end = GET_TIME;
                 auto calculation_time = GET_TIME_DELTA(begin, end);
 

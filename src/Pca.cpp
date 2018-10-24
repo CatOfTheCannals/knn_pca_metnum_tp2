@@ -56,19 +56,11 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
     for (auto i = 0; i < num_components; i++) {
 
         Matrix x_0( random(A.rows(), 1));
-
         Matrix eigen_vector(A.rows(), 1);
         double eigen_value;
 
         tie(eigen_vector, eigen_value) =
                 power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
-
-        // cout << "eigen_vector: " << endl << eigen_vector << endl;
-
-        // cout << "eigen_value: " << eigen_value << endl;
-
-        // cout << "diff with X: " << endl << X.multiply(eigen_vector) - eigen_vector * eigen_value << endl;
-        // cout << "diff with A: " << endl << A_copy.multiply(eigen_vector) - eigen_vector * eigen_value << endl;
 
         for (auto q = 0; q < k_eigen_vectors.rows(); q++) {
             k_eigen_vectors.setIndex(q, i, eigen_vector(q, 0)); // fill eigen vector in res matrix
@@ -76,14 +68,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         lambdas.setIndex(i, i, eigen_value);
 
         auto external = eigen_vector*eigen_vector.transpose();
-
-
-        // cout << "pre-deflation X: " << endl << X << endl;
-        // cout << "external * eigen_value: " << endl << external * eigen_value<< endl;
-        X = X - (external * eigen_value );
-
-        // cout << "pos-deflation X: " << endl << X << endl;
-
+        X = X - (external * eigen_value);
     }
 
     return make_tuple(k_eigen_vectors, lambdas);

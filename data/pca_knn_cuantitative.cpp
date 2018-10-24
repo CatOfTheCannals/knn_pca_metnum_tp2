@@ -48,29 +48,42 @@ void pca_knn_qualitative_and_quantitative(){
 
     Dataset d = Dataset::loadImdbVectorizedReviews();
     std::cout << std::endl << "dataset successfully loaded" << std::endl;
-    double test_ratio = 0.10;
-    d.splitTrainFromTest(test_ratio); 
+
+    double test_ratio = 0.50;
+    d.splitTrainFromTest(test_ratio);
     std::cout << std::endl << "dataset successfully split" << std::endl;
+
+
     int rows = d.getTrainImages().rows();
     auto test_labels = d.getTestLabels();
-    vector<int> alphas = vector<int>({5,10,15,20,170,170*2,170*3,170*4,170*5,170*6,170*7,170*8,170*9,1700});
+    // vector<int> alphas = vector<int>({5,10,15,20,50,100,170,425,170*5,170*7,1700});
+    vector<int> alphas = vector<int>({5});
     for(int alpha : alphas) {
 
-        std::cout << std::endl << "alpha: " << alpha << " out of " << rows << std::endl;
-
+        auto begin = GET_TIME;
         d.trainPca(alpha, epsilon);
-        int iterations = rows/10 ;
-        for (int k = 1; k < iterations; k+=5) {
+        auto end = GET_TIME;
+        auto train_time = GET_TIME_DELTA(begin, end);
+
+        std::cout << std::endl << "alpha: " << alpha << " out of " << rows  << std::endl;
+        std::cout <<  "train_time : " << train_time << std::endl;
+
+        // int iterations = rows/10;
+        int iterations = 2;
+        int step = rows/100;
+        for (int k = 1; k < iterations; k+=step) {
+
             std::cout << std::endl << "k: " << k << std::endl;
-            auto begin = GET_TIME;
+            begin = GET_TIME;
             auto results = d.pca_kNN_predict_old(k);
+
 			double acc = accuracy(test_labels, results);
 			std::cout << "accuracy: " << acc << std::endl;
-            auto end = GET_TIME;
+            end = GET_TIME;
             auto predict_time = GET_TIME_DELTA(begin, end);
+            std::cout <<  "predict_time : " << predict_time << std::endl;
 
             file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
-            std::cout << "time: " << predict_time << std::endl;
         }
         
     }

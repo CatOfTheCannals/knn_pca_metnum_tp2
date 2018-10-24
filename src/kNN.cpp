@@ -29,12 +29,12 @@ Matrix distance(const Matrix& data, const Matrix& image) {
  of every image on data with the one that enters as a parameter 
  //The image is taken as a row vector*/
     
-    assert(data.cols() == image.rows());
+    assert(data.cols() == image.cols());
     Matrix res(data.rows(),1);
 
     for (int i = 0; i < data.rows(); ++i) {
         double sum = 0;
-        for (int j = 0; j < data.rows(); ++j) {
+        for (int j = 0; j < data.cols(); ++j) {
             int value = data(i,j) - image(j);
             sum += (value * value);
         }
