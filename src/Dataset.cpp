@@ -122,7 +122,7 @@ Matrix Dataset::pca_kNN_predict_old(int k, int alpha) const {
             for(int k = 0; k < _pcaVecs.rows() ; k++){
                 acum+=_testImages(i,k)*_pcaVecs(k,j);
             }
-            characteristic_transformation[j] = acum;
+            characteristic_transformation.setIndex(0,j,acum);
         }
         // std::cout << "char trans ok " << std::endl;
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
