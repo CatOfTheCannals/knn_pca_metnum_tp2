@@ -49,14 +49,15 @@ void pca_knn_qualitative_and_quantitative(){
     Dataset d = Dataset::loadImdbVectorizedReviews();
     std::cout << std::endl << "dataset successfully loaded" << std::endl;
 
-    double test_ratio = 0.50;
+    double test_ratio = 0.75;
     d.splitTrainFromTest(test_ratio);
     std::cout << std::endl << "dataset successfully split" << std::endl;
 
 
     int rows = d.getTrainImages().rows();
     auto test_labels = d.getTestLabels();
-    int MAX_ALPHA = 1700;
+    int MAX_ALPHA = d.getTrainImages().cols();
+    std::cout << d.getTrainImages().cols() << std::endl;
     vector<int> alphas = vector<int>({5,10,15,20,50,100,170,425,170*5,170*7,1700});
     //vector<int> alphas = vector<int>({5});
     auto begin = GET_TIME;
@@ -69,10 +70,10 @@ void pca_knn_qualitative_and_quantitative(){
     for(int alpha : alphas) {
 
         
-        std::cout << std::endl << "alpha: " << alpha << " out of " << rows  << std::endl;
+        std::cout << std::endl << "alpha: " << alpha << " out of " << MAX_ALPHA  << std::endl;
         // int iterations = rows/10;
         int iterations = 2;
-        int step = rows/100;
+        int step = 10;
         for (int k = 1; k < iterations; k+=step) {
             
             std::cout << std::endl << "k: " << k << std::endl;

@@ -66,7 +66,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
             k_eigen_vectors.setIndex(q, i, eigen_vector(q, 0)); // fill eigen vector in res matrix
         }
         lambdas.setIndex(i, i, eigen_value);
-
+        if(i%100==0){ cout <<"PCA i : " << i << endl;}
         auto external = eigen_vector*eigen_vector.transpose();
         X = X - (external * eigen_value);
     }
