@@ -58,7 +58,7 @@ void pca_knn_qualitative_and_quantitative(){
     auto test_labels = d.getTestLabels();
     int MAX_ALPHA = d.getTrainImages().cols();
     std::cout << d.getTrainImages().cols() << std::endl;
-    vector<int> alphas = vector<int>({5,10,15,20,50,100,170,425,170*5,170*7,1700});
+    vector<int> alphas = vector<int>({5,10,15,20,50,100,MAX_ALPHA/10,MAX_ALPHA/4,MAX_ALPHA/2,MAX_ALPHA*7/10,MAX_ALPHA});
     //vector<int> alphas = vector<int>({5});
     auto begin = GET_TIME;
     d.trainPca(MAX_ALPHA, epsilon);
