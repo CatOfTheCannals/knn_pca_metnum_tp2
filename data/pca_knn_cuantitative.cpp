@@ -40,7 +40,7 @@ void pca_knn_qualitative_and_quantitative(){
     double epsilon = 0.001;
 
     std::ostringstream filename;
-    filename << "../../data/results/pca_knn_qualitative_changing_alpha_test_is_10.csv";
+    filename << "../../data/results/experiment_results.csv";
     ofstream file;
     file.open(filename.str());
     file << "alpha" << "," << "k" << "," << "accuracy" <<","<<"time" << std::endl;
