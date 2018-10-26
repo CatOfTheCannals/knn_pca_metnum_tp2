@@ -73,7 +73,6 @@ int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int
     assert(data.cols() == observation.cols());
     assert(observation.rows() == 1);
 
-    
     int differentLabels = 2;
 
     Matrix distances = distance_old(data, observation); //vector de distancias
