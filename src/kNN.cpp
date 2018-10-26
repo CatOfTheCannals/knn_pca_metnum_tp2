@@ -54,7 +54,7 @@ int mostAppears(const vector<int> repetitions){/* returns the index of the bigge
             }
         }
     }
-    return mostRepeated+1;
+    return mostRepeated;
 }
 
 bool shortestDistance(const tuple<int,double> a, const tuple<int,double> b) {//used to sort v
@@ -70,7 +70,9 @@ bool orderedByIndex(const tuple<int,double> a, const tuple<int,double> b) {//use
 int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int k){
     assert(data.rows() >= k && k > 0); //the number of neighbours must be equal to or less than the number of pictures on the dataset
     assert(data.rows() == labels.rows());
-    assert(data.rows() > 0);
+    assert(data.cols() == observation.cols());
+    assert(observation.rows() == 1);
+
     
     int differentLabels = 2;
 
@@ -87,7 +89,8 @@ int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int
 
     std::vector<int> repetitions = vector<int>(differentLabels, 0);
     for (int i = 0; i < k; ++i) {
-        repetitions.at(get<0>(personDistances[i]))++;
+        int ith_closest_neighbour_label = get<0>(personDistances[i]);
+        repetitions.at(ith_closest_neighbour_label)++;
     }
 
     return mostAppears(repetitions); //returns the person that appears the most on the kNN.
