@@ -124,8 +124,8 @@ Matrix Matrix::operator/(const double& scalar) const{
 
 void Matrix::show_matrix(){
     cout << endl;
-    for(int i = 0 ; i < _cols ; i++){
-		for(int j = 0 ; j < _rows ; j++){
+    for(int i = 0 ; i < _rows ; i++){
+		for(int j = 0 ; j < _cols ; j++){
         cout << (*this)(i,j) << " ";
 		}
 		cout << endl;
