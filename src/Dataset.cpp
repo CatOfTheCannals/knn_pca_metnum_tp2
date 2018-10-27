@@ -97,14 +97,14 @@ Matrix Dataset::pca_kNN_predict_old(int k) const {
         auto begin = GET_TIME;
         // std::cout << "entro " << i << std::endl;
         auto characteristic_transformation = _testImages.getRow(i)*_pcaVecs;
-        characteristic_transformation.show_matrix();
+        // characteristic_transformation.show_matrix();
         // std::cout << "char trans ok " << std::endl;
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
         // std::cout << "knn pred  ok " << std::endl;
         testLabels.setIndex(i , 0 ,ith_label);
         // std::cout << "set index ok " << std::endl;
         auto end = GET_TIME;
-        if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
+        //if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
     }
     std::cout << " salio del loop" << std::endl;
     return testLabels;
@@ -113,14 +113,13 @@ Matrix Dataset::pca_kNN_predict_old(int k) const {
 Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
     assert(alpha <= _pcaAlpha);
     Matrix testLabels = Matrix(_testImages.rows(), 1);
-    // std::cout << "rows " << _testImages.rows() << std::endl;
-    cout << _transformedTrainImages.cols() << endl;
-    cout << _testImages.cols() << endl;
+
+    // iterate through test instances
     for(int i = 0; i < _testImages.rows(); i++) {
         auto begin = GET_TIME;
-        // std::cout << "entro " << i << std::endl;
-        Matrix characteristic_transformation = Matrix(1, _transformedTrainImages.cols());
+
         //generate the characteristic transform
+        Matrix characteristic_transformation = Matrix(1, _transformedTrainImages.cols());
         for(int j = 0; j < alpha; j++){
             double acum = 0.0;
             for(int k = 0; k < _pcaVecs.cols() ; k++){
@@ -128,17 +127,15 @@ Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
                 }
             characteristic_transformation.setIndex(0,j,acum);
         }
-        // std::cout << "char trans ok " << std::endl;
-        cout << characteristic_transformation.rows() <<"x"<< characteristic_transformation.cols() << endl;
-        cout << _transformedTrainImages.rows() <<"x"<< _transformedTrainImages.cols() << endl;
+
+        cout << "characteristic_transformation" << endl;
+        cout << characteristic_transformation << endl;
+
+        // knn predict
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
-        // std::cout << "knn pred  ok " << std::endl;
         testLabels.setIndex(i , 0 ,ith_label);
-        // std::cout << "set index ok " << std::endl;
         auto end = GET_TIME;
-        if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
     }
-    std::cout << " salio del loop" << std::endl;
     return testLabels;
 }
 

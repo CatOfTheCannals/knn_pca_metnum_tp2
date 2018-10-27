@@ -48,16 +48,22 @@ void pca_knn_qualitative_and_quantitative(){
     Dataset d = Dataset::loadImdbVectorizedReviews();
     std::cout << std::endl << "dataset successfully loaded" << std::endl;
     double test_ratio = 0.9;
-    d.splitTrainFromTest(test_ratio);
+    d.shuffle();
+    //d.splitTrainFromTest(test_ratio);
     std::cout << std::endl << "dataset successfully split" << std::endl;
 
 
     auto test_labels = d.getTestLabels();
+    auto train_labels = d.getTrainLabels();
+
+    std::cout << "train set size: (" << train_labels.rows() << "," << train_labels.cols() << ")" << std::endl;
+    std::cout << train_labels << std::endl;
     
     /*
     int MAX_ALPHA = d.getTrainImages().cols();
     vector<int> alphas = vector<int>({5,10,15,20,50,100,MAX_ALPHA/10,MAX_ALPHA/4,MAX_ALPHA/2,MAX_ALPHA*7/10,MAX_ALPHA});
     */
+
 
     int MAX_ALPHA = 500;
     vector<int> alphas = vector<int>({5,10,15,20,50,100, MAX_ALPHA});
@@ -75,18 +81,19 @@ void pca_knn_qualitative_and_quantitative(){
         int step = 10;
         for (int k = 5; k < iterations; k+=step) {
             
-            std::cout << std::endl << "k: " << k << std::endl;
             begin = GET_TIME;
             auto results = d.pca_kNN_predict_new(k, alpha);
-            d.pca_kNN_predict_old(k);
 			double acc = accuracy(test_labels, results);
 			std::cout << "accuracy: " << acc << std::endl;
             end = GET_TIME;
             auto predict_time = GET_TIME_DELTA(begin, end);
             std::cout <<  "predict_time : " << predict_time << std::endl;
 
+            // std::cout << "results alpha:" << alpha << " k: " << k << std::endl;
+            // std::cout << results << std::endl;
+
             file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
         }
-        
     }
+
 }
