@@ -70,6 +70,7 @@ public:
     std::tuple<int, int> maxCoeff();
     friend std::ostream& operator<<(std::ostream& o, const Matrix& a);
     bool isApproximate(const Matrix b, double epsilon) const;
+    double sum() const;
     double squared_norm() const;
     double norm() const;
     static Matrix vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows);

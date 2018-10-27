@@ -128,8 +128,6 @@ Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
             characteristic_transformation.setIndex(0,j,acum);
         }
 
-        cout << "characteristic_transformation" << endl;
-        cout << characteristic_transformation << endl;
 
         // knn predict
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);

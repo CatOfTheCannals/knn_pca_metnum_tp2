@@ -56,14 +56,13 @@ void pca_knn_qualitative_and_quantitative(){
     auto test_labels = d.getTestLabels();
     auto train_labels = d.getTrainLabels();
 
-    std::cout << "train set size: (" << train_labels.rows() << "," << train_labels.cols() << ")" << std::endl;
-    std::cout << train_labels << std::endl;
+    // std::cout << "train set size: (" << train_labels.rows() << "," << train_labels.cols() << ")" << std::endl;
+    //std::cout << train_labels << std::endl;
     
     /*
     int MAX_ALPHA = d.getTrainImages().cols();
     vector<int> alphas = vector<int>({5,10,15,20,50,100,MAX_ALPHA/10,MAX_ALPHA/4,MAX_ALPHA/2,MAX_ALPHA*7/10,MAX_ALPHA});
     */
-
 
     int MAX_ALPHA = 500;
     vector<int> alphas = vector<int>({5,10,15,20,50,100, MAX_ALPHA});
@@ -89,8 +88,8 @@ void pca_knn_qualitative_and_quantitative(){
             auto predict_time = GET_TIME_DELTA(begin, end);
             std::cout <<  "predict_time : " << predict_time << std::endl;
 
-            // std::cout << "results alpha:" << alpha << " k: " << k << std::endl;
-            // std::cout << results << std::endl;
+            std::cout << "results sumalpha:" << alpha << " k: " << k << std::endl;
+            std::cout << results.sum() << std::endl;
 
             file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
         }

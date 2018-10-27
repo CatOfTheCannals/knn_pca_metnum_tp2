@@ -79,8 +79,6 @@ int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int
     int differentLabels = 2;
 
     Matrix distances = distance(data, observation); //vector de distancias
-    cout << "distances:" << endl;
-    cout << distances << endl;
 
     vector<tuple<int, double>> personDistances; /*first element of tuple identifies the person on data observation, second is the distance
     to the imput observation. */
@@ -89,12 +87,12 @@ int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int
         personDistances.push_back(std::make_tuple(labels(i), distances(i)));
     }
 
-    cout << "distances per label: " << personDistances.size() << endl;
-    cout << "label, distance" << endl;
+    // cout << "distances per label: " << personDistances.size() << endl;
+    // cout << "label, distance" << endl;
     for(auto label_distance : personDistances) {
         int ith_closest_neighbour_label = get<0>(label_distance);
         double distance = get<1>(label_distance);
-        cout << ith_closest_neighbour_label << ", " << distance << endl;
+        // cout << ith_closest_neighbour_label << ", " << distance << endl;
     }
     sort(personDistances.begin(), personDistances.end(), shortestDistance); //Sorts personDistances from the shortest distance to the largest.
 

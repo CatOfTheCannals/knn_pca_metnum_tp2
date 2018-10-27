@@ -334,6 +334,17 @@ bool Matrix::isApproximate(const Matrix b, double epsilon) const{
     return true;
 }
 
+double Matrix::sum() const {
+    assert(this->_rows == 1 || this->_cols == 1);
+    double res = 0;
+    auto size = this->size();
+    for (std::size_t i = 0; i < size; i++) {
+        res += (double)((*this)(i));
+    }
+
+    return res;
+}
+
 double Matrix::squared_norm() const {
     assert(this->_rows == 1 || this->_cols == 1);
     double res = 0;
