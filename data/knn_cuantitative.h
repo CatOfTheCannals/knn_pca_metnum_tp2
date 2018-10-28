@@ -12,6 +12,6 @@
 #include "../src/utils.h"
 #include "../src/Dataset.h"
 
-void knn_cuantitative();
+void knn_qualitative_and_quantitative();
 
 #endif //TP2_METODOS_KNN_CUANTITATIVE_H

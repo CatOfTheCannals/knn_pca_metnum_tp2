@@ -83,36 +83,16 @@ void Dataset::trainPca(int alpha, double epsilon) {
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
     _pcaAlpha = alpha;
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
-    _transformedTrainImages = _trainImages*_pcaVecs;
     std::cout << "_pcaVecs " << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
-    std::cout << "_transformedTrainImages " << _transformedTrainImages.rows() << ", " << _transformedTrainImages.cols() << std::endl;
 
 }
 
-Matrix Dataset::pca_kNN_predict_old(int k) const {
-
-    Matrix testLabels = Matrix(_testImages.rows(), 1);
-    // std::cout << "rows " << _testImages.rows() << std::endl;
-    for(int i = 0; i < _testImages.rows(); i++) {
-        auto begin = GET_TIME;
-        // std::cout << "entro " << i << std::endl;
-        auto characteristic_transformation = _testImages.getRow(i)*_pcaVecs;
-        // characteristic_transformation.show_matrix();
-        // std::cout << "char trans ok " << std::endl;
-        int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
-        // std::cout << "knn pred  ok " << std::endl;
-        testLabels.setIndex(i , 0 ,ith_label);
-        // std::cout << "set index ok " << std::endl;
-        auto end = GET_TIME;
-        //if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
-    }
-    std::cout << " salio del loop" << std::endl;
-    return testLabels;
-}
-
-Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
+Matrix Dataset::pca_kNN_predict(int k, int alpha) {
     assert(alpha <= _pcaAlpha);
     Matrix testLabels = Matrix(_testImages.rows(), 1);
+
+    // create change feature basis
+    _transformedTrainImages = _trainImages * (_pcaVecs.subMatrix(0,_pcaVecs.rows() - 1 , 0, alpha - 1));
 
     // iterate through test instances
     for(int i = 0; i < _testImages.rows(); i++) {
@@ -128,7 +108,6 @@ Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
             characteristic_transformation.setIndex(0,j,acum);
         }
 
-
         // knn predict
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
         testLabels.setIndex(i , 0 ,ith_label);
@@ -141,7 +120,6 @@ Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
 Matrix Dataset::kNN_predict(int k) const {
     Matrix testLabels = Matrix(_testImages.rows(), 1);
     for(int i = 0; i < _testImages.rows(); i++) {
-        std::cout << "call knn for row: " << i << std::endl;
         int ith_label = kNN(_trainImages, _trainLabels, _testImages.getRow(i), k);
         testLabels.setIndex(i ,0 , ith_label);
     }
@@ -192,7 +170,7 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSe
         std::cout << "train_pca" << std::endl;
         d.trainPca(alpha, epsilon);
         scores_per_fold.push_back(allMetricsWrapper(std::get<1>(labelFold),
-                                                    d.pca_kNN_predict_old(neighbours)));
+                                                    d.pca_kNN_predict(neighbours, alpha)));
     }
 
     return scores_per_fold;

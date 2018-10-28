@@ -87,14 +87,18 @@ int kNN(const Matrix& data, const Matrix& labels, const Matrix& observation, int
         personDistances.push_back(std::make_tuple(labels(i), distances(i)));
     }
 
-    // cout << "distances per label: " << personDistances.size() << endl;
-    // cout << "label, distance" << endl;
-    for(auto label_distance : personDistances) {
-        int ith_closest_neighbour_label = get<0>(label_distance);
-        double distance = get<1>(label_distance);
-        // cout << ith_closest_neighbour_label << ", " << distance << endl;
-    }
+
     sort(personDistances.begin(), personDistances.end(), shortestDistance); //Sorts personDistances from the shortest distance to the largest.
+
+    if(LOG_KNN_DISTANCES) {
+        cout << "distances per train instance: " << personDistances.size() << endl;
+        cout << "label, distance" << endl;
+        for (auto label_distance : personDistances) {
+            int ith_closest_neighbour_label = get<0>(label_distance);
+            double distance = get<1>(label_distance);
+            cout << ith_closest_neighbour_label << ", " << distance << endl;
+        }
+    }
 
     vector<int> repetitions = vector<int>(differentLabels, 0);
 

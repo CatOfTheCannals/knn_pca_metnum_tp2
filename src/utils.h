@@ -13,5 +13,8 @@
 #define GET_TIME_DELTA(begin, end) \
      std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
 
+#define LOG_KNN_DISTANCES false
+#define LOG_EXP_RESULTS_SUM true
+
 
 #endif //TP2_METODOS_UTILS_H
