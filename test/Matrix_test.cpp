@@ -164,3 +164,8 @@ TEST_F (mockMatrices, abs){
     ASSERT_EQ(l_copy, l.abs());
 }
 
+TEST_F (mockMatrices, mt_times_m){
+
+    ASSERT_TRUE(e.mt_times_m().isApproximate(e.transpose()*e, 0.01));
+    ASSERT_TRUE(e.transpose().mt_times_m().isApproximate(e*e.transpose(), 0.01));
+}

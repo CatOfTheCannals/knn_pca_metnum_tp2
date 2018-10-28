@@ -31,6 +31,7 @@ void pca_knn_qualitative_and_quantitative(){
     auto train_time = GET_TIME_DELTA(begin, end);
     std::cout <<  "train_time : " << train_time << std::endl;
 
+    /*
     for(int alpha : alphas) {
         std::cout << std::endl << "alpha: " << alpha << " out of " << MAX_ALPHA  << std::endl;
         int iterations = train_labels.rows()/10;
@@ -46,6 +47,12 @@ void pca_knn_qualitative_and_quantitative(){
             auto predict_time = GET_TIME_DELTA(begin, end);
             std::cout <<  "predict_time : " << predict_time << std::endl;
 
+            if(LOG_EXP_PCA_VECS) {
+                std::cout << "getPca Vecs: " << std::endl;
+                std::cout << d.getPcaVecs() << std::endl;
+            }
+
+
             if(LOG_EXP_RESULTS_SUM) {
                 std::cout << "results sumapha:" << alpha << " k: " << k << std::endl;
                 std::cout << results.sum() << std::endl;
@@ -54,5 +61,5 @@ void pca_knn_qualitative_and_quantitative(){
             file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
         }
     }
-
+*/
 }

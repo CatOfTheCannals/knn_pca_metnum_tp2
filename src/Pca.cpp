@@ -46,7 +46,6 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
                           double epsilon) {
 
     Matrix X(A);
-    Matrix A_copy(A);
 
     assert((num_components <= X.rows()) && (num_components <= X.cols()));
 
@@ -62,11 +61,15 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         tie(eigen_vector, eigen_value) =
                 power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
 
+        if ((i > 0) && eigen_vector.isApproximate(k_eigen_vectors.subMatrix(0, A.rows()-1, i-1, i-1), 0.01)){
+            std::cout << "se esta repitiendo autovector ñeri" << std::endl;
+        }
+
         for (auto q = 0; q < k_eigen_vectors.rows(); q++) {
             k_eigen_vectors.setIndex(q, i, eigen_vector(q, 0)); // fill eigen vector in res matrix
         }
         lambdas.setIndex(i, i, eigen_value);
-        if(i%100==0){ cout <<"PCA i : " << i << endl;}
+        if(i%100==0){ cout << "PCA i : " << i << endl;}
         auto external = eigen_vector*eigen_vector.transpose();
         X = X - (external * eigen_value);
     }
@@ -86,12 +89,11 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
     assert(input.rows() == x_0.rows());
     assert(1 == x_0.cols());
 
-
-
     Matrix x(x_0 / x_0.norm());
     Matrix A(input);
 
-    double prev_norm = 0;
+    double lambda;
+    double prev_lambda = 0;
 
     auto Ax = A*x;
 
@@ -99,15 +101,15 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
         auto Ax_norm = Ax.norm();
         x = Ax / Ax_norm;
         Ax = A*x;
-        if( fabs(Ax_norm - prev_norm) < epsilon ) {
+
+        lambda = (x.transpose()*Ax)(0);
+        if( fabs(lambda - prev_lambda) < epsilon ) {
             break;
         }
-        prev_norm = Ax_norm;
-
+        prev_lambda = lambda;
     }
 
-    auto lambda = x.transpose()*Ax;
-    return make_tuple(x, lambda(0));
+    return make_tuple(x, lambda);
 }
 
 Matrix ones(int rows, int cols)  {

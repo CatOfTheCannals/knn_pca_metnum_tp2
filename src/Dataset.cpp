@@ -79,6 +79,7 @@ void Dataset::splitTrainFromTest(double testPercentage) {
 void Dataset::trainPca(int alpha, double epsilon) {
     assert(_trainImages.rows() > 0);
     Matrix M = get_mt_times_m();
+
     auto pca_eigenvectors_and_eigenvalues = svd(M, alpha, epsilon);
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
     _pcaAlpha = alpha;
@@ -91,7 +92,7 @@ Matrix Dataset::pca_kNN_predict(int k, int alpha) {
     assert(alpha <= _pcaAlpha);
     Matrix testLabels = Matrix(_testImages.rows(), 1);
 
-    // create change feature basis
+    // change basis of the features
     _transformedTrainImages = _trainImages * (_pcaVecs.subMatrix(0,_pcaVecs.rows() - 1 , 0, alpha - 1));
 
     // iterate through test instances
