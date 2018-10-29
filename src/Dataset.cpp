@@ -110,10 +110,25 @@ Matrix Dataset::pca_kNN_predict_old(int k) const {
     return testLabels;
 }
 
-Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
+Matrix Dataset::pca_kNN_predict_new(int k, int alpha) {
     assert(alpha <= _pcaAlpha);
     Matrix testLabels = Matrix(_testImages.rows(), 1);
-
+    cout << "retraining model for new alpha: "<< alpha << endl;
+    //_transformedTrainImages = trainImages*_pcaVecs
+    _transformedTrainImages = Matrix(_trainImages.rows(),alpha);
+    for(int i = 0; i < _trainImages.rows(); i++) {
+        auto begin = GET_TIME;
+        for(int j = 0; j < alpha; j++){
+            double acum = 0.0;
+            for(int k = 0; k < _pcaVecs.rows() ; k++){
+                acum+=_testImages(i,k)*_pcaVecs(k,j);
+                }
+            _transformedTrainImages.setIndex(i,j,acum);
+        }
+        auto end = GET_TIME;
+        if(i%100==0){cout << "new train i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
+    }
+    cout << "done training model for alpha: "<< alpha << endl;
     // iterate through test instances
     for(int i = 0; i < _testImages.rows(); i++) {
         auto begin = GET_TIME;
@@ -122,8 +137,8 @@ Matrix Dataset::pca_kNN_predict_new(int k, int alpha) const {
         Matrix characteristic_transformation = Matrix(1, _transformedTrainImages.cols());
         for(int j = 0; j < alpha; j++){
             double acum = 0.0;
-            for(int k = 0; k < _pcaVecs.cols() ; k++){
-                acum+=_testImages(i,k)*_pcaVecs(j,k);
+            for(int k = 0; k < _pcaVecs.rows() ; k++){
+                acum+=_testImages(i,k)*_pcaVecs(k,j);
                 }
             characteristic_transformation.setIndex(0,j,acum);
         }
