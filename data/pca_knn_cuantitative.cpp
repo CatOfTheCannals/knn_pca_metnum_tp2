@@ -72,27 +72,8 @@ void pca_knn_qualitative_and_quantitative(){
     auto end = GET_TIME;
     auto train_time = GET_TIME_DELTA(begin, end);
     std::cout <<  "train_time : " << train_time << std::endl;
-
-    for(int alpha : alphas) {
-        std::cout << std::endl << "alpha: " << alpha << " out of " << MAX_ALPHA  << std::endl;
-        // int iterations = rows/10;
-        int iterations = 6;
-        int step = 10;
-        for (int k = 5; k < iterations; k+=step) {
-            
-            begin = GET_TIME;
-            auto results = d.pca_kNN_predict_new(k, alpha);
-			double acc = accuracy(test_labels, results);
-			std::cout << "accuracy: " << acc << std::endl;
-            end = GET_TIME;
-            auto predict_time = GET_TIME_DELTA(begin, end);
-            std::cout <<  "predict_time : " << predict_time << std::endl;
-
-            std::cout << "results sumalpha:" << alpha << " k: " << k << std::endl;
-            std::cout << results.sum() << std::endl;
-
-            file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
-        }
-    }
+    
+    Dataset_tester dt = Dataset_tester(d);
+    dt.checksumPCA();
 
 }
