@@ -24,7 +24,7 @@ void pca_cuantitative(const vector<int> alphas, const vector<double> chunkPercen
 
             // train pca with the biggest alpha
             auto begin = GET_TIME;
-            d.trainPca(alpha);
+            d.trainActualPCA(alpha);
             auto end = GET_TIME;
             auto train_time = GET_TIME_DELTA(begin, end);
             std::cout << "train_time : " << train_time << std::endl;

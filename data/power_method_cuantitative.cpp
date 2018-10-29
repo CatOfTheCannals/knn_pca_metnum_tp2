@@ -1,6 +1,6 @@
 #include "power_method_cuantitative.h"
 
-void power_method_cuantitative(int n, double max_epsilon_ceros , int max_reps, int rep_step) {
+void power_method_cuantitative(int n, int max_reps, int rep_step) {
 
     std::stringstream filename;
     filename << "../../data/results/power_method_cuantitative/"
@@ -9,7 +9,7 @@ void power_method_cuantitative(int n, double max_epsilon_ceros , int max_reps, i
     std::cout << filename.str() << std::endl;
     ofstream file(filename.str());
 
-    file << "n" << "," << "epsilon" << "," << "reps" << "time" << "mse" << std::endl;
+    file << "n" << "," << "reps" << "," << "time" << "," << "mse" << std::endl;
 
     for (int matrix_size = 1; matrix_size < n; matrix_size += n / 10) {
 
@@ -18,8 +18,6 @@ void power_method_cuantitative(int n, double max_epsilon_ceros , int max_reps, i
         Matrix A = Matrix::random(matrix_size);
 
         for (int repetitions = 0; repetitions < max_reps; repetitions += rep_step) {
-
-            double epsilon = pow(1.0e-1, epsilon_ceros);
 
             Matrix x_0( random(A.rows(), 1));
             Matrix eigen_vector(A.rows(), 1);
@@ -33,7 +31,7 @@ void power_method_cuantitative(int n, double max_epsilon_ceros , int max_reps, i
 
             double result_mse = Matrix::mse(A * eigen_vector, eigen_vector * eigen_value);
 
-            file << matrix_size << "," << "," << repetitions
+            file << matrix_size << "," << repetitions
                  << "," << calculation_time << "," << result_mse << std::endl;
             std::cout << "time: " << calculation_time << std::endl;
 

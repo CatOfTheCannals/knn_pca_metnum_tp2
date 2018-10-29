@@ -26,7 +26,6 @@ void pca_knn_qualitative_and_quantitative(
         pca_predict_filename << "../../data/results/pca_knn_cuali_cuanti_experiment_results_n_" << n <<".csv";
         ofstream file;
         file.open(pca_predict_filename .str());
-        file.open(pca_predict_filename.str());
         file << "alpha" << "," << "k" << "," << "accuracy" <<","<<"time" << std::endl;
 
         for (int alpha : alphas) {
