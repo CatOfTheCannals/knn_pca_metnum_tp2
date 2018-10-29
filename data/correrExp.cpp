@@ -29,6 +29,11 @@ int main(int argc, char** argv){
 
     // knn_qualitative_and_quantitative(chunkPercentages, neighbourhoodPercentualSizes);
     pca_knn_qualitative_and_quantitative(alphas, chunkPercentages, neighbourhoodPercentualSizes);
+
+    // power_method_cuantitative(2000, 101, 25);
+
+    // pca_cuantitative(const vector<int> alphas, const vector<double> chunkPercentages);
+
     std::cout << std::endl << "Done cuanti cuali exp." << std::endl;
 
     return 0;

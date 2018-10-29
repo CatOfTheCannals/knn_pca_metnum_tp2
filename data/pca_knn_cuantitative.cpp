@@ -15,7 +15,7 @@ void pca_knn_qualitative_and_quantitative(
 
         // train pca with the biggest alpha
         auto begin = GET_TIME;
-        d.trainPca(alphas.back());
+        d.trainActualPCA(alphas.back());
         auto end = GET_TIME;
         auto train_time = GET_TIME_DELTA(begin, end);
         std::cout << "train_time : " << train_time << std::endl;
