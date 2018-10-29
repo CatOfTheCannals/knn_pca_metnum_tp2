@@ -21,3 +21,10 @@ void Dataset_tester::checksumPCA(){
     	cout << k <<" sum: "<<componentSums[k]<<endl;
     }
 }
+
+void Dataset_tester::write_down_two_components(){ 
+    cout << "breaks here" << endl;
+    myDataset.trainActualPCA(2);
+    cout << myDataset.getTransformedTrainImages() << endl << endl;
+    cout << myDataset.getTrainLabels() << endl;
+}
