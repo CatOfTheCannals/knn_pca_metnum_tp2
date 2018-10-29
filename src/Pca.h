@@ -9,13 +9,13 @@
 #define     GET_TIME_DELTA(begin, end) \
      std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()
 
-tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon);
+tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components);
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon);
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon, int max_iters);
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input);
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, int max_iters);
 
-//pair<double, Matrix> powerMethodQ1(long N,const Matrix &a )
-tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components, double epsilon);
+tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a);
+tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components);
 
 Matrix ones(int rows, int cols);
 

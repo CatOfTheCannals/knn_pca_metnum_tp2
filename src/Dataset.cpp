@@ -69,18 +69,26 @@ void Dataset::generate_mt_times_m(){
 }
 void Dataset::splitTrainFromTest(double testPercentage) {
     int testRows = _trainImages.rows() * testPercentage;
-    cout << " test rows: "<< testRows << " rows: "<< _trainImages.rows() << endl;
     _testImages = _trainImages.subMatrix(0, testRows, 0, _trainImages.cols() - 1);
     _testLabels = _trainLabels.subMatrix(0, testRows, 0, _trainLabels.cols() - 1);
     _trainImages = _trainImages.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
     _trainLabels = _trainLabels.subMatrix(testRows + 1, _trainLabels.rows() - 1, 0, _trainLabels.cols() - 1);
 }
 
-void Dataset::trainPca(int alpha, double epsilon) {
+void Dataset::chunkTrainSet(double percentageToKeep) {
+    /*
+     * WARNING: always consider shuffling dataset before using this function
+     */
+    int rows_to_keep = _trainImages.rows() * percentageToKeep;
+    _trainImages = _trainImages.subMatrix(rows_to_keep + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
+    _trainLabels = _trainLabels.subMatrix(rows_to_keep + 1, _trainLabels.rows() - 1, 0, _trainLabels.cols() - 1);
+}
+
+void Dataset::trainPca(int alpha) {
     assert(_trainImages.rows() > 0);
     Matrix M = get_mt_times_m();
 
-    auto pca_eigenvectors_and_eigenvalues = svd(M, alpha, epsilon);
+    auto pca_eigenvectors_and_eigenvalues = svd(M, alpha);
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
     _pcaAlpha = alpha;
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
@@ -93,7 +101,11 @@ Matrix Dataset::pca_kNN_predict(int k, int alpha) {
     Matrix testLabels = Matrix(_testImages.rows(), 1);
 
     // change basis of the features
-    _transformedTrainImages = _trainImages * (_pcaVecs.subMatrix(0,_pcaVecs.rows() - 1 , 0, alpha - 1));
+    if(alpha != _currentAlpha) {
+        _transformedTrainImages = _trainImages * (_pcaVecs.subMatrix(0,_pcaVecs.rows() - 1 , 0, alpha - 1));
+        _currentAlpha = alpha;
+    }
+
 
     // iterate through test instances
     for(int i = 0; i < _testImages.rows(); i++) {
@@ -153,7 +165,6 @@ Dataset::knnEquitativeSamplingKFold(int neighbours, bool bigTestSet = false)  {
 std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
 Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSet = false) {
 
-    double epsilon = 0.0001;
     int amount_of_people = 41;
     int amount_of_picks = _trainImages.rows();
     int picks_per_person = amount_of_picks / amount_of_people;
@@ -169,7 +180,7 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSe
         Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                             std::get<1>(imageFold), std::get<1>(labelFold));
         std::cout << "train_pca" << std::endl;
-        d.trainPca(alpha, epsilon);
+        d.trainPca(alpha);
         scores_per_fold.push_back(allMetricsWrapper(std::get<1>(labelFold),
                                                     d.pca_kNN_predict(neighbours, alpha)));
     }

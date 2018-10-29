@@ -46,7 +46,7 @@ TEST_F (runTest, powerG){
     Matrix v = Matrix(3,1);
     double lambda;
 
-    std::tie(v, lambda) = power_method(x_0, g, epsilon);
+    std::tie(v, lambda) = power_method(x_0, g);
 
     epsilon *= 10; // la precision queda asi por algun motivo
     ASSERT_TRUE((g*v).isApproximate(v * lambda, epsilon)) ;
@@ -56,7 +56,7 @@ TEST_F (runTest, svdTest1){
 
     auto sim = f * f.transpose();
 
-    auto svdRes = svd(sim, 3, epsilon);
+    auto svdRes = svd(sim, 3);
     Matrix autoVecs(std::get<0>(svdRes));
     Matrix lambdas(std::get<1>(svdRes));
 

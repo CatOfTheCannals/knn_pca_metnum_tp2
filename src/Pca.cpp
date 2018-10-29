@@ -1,7 +1,7 @@
 #include "Pca.h"
 
 
-tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon) {
+tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components) {
     Matrix X(A);
     Matrix mean(1, A.cols());
 
@@ -22,28 +22,11 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     auto M = X.mt_times_m();
 
 
-    return svd(M, num_components, epsilon);
+    return svd(M, num_components);
 
-    // auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
-
-    // std::cout << M_eigenvectors.rows() << ", " << M_eigenvectors.cols() << std::endl;
-    // std::cout << X.rows() << ", " << X.cols() << std::endl;
-
-    //std::cout << "difference between U's:" << std::endl ;
-    //std::cout << big_m_eigenvectors - M_eigenvectors << std::endl;
-    //std::cout << M_eigenvectors << std::endl;
-
-    //std::cout << "BIG: " << big_M.multiply(big_m_eigenvectors) -big_m_eigenvectors.multiply(big_lambdas) << std::endl;
-    //std::cout << std::endl << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl;
-    //std::cout << "SMALL: " << M.multiply(m_eigenvectors) - m_eigenvectors.multiply(lambdas) << std::endl;
-
-    // std::cout << "lambdas:" << std::endl << lambdas << std::endl;
-
-    //return make_tuple(m_eigenvectors, lambdas);
 }
 
-tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
-                          double epsilon) {
+tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components) {
 
     Matrix X(A);
 
@@ -58,7 +41,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         Matrix eigen_vector(A.rows(), 1);
         double eigen_value;
         // compute i_th eigen vector and its value
-        tie(eigen_vector, eigen_value) = power_method(x_0, X, epsilon); 
+        tie(eigen_vector, eigen_value) = powerMethodQ1(x_0, X);
 
         if ((i > 0) && eigen_vector.isApproximate(k_eigen_vectors.subMatrix(0, A.rows()-1, i-1, i-1), 0.01)){
             std::cout << "se esta repitiendo autovector ñeri" << std::endl;
@@ -77,37 +60,33 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
     return make_tuple(k_eigen_vectors, lambdas);
 }
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon) {
-    return power_method(x_0, input, epsilon, 100);
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input) {
+    return power_method(x_0, input, 100);
 
 };
-/*
-pair<autovalor, autovector> powerMethodQ1(long N,const Matrix &a ) {
 
-  vector<double> inicial = vector<double>(a.cols(), 1.0);
-  for(int i = 0 ; i < inicial.size();i+=2){
-    inicial[i]= -1.0 ;
-  }
+tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a) {
+    long N =25;
 
-  for (long i = 0; i < N; i++) {
-    inicial = productoMatrizVector(a, inicial);
-    inicial = normalizar(inicial);
-  }
+    for (long i = 0; i < N; i++) {
+        x_0 = a * x_0;
+        x_0 = x_0 / x_0.norm();
+    }
 
-  float_vector producto = productoMatrizVector(a, inicial);
-  autovalor val = 0.0;
- for(int i = 0 ; i< inicial.size() ; i++){
-   if(inicial[i]!=0.0){
-     val = producto[i]/inicial[i];
-   }
+    Matrix producto = a * x_0;
+    double val = 0.0;
+    for(int i = 0 ; i< x_0.size() ; i++){
+        if(x_0(i)!=0.0){
+            val = producto(i)/x_0(i);
+        }
 
- }
-  pair<autovalor, autovector> res = pair<autovalor, autovector>(val, inicial);
+    }
+    std::tuple<Matrix, double> res = std::make_tuple(x_0, val);
 
-  return res;
-} */
+    return res;
+}
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon, int max_iters) {
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, int max_iters) {
     assert(input.rows() == input.cols());
     assert(input.rows() == x_0.rows());
     assert(1 == x_0.cols());
@@ -128,9 +107,6 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon, i
         Ax = A*x;
 
         lambda = (x.transpose()*Ax)(0);
-        if( fabs(lambda - prev_lambda) < epsilon ) {
-            break;
-        }
         prev_lambda = lambda;
     }
 

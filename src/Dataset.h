@@ -144,10 +144,13 @@ public:
     Matrix& get_mt_times_m() ;
 
     void shuffle();
-    void trainPca(int alpha, double epsilon);
+    void splitTrainFromTest(double testPercentage);
+    void chunkTrainSet(double percentageToKeep);
+
+    void trainPca(int alpha);
     Matrix pca_kNN_predict(int k, int alpha);
     Matrix kNN_predict(int k) const;
-    void splitTrainFromTest(double testPercentage);
+
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
         knnEquitativeSamplingKFold(int neighbours, bool bigTestSet);
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
@@ -178,6 +181,8 @@ private:
     Matrix _pcaLambdas;
     Matrix _transformedTrainImages;
     int _pcaAlpha = 0;
+    int _currentAlpha = 0;
+
     // Matrix _transformedTestImages;
 };
 

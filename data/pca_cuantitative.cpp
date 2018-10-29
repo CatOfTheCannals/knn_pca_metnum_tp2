@@ -19,7 +19,7 @@ void pca_cuantitative() {
             Matrix features_sub_sample = features.subMatrix(0, rows, 0, features.cols() - 1);
 
             auto begin = GET_TIME;
-            auto vectors_and_lambdas = pca(features_sub_sample , alpha, epsilon);
+            auto vectors_and_lambdas = pca(features_sub_sample , alpha);
             auto end = GET_TIME;
 
             file << features_sub_sample.rows() << "," << alpha

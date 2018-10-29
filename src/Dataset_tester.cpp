@@ -9,7 +9,7 @@ void Dataset_tester::checksumPCA(){
             component_sum+=fabs(myDataset.getPcaVecs()(i,j));
     	}
         componentSums.push_back(component_sum);
-        cout << "done sum: "<<j<<" got "<<component_sum<<endl;
+        cout << "done sum: "<< j <<" got "<<component_sum<<endl;
     }
     for(int k = 0; k < componentSums.size(); k++){
     	cout << k <<" sum: "<<componentSums[k]<<endl;
