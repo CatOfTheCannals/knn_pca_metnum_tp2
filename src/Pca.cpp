@@ -57,9 +57,8 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         Matrix x_0( random(A.rows(), 1));
         Matrix eigen_vector(A.rows(), 1);
         double eigen_value;
-
-        tie(eigen_vector, eigen_value) =
-                power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
+        // compute i_th eigen vector and its value
+        tie(eigen_vector, eigen_value) = power_method(x_0, X, epsilon); 
 
         if ((i > 0) && eigen_vector.isApproximate(k_eigen_vectors.subMatrix(0, A.rows()-1, i-1, i-1), 0.01)){
             std::cout << "se esta repitiendo autovector ñeri" << std::endl;
@@ -71,20 +70,44 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         lambdas.setIndex(i, i, eigen_value);
         if(i%100==0){ cout << "PCA i : " << i << endl;}
         auto external = eigen_vector*eigen_vector.transpose();
+        cout <<"eigen value "<<i<<": " << eigen_value << endl;
         X = X - (external * eigen_value);
     }
 
     return make_tuple(k_eigen_vectors, lambdas);
 }
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
-                                   double epsilon) {
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon) {
     return power_method(x_0, input, epsilon, 100);
 
 };
+/*
+pair<autovalor, autovector> powerMethodQ1(long N,const Matrix &a ) {
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
-                                   double epsilon, int max_iters) {
+  vector<double> inicial = vector<double>(a.cols(), 1.0);
+  for(int i = 0 ; i < inicial.size();i+=2){
+    inicial[i]= -1.0 ;
+  }
+
+  for (long i = 0; i < N; i++) {
+    inicial = productoMatrizVector(a, inicial);
+    inicial = normalizar(inicial);
+  }
+
+  float_vector producto = productoMatrizVector(a, inicial);
+  autovalor val = 0.0;
+ for(int i = 0 ; i< inicial.size() ; i++){
+   if(inicial[i]!=0.0){
+     val = producto[i]/inicial[i];
+   }
+
+ }
+  pair<autovalor, autovector> res = pair<autovalor, autovector>(val, inicial);
+
+  return res;
+} */
+
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon, int max_iters) {
     assert(input.rows() == input.cols());
     assert(input.rows() == x_0.rows());
     assert(1 == x_0.cols());
@@ -95,10 +118,12 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
     double lambda;
     double prev_lambda = 0;
 
-    auto Ax = A*x;
+    Matrix Ax = A*x;
 
     for(int i = 0; i < max_iters; i++) {
-        auto Ax_norm = Ax.norm();
+        double Ax_norm = Ax.norm();
+        if(i==0){
+            cout <<"ax norm: "<< Ax_norm <<endl; }
         x = Ax / Ax_norm;
         Ax = A*x;
 

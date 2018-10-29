@@ -14,6 +14,7 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
 tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon);
 tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, double epsilon, int max_iters);
 
+//pair<double, Matrix> powerMethodQ1(long N,const Matrix &a )
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components, double epsilon);
 
 Matrix ones(int rows, int cols);

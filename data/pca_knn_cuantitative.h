@@ -10,6 +10,7 @@
 #include <tuple>
 
 #include "../src/utils.h"
+#include "../src/Dataset_tester.h"
 #include "../src/Dataset.h"
 
 void pca_knn_cuantitative();

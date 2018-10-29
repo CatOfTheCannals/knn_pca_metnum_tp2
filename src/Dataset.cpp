@@ -103,8 +103,8 @@ Matrix Dataset::pca_kNN_predict(int k, int alpha) {
         Matrix characteristic_transformation = Matrix(1, _transformedTrainImages.cols());
         for(int j = 0; j < alpha; j++){
             double acum = 0.0;
-            for(int k = 0; k < _pcaVecs.cols() ; k++){
-                acum+=_testImages(i,k)*_pcaVecs(j,k);
+            for(int k = 0; k < _pcaVecs.rows() ; k++){
+                acum+=_testImages(i,k)*_pcaVecs(k,j);
                 }
             characteristic_transformation.setIndex(0,j,acum);
         }

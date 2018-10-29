@@ -2,6 +2,7 @@
 
 
 void pca_knn_qualitative_and_quantitative(){
+
     double epsilon = 0.001;
 
     std::ostringstream filename;
@@ -17,7 +18,7 @@ void pca_knn_qualitative_and_quantitative(){
     //d.splitTrainFromTest(test_ratio);
     std::cout << std::endl << "dataset successfully split" << std::endl;
 
-
+    /*
     auto test_labels = d.getTestLabels();
     auto train_labels = d.getTrainLabels();
 
@@ -31,7 +32,7 @@ void pca_knn_qualitative_and_quantitative(){
     auto train_time = GET_TIME_DELTA(begin, end);
     std::cout <<  "train_time : " << train_time << std::endl;
 
-    /*
+
     for(int alpha : alphas) {
         std::cout << std::endl << "alpha: " << alpha << " out of " << MAX_ALPHA  << std::endl;
         int iterations = train_labels.rows()/10;
@@ -62,4 +63,8 @@ void pca_knn_qualitative_and_quantitative(){
         }
     }
 */
+
+    Dataset_tester dt = Dataset_tester(d);
+    dt.checksumPCA();
+
 }
