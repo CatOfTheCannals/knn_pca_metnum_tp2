@@ -17,7 +17,6 @@
 #include "vector_builder.h"
 
 
-
 class Dataset {
 public:
 
@@ -140,6 +139,7 @@ public:
     Matrix getTrainLabels() const;
     Matrix getPcaVecs() const;
     Matrix getPcaLambdas() const;
+    Matrix getTransformedTrainImages() const;
     void generate_mt_times_m();
     Matrix& get_mt_times_m() ;
 
@@ -150,6 +150,7 @@ public:
     void trainPca(int alpha);
     Matrix pca_kNN_predict(int k, int alpha);
     Matrix kNN_predict(int k) const;
+    void trainActualPCA(int alpha);
 
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
         knnEquitativeSamplingKFold(int neighbours, bool bigTestSet);

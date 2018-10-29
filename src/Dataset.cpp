@@ -15,6 +15,11 @@ Matrix Dataset::getTrainImages() const{
     return output;
 }
 
+Matrix Dataset::getTransformedTrainImages() const{
+    Matrix output(_transformedTrainImages);
+    return output;
+}
+
 Matrix Dataset::getTrainLabels() const{
     Matrix output(_trainLabels);
     return output;
@@ -61,6 +66,10 @@ void Dataset::generate_mt_times_m(){
         for (int j = 0; j < X.cols(); ++j) {
             X.setIndex(i,j, centered_row(j));
         }
+        if(DATASET_DEBUG_MODE && (i%100==0)){
+            cout << "product row at: "<< i <<endl;
+        }
+
     }
 
     //Matrix trans = X.transpose();
@@ -96,15 +105,28 @@ void Dataset::trainPca(int alpha) {
 
 }
 
+void Dataset::trainActualPCA(int alpha){
+    assert(_trainImages.rows() > 0);
+    Matrix M = get_mt_times_m();
+
+    auto pca_eigenvectors_and_eigenvalues = svd(M, alpha);
+    _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
+    _pcaAlpha = alpha;
+    _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
+    std::cout << "_pcaVecs " << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
+    
+    if(alpha != _currentAlpha) {
+        _transformedTrainImages = _trainImages * (_pcaVecs.subMatrix(0,_pcaVecs.rows() - 1 , 0, alpha - 1));
+        _currentAlpha = alpha;
+    }
+}
+
 Matrix Dataset::pca_kNN_predict(int k, int alpha) {
     assert(alpha <= _pcaAlpha);
     Matrix testLabels = Matrix(_testImages.rows(), 1);
 
     // change basis of the features
-    if(alpha != _currentAlpha) {
-        _transformedTrainImages = _trainImages * (_pcaVecs.subMatrix(0,_pcaVecs.rows() - 1 , 0, alpha - 1));
-        _currentAlpha = alpha;
-    }
+    this->trainActualPCA(alpha);
 
 
     // iterate through test instances
