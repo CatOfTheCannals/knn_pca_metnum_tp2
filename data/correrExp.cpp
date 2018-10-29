@@ -24,6 +24,7 @@ int main(int argc, char** argv){
     auto chunkPercentages = vector<double>({0.02, 0.04, 0.08, 0.2 , 0.4});
     auto neighbourhoodPercentualSizes = vector<double>({0.002, 0.004, 0.006, 0.01, 0.02, 0.05, 0.1, 0.15});
 
+    knn_qualitative_and_quantitative(chunkPercentages, neighbourhoodPercentualSizes);
     pca_knn_qualitative_and_quantitative(alphas, chunkPercentages, neighbourhoodPercentualSizes);
     std::cout << std::endl << "Done cuanti cuali exp." << std::endl;
 

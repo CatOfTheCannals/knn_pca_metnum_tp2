@@ -1,4 +1,5 @@
 set(DATA_FILES
+        knn_cuantitative.cpp
         pca_knn_cuantitative.cpp
         )
 
