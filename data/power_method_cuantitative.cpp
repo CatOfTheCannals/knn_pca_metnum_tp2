@@ -4,8 +4,7 @@ void power_method_cuantitative(int n, int max_reps, int rep_step) {
 
     std::stringstream filename;
     filename << "../../data/results/power_method_cuantitative/"
-                      << "n_" << n << "_max_epsilon_ceros_" << max_epsilon_ceros
-                      << "_max_reps_" << max_reps << "_rep_step_" << rep_step << ".csv";
+                      << "n_" << n << "_max_reps_" << max_reps << "_rep_step_" << rep_step << ".csv";
     std::cout << filename.str() << std::endl;
     ofstream file(filename.str());
 
