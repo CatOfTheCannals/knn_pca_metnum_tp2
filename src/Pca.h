@@ -15,6 +15,8 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input);
 tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, int max_iters);
 
 tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a);
+tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a, long N);
+
 tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components);
 
 Matrix ones(int rows, int cols);

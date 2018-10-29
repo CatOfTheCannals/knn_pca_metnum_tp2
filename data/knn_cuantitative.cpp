@@ -32,7 +32,6 @@ void knn_qualitative_and_quantitative(
             double acc = std::get<0>(metrics);
             std::vector<double> recall_per_label = std::get<1>(metrics);
             std::vector<double> precision_per_label = std::get<2>(metrics);
-            std::cout << "accuracy: " << acc << std::endl;
             auto end = GET_TIME;
             auto predict_time = GET_TIME_DELTA(begin, end);
             std::cout << "predict_time : " << predict_time << std::endl;

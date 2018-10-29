@@ -66,7 +66,11 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input) {
 };
 
 tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a) {
-    long N =25;
+    return powerMethodQ1(x_0, a, 25);
+};
+
+tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a, long N) {
+
 
     for (long i = 0; i < N; i++) {
         x_0 = a * x_0;

@@ -4,7 +4,6 @@
 void pca_knn_qualitative_and_quantitative(
         const vector<int> alphas, const vector<double> chunkPercentages, const vector<double> neighbourhoodPercentualSizes){
 
-
     for(double chunkPercentage : chunkPercentages ) {
 
         // load dataset
@@ -14,7 +13,6 @@ void pca_knn_qualitative_and_quantitative(
         d.chunkTrainSet(chunkPercentage);
         std::cout << std::endl << "dataset successfully chunked" << std::endl;
 
-
         // train pca with the biggest alpha
         auto begin = GET_TIME;
         d.trainPca(alphas.back());
@@ -22,12 +20,13 @@ void pca_knn_qualitative_and_quantitative(
         auto train_time = GET_TIME_DELTA(begin, end);
         std::cout << "train_time : " << train_time << std::endl;
 
-        // open output file
+        // open pca_predict output file
         int n = d.getTrainLabels().rows();
-        std::ostringstream filename;
-        filename << "../../data/results/pca_knn_cuali_cuanti_experiment_results_n_" << n <<".csv";
+        std::ostringstream pca_predict_filename;
+        pca_predict_filename << "../../data/results/pca_knn_cuali_cuanti_experiment_results_n_" << n <<".csv";
         ofstream file;
-        file.open(filename.str());
+        file.open(pca_predict_filename .str());
+        file.open(pca_predict_filename.str());
         file << "alpha" << "," << "k" << "," << "accuracy" <<","<<"time" << std::endl;
 
         for (int alpha : alphas) {
@@ -41,7 +40,6 @@ void pca_knn_qualitative_and_quantitative(
                 double acc = std::get<0>(metrics);
                 std::vector<double> recall_per_label = std::get<1>(metrics);
                 std::vector<double> precision_per_label = std::get<2>(metrics);
-                std::cout << "accuracy: " << acc << std::endl;
                 end = GET_TIME;
                 auto predict_time = GET_TIME_DELTA(begin, end);
                 std::cout << "predict_time : " << predict_time << std::endl;

@@ -8,7 +8,7 @@ void read_entries(TokenizedEntriesMap & train_entries, TokenizedEntriesMap & tes
     std::cerr << "Levantando dataset..." << '\r';
     std::string line;
     std::ifstream infile;
-    infile.open ("../../imdb/imdb_tokenized.csv");
+    infile.open ("../../imdb/garompa_mediana");
     if (infile.fail()) throw std::runtime_error("Ocurrió un error al abrir el archivo de tokenizadas.");
 
     while (std::getline(infile,line)) {
