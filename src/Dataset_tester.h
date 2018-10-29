@@ -11,7 +11,7 @@ using namespace std;
 class Dataset_tester {
     public:
         Dataset_tester(const Dataset& ds) : myDataset(ds){}
-
+        void write_down_two_components();
         void checksumPCA();
     private:
     	Dataset myDataset;
