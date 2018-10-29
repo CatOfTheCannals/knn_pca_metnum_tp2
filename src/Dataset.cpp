@@ -80,8 +80,8 @@ void Dataset::chunkTrainSet(double percentageToKeep) {
      * WARNING: always consider shuffling dataset before using this function
      */
     int rows_to_keep = _trainImages.rows() * percentageToKeep;
-    _trainImages = _trainImages.subMatrix(rows_to_keep + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
-    _trainLabels = _trainLabels.subMatrix(rows_to_keep + 1, _trainLabels.rows() - 1, 0, _trainLabels.cols() - 1);
+    _trainImages = _trainImages.subMatrix(0, rows_to_keep, 0, _trainImages.cols() - 1);
+    _trainLabels = _trainLabels.subMatrix(0, rows_to_keep, 0, _trainLabels.cols() - 1);
 }
 
 void Dataset::trainPca(int alpha) {
