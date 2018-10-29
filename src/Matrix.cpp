@@ -372,3 +372,46 @@ Matrix Matrix::vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows) {
 
     return hstack;
 }
+
+void Matrix::saveMatrixToCsv(Matrix e, string filename) {
+    ofstream file;
+    file.open(filename);
+
+    file << e.rows() << " " << e.cols() << std::endl;
+    for(size_t i = 0; i < e.rows(); i++) {
+        for (size_t j = 0; j < e.cols(); ++j) {
+            file << e(i,j) << ",";
+        }
+        file << std::endl;
+    }
+}
+
+
+Matrix Matrix::loadMatrixFromFile(string filename) {
+    std::ifstream load_matrix_stream(filename);
+    assert(load_matrix_stream.is_open());
+    string line, rows, cols, trash;
+    string delimiter(",");
+    // parse first line matrix dimensions
+    getline(load_matrix_stream, line);
+    std::istringstream lineStream(line);
+    lineStream >> rows >> cols;
+    Matrix loaded_matrix(stoi(rows), stoi(cols));
+
+    size_t pos = 0;
+    std::string token;
+    int i = 0;
+    int j = 0;
+    while( getline(load_matrix_stream, line) ){
+
+        while ((pos = line.find_first_of(delimiter)) != std::string::npos) {
+            token = line.substr(0, pos);
+            loaded_matrix.setIndex(i, j, stoi(token));
+            line.erase(0, pos + delimiter.length());
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+    return loaded_matrix;
+}

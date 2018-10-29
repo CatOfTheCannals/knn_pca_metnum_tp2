@@ -169,3 +169,12 @@ TEST_F (mockMatrices, mt_times_m){
     ASSERT_TRUE(e.mt_times_m().isApproximate(e.transpose()*e, 0.01));
     ASSERT_TRUE(e.transpose().mt_times_m().isApproximate(e*e.transpose(), 0.01));
 }
+
+TEST_F (mockMatrices, saveMatrixToCsv){
+    string filename("../../test/debugging_matrices/erase_me.csv");
+    Matrix::saveMatrixToCsv(e, filename);
+    ASSERT_EQ(Matrix::loadMatrixFromFile(filename), e);
+
+
+
+}
