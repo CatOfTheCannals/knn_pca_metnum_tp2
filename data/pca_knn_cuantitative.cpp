@@ -36,15 +36,18 @@ void pca_knn_qualitative_and_quantitative(
 
                 int k = n * p;
                 begin = GET_TIME;
-                //auto results = d.pca_kNN_predict(k, alpha);
-                //double acc = accuracy(d.getTestLabels(), results);
-                double acc = 0;
+                Matrix results = d.pca_kNN_predict(k, alpha);
+                auto metrics = allMetricsWrapper(d.getTestLabels(), results);
+                double acc = std::get<0>(metrics);
+                std::vector<double> recall_per_label = std::get<1>(metrics);
+                std::vector<double> precision_per_label = std::get<2>(metrics);
                 std::cout << "accuracy: " << acc << std::endl;
                 end = GET_TIME;
                 auto predict_time = GET_TIME_DELTA(begin, end);
                 std::cout << "predict_time : " << predict_time << std::endl;
 
-                file << alpha << "," << k << "," << acc << "," << predict_time << std::endl;
+                file << alpha << "," << k << "," << acc << "," << vecOfDoublesToString(recall_per_label) << ","
+                     << vecOfDoublesToString(precision_per_label) << "," << predict_time << std::endl;
 
 
                 if (LOG_EXP_PCA_VECS) {

@@ -1,6 +1,7 @@
 set(DATA_FILES
         knn_cuantitative.cpp
         pca_knn_cuantitative.cpp
+        ../src/Metrics.cpp
         )
 
 add_library(exp_library ${DATA_FILES})
