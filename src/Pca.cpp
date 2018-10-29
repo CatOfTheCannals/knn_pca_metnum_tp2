@@ -42,6 +42,7 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components) {
         double eigen_value;
         // compute i_th eigen vector and its value
         tie(eigen_vector, eigen_value) = powerMethodQ1(x_0, X);
+        cout << i << " eigen value: " << eigen_value << endl;
 
         if ((i > 0) && eigen_vector.isApproximate(k_eigen_vectors.subMatrix(0, A.rows()-1, i-1, i-1), 0.01)){
             std::cout << "se esta repitiendo autovector ñeri" << std::endl;
@@ -53,7 +54,6 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components) {
         lambdas.setIndex(i, i, eigen_value);
         if(i%100==0){ cout << "PCA i : " << i << endl;}
         auto external = eigen_vector*eigen_vector.transpose();
-        cout <<"eigen value "<<i<<": " << eigen_value << endl;
         X = X - (external * eigen_value);
     }
 
@@ -82,7 +82,6 @@ tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a) {
 
     }
     std::tuple<Matrix, double> res = std::make_tuple(x_0, val);
-
     return res;
 }
 
@@ -109,7 +108,6 @@ tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, int max_iters) {
         lambda = (x.transpose()*Ax)(0);
         prev_lambda = lambda;
     }
-
     return make_tuple(x, lambda);
 }
 

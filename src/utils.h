@@ -16,6 +16,7 @@
 #define LOG_EXP_PCA_VECS false
 #define LOG_KNN_DISTANCES false
 #define LOG_EXP_RESULTS_SUM true
+#define DATASET_DEBUG_MODE true
 
 
 #endif //TP2_METODOS_UTILS_H
