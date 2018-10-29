@@ -34,16 +34,16 @@ allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation) {
     assert(groundTruth.rows() == estimation.rows());
     assert(groundTruth.cols() == 1 && estimation.cols() == 1);
 
-    unsigned long amount_of_persons = 41;
-    std::vector<double> recallAtK(amount_of_persons);
-    std::vector<double> precisionAtK(amount_of_persons);
+    unsigned long amount_of_labels = 2;
+    std::vector<double> recallAtK(amount_of_labels);
+    std::vector<double> precisionAtK(amount_of_labels);
 
     std::vector<double> vecGroundTruth = matrixToVec(groundTruth);
     std::vector<double> vecEstimation = matrixToVec(estimation);
 
-    for(int i = 1; i < amount_of_persons; i++) {
-        recallAtK[i] = recallPerPerson(groundTruth, estimation, i);
-        precisionAtK[i] = precisionPerPerson(groundTruth, estimation, i);
+    for(int i = 0; i < amount_of_labels; i++) {
+        recallAtK[i] = recallPerLabel(groundTruth, estimation, i);
+        precisionAtK[i] = precisionPerLabel(groundTruth, estimation, i);
 
         std::cout << "recall at " << i << ":"  << recallAtK[i] << std::endl;
         std::cout << "precision at " << i << ":"  << precisionAtK[i] << std::endl;
@@ -55,7 +55,7 @@ allMetricsWrapper(const Matrix &groundTruth, const Matrix &estimation) {
     std::cout << "accuracy: " << acc << " | mean recall: " << mean(recallAtK)
               << " | mean precision: " << mean(precisionAtK) << std::endl;
 
-    return std::make_tuple(acc, vecGroundTruth, vecEstimation);
+    return std::make_tuple(acc, recallAtK, precisionAtK);
 }
 
 double mean(std::vector<double> series) {
@@ -70,7 +70,7 @@ double mean(std::vector<double> series) {
     return sum / amount_of_defined_values;
 }
 
-double recallPerPerson(const Matrix &groundTruth, const Matrix &estimation, const int person) {
+double recallPerLabel(const Matrix &groundTruth, const Matrix &estimation, const int person) {
     assert(groundTruth.rows() == estimation.rows());
     assert(groundTruth.cols() == 1 && estimation.cols() == 1);
     double amountOfGoodPredictions = 0; // tp
@@ -87,7 +87,7 @@ double recallPerPerson(const Matrix &groundTruth, const Matrix &estimation, cons
     return amountOfGoodPredictions / personApparitions;
 }
 
-double precisionPerPerson(const Matrix &groundTruth, const Matrix &estimation, const int person) {
+double precisionPerLabel(const Matrix &groundTruth, const Matrix &estimation, const int person) {
     assert(groundTruth.rows() == estimation.rows());
     assert(groundTruth.cols() == 1 && estimation.cols() == 1);
     double amountOfGoodPredictions = 0; // tp
