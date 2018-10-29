@@ -182,7 +182,8 @@ private:
     Matrix _pcaLambdas;
     Matrix _transformedTrainImages;
     int _pcaAlpha = 0;
-    int _currentAlpha = 0;
+    int _currentPcaAlpha = 0;
+    int _currentTrainSetAlpha = 0;
 
     // Matrix _transformedTestImages;
 };
