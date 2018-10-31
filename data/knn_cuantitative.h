@@ -13,6 +13,8 @@
 #include "../src/Dataset.h"
 
 void knn_qualitative_and_quantitative(
-        const vector<double> chunkPercentages, const vector<double> neighbourhoodPercentualSizes);
+        const vector<double> chunkPercentages,
+        const vector<double> neighbourhoodPercentualSizes,
+        const vector<double> frequencyThresholds);
 
 #endif //TP2_METODOS_KNN_CUANTITATIVE_H

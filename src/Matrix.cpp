@@ -363,14 +363,30 @@ double Matrix::norm() const {
 
 Matrix Matrix::vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows) {
     assert(vecOfRows.size() > 0);
-    Matrix hstack(vecOfRows.size(), vecOfRows[0].cols());
-    for(int i = 0; i < hstack.rows(); i++) {
-        for(int j = 0; j < hstack.cols(); j++) {
-            hstack.setIndex(i, j, vecOfRows[i](j));
+    Matrix res(vecOfRows.size(), vecOfRows[0].cols());
+    for(int i = 0; i < res.rows(); i++) {
+        for(int j = 0; j < res.cols(); j++) {
+            res.setIndex(i, j, vecOfRows[i](j));
         }
     }
 
-    return hstack;
+    return res;
+}
+
+Matrix Matrix::hstack(const Matrix a, const Matrix b) {
+    assert(a.rows() == b.rows());
+    Matrix res(a.rows(), a.cols() + b.cols());
+
+    for(int i = 0; i < res.rows(); i ++) {
+        for (int j = 0; j < res.cols(); ++j) {
+            if(j < a.cols()) {
+                res.setIndex(i,j, a(i,j));
+            } else {
+                res.setIndex(i,j, b(i,j - a.cols()));
+            }
+        }
+    }
+    return res;
 }
 
 void Matrix::saveMatrixToCsv(Matrix e, string filename) {

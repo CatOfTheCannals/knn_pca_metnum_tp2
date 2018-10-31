@@ -1,6 +1,6 @@
 #include "reader.h"
 
-void read_entries(TokenizedEntriesMap & train_entries, TokenizedEntriesMap & test_entries) {
+void read_entries(const std::string & entries_path, TokenizedEntriesMap & train_entries, TokenizedEntriesMap & test_entries) {
     /**
      *  Parsea el archivo de reviews tokenizadas
      *  El archivo en cuestión no debe tener una línea vacía al final
@@ -8,7 +8,7 @@ void read_entries(TokenizedEntriesMap & train_entries, TokenizedEntriesMap & tes
     std::cerr << "Levantando dataset..." << '\r';
     std::string line;
     std::ifstream infile;
-    infile.open ("../../imdb/garompa_mediana");
+    infile.open(entries_path);
     if (infile.fail()) throw std::runtime_error("Ocurrió un error al abrir el archivo de tokenizadas.");
 
     while (std::getline(infile,line)) {
@@ -40,8 +40,10 @@ FrecuencyVocabularyMap read_vocabulary() {
     FrecuencyVocabularyMap vocabulary;
     std::string line;
     std::ifstream infile;
-    infile.open ("../../imdb/vocab.csv");
-    if (infile.fail()) throw std::runtime_error("Ocurrió un error al abrir el archivo de vocabulario.");
+    // infile.open ("../../imdb/vocab.csv"); // this one is for running correrExp target
+    infile.open ("../../imdb/vocab.csv"); // this one is for running the main
+    if (infile.fail()) throw std::runtime_error(
+                "Ocurrió un error al abrir el archivo de vocabulario. Fijate el path de read_vocabulary()");
 
     std::getline(infile,line);  // Sacamos el header del csv
     while (std::getline(infile,line)) {  // Leemos una línea

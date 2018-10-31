@@ -77,6 +77,7 @@ public:
     double squared_norm() const;
     double norm() const;
     static Matrix vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows);
+    static Matrix hstack(const Matrix a, const Matrix b);
     static void saveMatrixToCsv(Matrix e, string filename);
     static Matrix loadMatrixFromFile(string filename);
 

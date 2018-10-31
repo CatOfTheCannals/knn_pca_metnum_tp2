@@ -9,8 +9,9 @@
 
 #include "Matrix.h"
 
-std::tuple<std::tuple<Matrix, Matrix>, std::tuple<Matrix, Matrix>> build_vectorized_datasets
-        (const std::function<bool(int token, const FrecuencyVocabularyMap & vocabulary)> & filter_out);
+std::tuple<std::tuple<Matrix, Matrix, Matrix>, std::tuple<Matrix, Matrix, Matrix>> build_vectorized_datasets
+        (const std::string & entries_path,
+         const std::function<bool(int token, const FrecuencyVocabularyMap & vocabulary)> & filter_out);
 
 #endif  // VECTOR_BUILDER__H
 
