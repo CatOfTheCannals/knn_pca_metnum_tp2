@@ -268,13 +268,19 @@ std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
 
 
 }
-
 Dataset Dataset::loadImdbVectorizedReviews() {
+    // File used for development. Productive file should be provided by the user when calling main
+    return loadImdbVectorizedReviews("../../imdb/imdb_tokenized.csv");
+
+}
+
+
+Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path) {
     auto filter_out = [] (const int token, const FrecuencyVocabularyMap & vocabulary) {
         double token_frecuency = vocabulary.at(token);
         return token_frecuency < 0.01 || token_frecuency > 0.99;
     };
-    auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(filter_out);
+    auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(entries_path, filter_out);
     auto train_vectorized_matrix_and_label = std::get<0>(train_and_test_vectorized_matrices_and_labels);
     auto test_vectorized_matrix_and_label = std::get<1>(train_and_test_vectorized_matrices_and_labels);
     

@@ -1,6 +1,7 @@
 #include "vector_builder.h"
 
-std::tuple<std::tuple<Matrix, Matrix>, std::tuple<Matrix, Matrix>>  build_vectorized_datasets(
+std::tuple<std::tuple<Matrix, Matrix, Matrix>, std::tuple<Matrix, Matrix, Matrix>>  build_vectorized_datasets(
+        const std::string & entries_path,
         const std::function<bool(int token, const FrecuencyVocabularyMap & vocabulary)> & filter_out) {
     /**
      * Construye las entradas vectorizadas, filtrándolas según `filter_out`.
@@ -9,7 +10,7 @@ std::tuple<std::tuple<Matrix, Matrix>, std::tuple<Matrix, Matrix>>  build_vector
 
     TokenizedEntriesMap train_entries;
     TokenizedEntriesMap test_entries;
-    read_entries(train_entries, test_entries);
+    read_entries(entries_path, train_entries, test_entries);
 
     const FrecuencyVocabularyMap vocabulary = read_vocabulary();
 
@@ -54,6 +55,7 @@ std::tuple<std::tuple<Matrix, Matrix>, std::tuple<Matrix, Matrix>>  build_vector
         std::cerr << "Traduciendo tokens a vectores..." << '\r';
         Matrix vectorized_entries(entries.size(),N);
         Matrix labels(entries.size(),1);
+        Matrix ids(entries.size(),1);
 
         auto entry = entries.begin();
         for (int i = 0; i < entries.size(); i++) {
@@ -72,11 +74,11 @@ std::tuple<std::tuple<Matrix, Matrix>, std::tuple<Matrix, Matrix>>  build_vector
         }
 
         std::cerr << "                                " << '\r';
-        return std::make_tuple(vectorized_entries, labels);
+        return std::make_tuple(vectorized_entries, labels, ids);
     };
     auto train_vectorized_entries = translate_tokenized_entries(train_entries);
     auto test_vectorized_entries = translate_tokenized_entries(test_entries);
 
-    return std::make_tuple(train_vectorized_entries, test_vectorized_entries );
+    return std::make_tuple(train_vectorized_entries, test_vectorized_entries);
 }
 

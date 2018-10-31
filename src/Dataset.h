@@ -165,6 +165,7 @@ public:
                                                          bool bigTestSet) const;
 
     static Dataset loadImdbVectorizedReviews();
+    static Dataset loadImdbVectorizedReviews(const std::string & entries_path);
 
 
 private:
