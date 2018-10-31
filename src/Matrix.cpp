@@ -373,6 +373,22 @@ Matrix Matrix::vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows) {
     return res;
 }
 
+Matrix Matrix::hstack(const Matrix a, const Matrix b) {
+    assert(a.rows() == b.rows());
+    Matrix res(a.rows(), a.cols() + b.cols());
+
+    for(int i = 0; i < res.rows(); i ++) {
+        for (int j = 0; j < res.cols(); ++j) {
+            if(j < a.cols()) {
+                res.setIndex(i,j, a(i,j));
+            } else {
+                res.setIndex(i,j, b(i,j - a.cols()));
+            }
+        }
+    }
+    return res;
+}
+
 void Matrix::saveMatrixToCsv(Matrix e, string filename) {
     ofstream file;
     file.open(filename);
