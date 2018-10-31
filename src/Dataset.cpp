@@ -275,9 +275,17 @@ Dataset Dataset::loadImdbVectorizedReviews() {
 }
 
 Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path) {
-    auto filter_out = [] (const int token, const FrecuencyVocabularyMap & vocabulary) {
+    // default frequencies
+    double higher_percentile = 0.99;
+    double lower_percentile = 0.01;
+    return loadImdbVectorizedReviews(entries_path, higher_percentile, lower_percentile);
+}
+
+Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path,
+                                           double higher_percentile, double lower_percentile) {
+    auto filter_out = [lower_percentile, higher_percentile] (const int token, const FrecuencyVocabularyMap & vocabulary) {
         double token_frecuency = vocabulary.at(token);
-        return token_frecuency < 0.01 || token_frecuency > 0.99;
+        return token_frecuency < lower_percentile || token_frecuency > higher_percentile;
     };
     auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(entries_path, filter_out);
     auto train_vectorized_matrix_and_label = std::get<0>(train_and_test_vectorized_matrices_and_labels);

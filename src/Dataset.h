@@ -166,6 +166,8 @@ public:
 
     static Dataset loadImdbVectorizedReviews();
     static Dataset loadImdbVectorizedReviews(const std::string & entries_path);
+    static Dataset loadImdbVectorizedReviews(const std::string & entries_path,
+                                               double higher_percentile, double lower_percentile);
     void setTestIds(Matrix test_ids);
     Matrix getTestIds() const;
 

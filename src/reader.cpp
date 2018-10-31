@@ -41,7 +41,7 @@ FrecuencyVocabularyMap read_vocabulary() {
     std::string line;
     std::ifstream infile;
     // infile.open ("../../imdb/vocab.csv"); // this one is for running correrExp target
-    infile.open ("../imdb/vocab.csv"); // this one is for running the main
+    infile.open ("../../imdb/vocab.csv"); // this one is for running the main
     if (infile.fail()) throw std::runtime_error(
                 "Ocurrió un error al abrir el archivo de vocabulario. Fijate el path de read_vocabulary()");
 
