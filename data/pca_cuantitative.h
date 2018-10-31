@@ -16,7 +16,7 @@
 
 
 
-void pca_cuantitative();
+void pca_cuantitative(const vector<int> alphas, const vector<double> chunkPercentages);
 
 
 #endif //TP2_METODOS_PCA_CUANTITATIVE_H

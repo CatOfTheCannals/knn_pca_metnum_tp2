@@ -268,13 +268,26 @@ std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
 
 
 }
-
 Dataset Dataset::loadImdbVectorizedReviews() {
-    auto filter_out = [] (const int token, const FrecuencyVocabularyMap & vocabulary) {
+    // File used for development. Productive file should be provided by the user when calling main
+    return loadImdbVectorizedReviews("../../imdb/imdb_tokenized.csv");
+
+}
+
+Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path) {
+    // default frequencies
+    double higher_percentile = 0.99;
+    double lower_percentile = 0.01;
+    return loadImdbVectorizedReviews(entries_path, higher_percentile, lower_percentile);
+}
+
+Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path,
+                                           double higher_percentile, double lower_percentile) {
+    auto filter_out = [lower_percentile, higher_percentile] (const int token, const FrecuencyVocabularyMap & vocabulary) {
         double token_frecuency = vocabulary.at(token);
-        return token_frecuency < 0.01 || token_frecuency > 0.99;
+        return token_frecuency < lower_percentile || token_frecuency > higher_percentile;
     };
-    auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(filter_out);
+    auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(entries_path, filter_out);
     auto train_vectorized_matrix_and_label = std::get<0>(train_and_test_vectorized_matrices_and_labels);
     auto test_vectorized_matrix_and_label = std::get<1>(train_and_test_vectorized_matrices_and_labels);
     
@@ -284,8 +297,19 @@ Dataset Dataset::loadImdbVectorizedReviews() {
     auto train_vector_label = std::get<1>(train_vectorized_matrix_and_label);
     auto test_vector_label = std::get<1>(test_vectorized_matrix_and_label);
 
-    return Dataset(train_vector_matrix, train_vector_label,
-                   test_vector_matrix, test_vector_label);
+    Dataset d = Dataset(train_vector_matrix, train_vector_label,
+                        test_vector_matrix, test_vector_label);
 
+    d.setTestIds(std::get<2>(test_vectorized_matrix_and_label));
 
+    return d;
+}
+
+void Dataset::setTestIds(Matrix test_ids) {
+    _test_ids = test_ids;
+}
+
+Matrix Dataset::getTestIds() const{
+    Matrix output(_test_ids);
+    return output;
 }
