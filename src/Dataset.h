@@ -166,6 +166,8 @@ public:
 
     static Dataset loadImdbVectorizedReviews();
     static Dataset loadImdbVectorizedReviews(const std::string & entries_path);
+    void setTestIds(Matrix test_ids);
+    Matrix getTestIds() const;
 
 
 private:
@@ -175,6 +177,7 @@ private:
 
     Matrix _testImages;
     Matrix _testLabels;
+    Matrix _test_ids;
     Matrix _trainImages;
     Matrix _trainLabels;
     Matrix _mt_times_m;

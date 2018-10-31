@@ -60,6 +60,7 @@ std::tuple<std::tuple<Matrix, Matrix, Matrix>, std::tuple<Matrix, Matrix, Matrix
         auto entry = entries.begin();
         for (int i = 0; i < entries.size(); i++) {
             const int review_id = entry->first;
+            ids.setIndex(i,0,review_id);
             const std::vector<int> & tokens = entry->second.tokens;
 
             labels.setIndex(i, 0, entry->second.is_positive);

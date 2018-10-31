@@ -274,7 +274,6 @@ Dataset Dataset::loadImdbVectorizedReviews() {
 
 }
 
-
 Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path) {
     auto filter_out = [] (const int token, const FrecuencyVocabularyMap & vocabulary) {
         double token_frecuency = vocabulary.at(token);
@@ -290,8 +289,19 @@ Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path) {
     auto train_vector_label = std::get<1>(train_vectorized_matrix_and_label);
     auto test_vector_label = std::get<1>(test_vectorized_matrix_and_label);
 
-    return Dataset(train_vector_matrix, train_vector_label,
-                   test_vector_matrix, test_vector_label);
+    Dataset d = Dataset(train_vector_matrix, train_vector_label,
+                        test_vector_matrix, test_vector_label);
 
+    d.setTestIds(std::get<2>(test_vectorized_matrix_and_label));
 
+    return d;
+}
+
+void Dataset::setTestIds(Matrix test_ids) {
+    _test_ids = test_ids;
+}
+
+Matrix Dataset::getTestIds() const{
+    Matrix output(_test_ids);
+    return output;
 }
