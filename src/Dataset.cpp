@@ -15,6 +15,11 @@ Matrix Dataset::getTrainImages() const{
     return output;
 }
 
+Matrix Dataset::getTransformedTrainImages() const{
+    Matrix output(_transformedTrainImages);
+    return output;
+}
+
 Matrix Dataset::getTrainLabels() const{
     Matrix output(_trainLabels);
     return output;
@@ -61,6 +66,10 @@ void Dataset::generate_mt_times_m(){
         for (int j = 0; j < X.cols(); ++j) {
             X.setIndex(i,j, centered_row(j));
         }
+        if(DATASET_DEBUG_MODE && (i%100==0)){
+            cout << "product row at: "<< i <<endl;
+        }
+
     }
 
     //Matrix trans = X.transpose();
@@ -69,70 +78,75 @@ void Dataset::generate_mt_times_m(){
 }
 void Dataset::splitTrainFromTest(double testPercentage) {
     int testRows = _trainImages.rows() * testPercentage;
-    cout << " test rows: "<< testRows << " rows: "<< _trainImages.rows() << endl;
     _testImages = _trainImages.subMatrix(0, testRows, 0, _trainImages.cols() - 1);
     _testLabels = _trainLabels.subMatrix(0, testRows, 0, _trainLabels.cols() - 1);
     _trainImages = _trainImages.subMatrix(testRows + 1, _trainImages.rows() - 1, 0, _trainImages.cols() - 1);
     _trainLabels = _trainLabels.subMatrix(testRows + 1, _trainLabels.rows() - 1, 0, _trainLabels.cols() - 1);
 }
 
-void Dataset::trainPca(int alpha, double epsilon) {
+void Dataset::chunkTrainSet(double percentageToKeep) {
+    /*
+     * WARNING: always consider shuffling dataset before using this function
+     */
+    int rows_to_keep = _trainImages.rows() * percentageToKeep;
+    _trainImages = _trainImages.subMatrix(0, rows_to_keep, 0, _trainImages.cols() - 1);
+    _trainLabels = _trainLabels.subMatrix(0, rows_to_keep, 0, _trainLabels.cols() - 1);
+}
+
+void Dataset::trainPca(int alpha) {
     assert(_trainImages.rows() > 0);
     Matrix M = get_mt_times_m();
-    auto pca_eigenvectors_and_eigenvalues = svd(M, alpha, epsilon);
+
+    auto pca_eigenvectors_and_eigenvalues = svd(M, alpha);
     _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
     _pcaAlpha = alpha;
     _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
-    _transformedTrainImages = _trainImages*_pcaVecs;
     std::cout << "_pcaVecs " << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
-    std::cout << "_transformedTrainImages " << _transformedTrainImages.rows() << ", " << _transformedTrainImages.cols() << std::endl;
 
 }
 
-Matrix Dataset::pca_kNN_predict_old(int k) const {
+void Dataset::trainActualPCA(int alpha) {
+    assert(_trainImages.rows() > 0);
+    Matrix M = get_mt_times_m();
 
-    Matrix testLabels = Matrix(_testImages.rows(), 1);
-    // std::cout << "rows " << _testImages.rows() << std::endl;
-    for(int i = 0; i < _testImages.rows(); i++) {
-        auto begin = GET_TIME;
-        // std::cout << "entro " << i << std::endl;
-        auto characteristic_transformation = _testImages.getRow(i)*_pcaVecs;
-        // std::cout << "char trans ok " << std::endl;
-        int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
-        // std::cout << "knn pred  ok " << std::endl;
-        testLabels.setIndex(i , 0 ,ith_label);
-        // std::cout << "set index ok " << std::endl;
-        auto end = GET_TIME;
-        if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
+    if (alpha != _currentTrainSetAlpha) {
+        if (alpha > _currentPcaAlpha) {
+            auto pca_eigenvectors_and_eigenvalues = svd(M, alpha);
+            _pcaVecs = std::get<0>(pca_eigenvectors_and_eigenvalues);
+            _pcaLambdas = std::get<1>(pca_eigenvectors_and_eigenvalues);
+            std::cout << "_pcaVecs " << _pcaVecs.rows() << ", " << _pcaVecs.cols() << std::endl;
+            _currentPcaAlpha = alpha;
+        }
+        _transformedTrainImages = _trainImages * (_pcaVecs.subMatrix(0, _pcaVecs.rows() - 1, 0, alpha - 1));
+        _currentTrainSetAlpha = alpha;
     }
-    std::cout << " salio del loop" << std::endl;
-    return testLabels;
 }
 
-Matrix Dataset::pca_kNN_predict_old(int k, int alpha) const {
-    assert(alpha <= _pcaAlpha);
+Matrix Dataset::pca_kNN_predict(int k, int alpha) {
     Matrix testLabels = Matrix(_testImages.rows(), 1);
-    // std::cout << "rows " << _testImages.rows() << std::endl;
+
+    // change basis of the features
+    this->trainActualPCA(alpha);
+
+    // iterate through test instances
     for(int i = 0; i < _testImages.rows(); i++) {
         auto begin = GET_TIME;
-        // std::cout << "entro " << i << std::endl;
-        Matrix characteristic_transformation = Matrix(1, _testImages.cols());
+
+        //generate the characteristic transform
+        Matrix characteristic_transformation = Matrix(1, _transformedTrainImages.cols());
         for(int j = 0; j < alpha; j++){
             double acum = 0.0;
             for(int k = 0; k < _pcaVecs.rows() ; k++){
                 acum+=_testImages(i,k)*_pcaVecs(k,j);
-            }
+                }
             characteristic_transformation.setIndex(0,j,acum);
         }
-        // std::cout << "char trans ok " << std::endl;
+
+        // knn predict
         int ith_label = kNN(_transformedTrainImages, _trainLabels, characteristic_transformation, k);
-        // std::cout << "knn pred  ok " << std::endl;
         testLabels.setIndex(i , 0 ,ith_label);
-        // std::cout << "set index ok " << std::endl;
         auto end = GET_TIME;
-        if(i%100==0){cout << "i: "<< i <<" time: "<< 100*GET_TIME_DELTA(begin, end)<< endl;}
     }
-    std::cout << " salio del loop" << std::endl;
     return testLabels;
 }
 
@@ -140,7 +154,6 @@ Matrix Dataset::pca_kNN_predict_old(int k, int alpha) const {
 Matrix Dataset::kNN_predict(int k) const {
     Matrix testLabels = Matrix(_testImages.rows(), 1);
     for(int i = 0; i < _testImages.rows(); i++) {
-        std::cout << "call knn for row: " << i << std::endl;
         int ith_label = kNN(_trainImages, _trainLabels, _testImages.getRow(i), k);
         testLabels.setIndex(i ,0 , ith_label);
     }
@@ -173,7 +186,6 @@ Dataset::knnEquitativeSamplingKFold(int neighbours, bool bigTestSet = false)  {
 std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
 Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSet = false) {
 
-    double epsilon = 0.0001;
     int amount_of_people = 41;
     int amount_of_picks = _trainImages.rows();
     int picks_per_person = amount_of_picks / amount_of_people;
@@ -189,9 +201,9 @@ Dataset::pcaKnnEquitativeSamplingKFold(int neighbours, int alpha, bool bigTestSe
         Dataset d = Dataset(std::get<0>(imageFold), std::get<0>(labelFold),
                             std::get<1>(imageFold), std::get<1>(labelFold));
         std::cout << "train_pca" << std::endl;
-        d.trainPca(alpha, epsilon);
+        d.trainPca(alpha);
         scores_per_fold.push_back(allMetricsWrapper(std::get<1>(labelFold),
-                                                    d.pca_kNN_predict_old(neighbours)));
+                                                    d.pca_kNN_predict(neighbours, alpha)));
     }
 
     return scores_per_fold;
@@ -256,13 +268,26 @@ std::tuple<Matrix, Matrix> Dataset::getEquitativeSamplingFold
 
 
 }
-
 Dataset Dataset::loadImdbVectorizedReviews() {
-    auto filter_out = [] (const int token, const FrecuencyVocabularyMap & vocabulary) {
+    // File used for development. Productive file should be provided by the user when calling main
+    return loadImdbVectorizedReviews("../../imdb/imdb_tokenized.csv");
+
+}
+
+Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path) {
+    // default frequencies
+    double higher_percentile = 0.99;
+    double lower_percentile = 0.01;
+    return loadImdbVectorizedReviews(entries_path, higher_percentile, lower_percentile);
+}
+
+Dataset Dataset::loadImdbVectorizedReviews(const std::string & entries_path,
+                                           double higher_percentile, double lower_percentile) {
+    auto filter_out = [lower_percentile, higher_percentile] (const int token, const FrecuencyVocabularyMap & vocabulary) {
         double token_frecuency = vocabulary.at(token);
-        return token_frecuency < 0.01 || token_frecuency > 0.99;
+        return token_frecuency < lower_percentile || token_frecuency > higher_percentile;
     };
-    auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(filter_out);
+    auto train_and_test_vectorized_matrices_and_labels = build_vectorized_datasets(entries_path, filter_out);
     auto train_vectorized_matrix_and_label = std::get<0>(train_and_test_vectorized_matrices_and_labels);
     auto test_vectorized_matrix_and_label = std::get<1>(train_and_test_vectorized_matrices_and_labels);
     
@@ -272,8 +297,19 @@ Dataset Dataset::loadImdbVectorizedReviews() {
     auto train_vector_label = std::get<1>(train_vectorized_matrix_and_label);
     auto test_vector_label = std::get<1>(test_vectorized_matrix_and_label);
 
-    return Dataset(train_vector_matrix, train_vector_label,
-                   test_vector_matrix, test_vector_label);
+    Dataset d = Dataset(train_vector_matrix, train_vector_label,
+                        test_vector_matrix, test_vector_label);
 
+    d.setTestIds(std::get<2>(test_vectorized_matrix_and_label));
 
+    return d;
+}
+
+void Dataset::setTestIds(Matrix test_ids) {
+    _test_ids = test_ids;
+}
+
+Matrix Dataset::getTestIds() const{
+    Matrix output(_test_ids);
+    return output;
 }

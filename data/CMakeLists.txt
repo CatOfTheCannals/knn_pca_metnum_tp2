@@ -1,9 +1,9 @@
 set(DATA_FILES
-        power_method_cuantitative.cpp
-        pca_cuantitative.cpp
         knn_cuantitative.cpp
         pca_knn_cuantitative.cpp
-        kfold_exp.cpp)
+        power_method_cuantitative.cpp
+        ../src/Metrics.cpp
+        )
 
 add_library(exp_library ${DATA_FILES})
 

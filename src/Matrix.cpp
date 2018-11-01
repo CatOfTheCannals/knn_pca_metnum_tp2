@@ -124,8 +124,8 @@ Matrix Matrix::operator/(const double& scalar) const{
 
 void Matrix::show_matrix(){
     cout << endl;
-    for(int i = 0 ; i < _cols ; i++){
-		for(int j = 0 ; j < _rows ; j++){
+    for(int i = 0 ; i < _rows ; i++){
+		for(int j = 0 ; j < _cols ; j++){
         cout << (*this)(i,j) << " ";
 		}
 		cout << endl;
@@ -334,6 +334,17 @@ bool Matrix::isApproximate(const Matrix b, double epsilon) const{
     return true;
 }
 
+double Matrix::sum() const {
+    assert(this->_rows == 1 || this->_cols == 1);
+    double res = 0;
+    auto size = this->size();
+    for (std::size_t i = 0; i < size; i++) {
+        res += (double)((*this)(i));
+    }
+
+    return res;
+}
+
 double Matrix::squared_norm() const {
     assert(this->_rows == 1 || this->_cols == 1);
     double res = 0;
@@ -352,12 +363,71 @@ double Matrix::norm() const {
 
 Matrix Matrix::vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows) {
     assert(vecOfRows.size() > 0);
-    Matrix hstack(vecOfRows.size(), vecOfRows[0].cols());
-    for(int i = 0; i < hstack.rows(); i++) {
-        for(int j = 0; j < hstack.cols(); j++) {
-            hstack.setIndex(i, j, vecOfRows[i](j));
+    Matrix res(vecOfRows.size(), vecOfRows[0].cols());
+    for(int i = 0; i < res.rows(); i++) {
+        for(int j = 0; j < res.cols(); j++) {
+            res.setIndex(i, j, vecOfRows[i](j));
         }
     }
 
-    return hstack;
+    return res;
+}
+
+Matrix Matrix::hstack(const Matrix a, const Matrix b) {
+    assert(a.rows() == b.rows());
+    Matrix res(a.rows(), a.cols() + b.cols());
+
+    for(int i = 0; i < res.rows(); i ++) {
+        for (int j = 0; j < res.cols(); ++j) {
+            if(j < a.cols()) {
+                res.setIndex(i,j, a(i,j));
+            } else {
+                res.setIndex(i,j, b(i,j - a.cols()));
+            }
+        }
+    }
+    return res;
+}
+
+void Matrix::saveMatrixToCsv(Matrix e, string filename) {
+    ofstream file;
+    file.open(filename);
+
+    file << e.rows() << " " << e.cols() << std::endl;
+    for(size_t i = 0; i < e.rows(); i++) {
+        for (size_t j = 0; j < e.cols(); ++j) {
+            file << e(i,j) << ",";
+        }
+        file << std::endl;
+    }
+}
+
+
+Matrix Matrix::loadMatrixFromFile(string filename) {
+    std::ifstream load_matrix_stream(filename);
+    assert(load_matrix_stream.is_open());
+    string line, rows, cols, trash;
+    string delimiter(",");
+    // parse first line matrix dimensions
+    getline(load_matrix_stream, line);
+    std::istringstream lineStream(line);
+    lineStream >> rows >> cols;
+    Matrix loaded_matrix(stoi(rows), stoi(cols));
+
+    size_t pos = 0;
+    std::string token;
+    int i = 0;
+    int j = 0;
+    while( getline(load_matrix_stream, line) ){
+
+        while ((pos = line.find_first_of(delimiter)) != std::string::npos) {
+            token = line.substr(0, pos);
+            loaded_matrix.setIndex(i, j, stoi(token));
+            line.erase(0, pos + delimiter.length());
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+    return loaded_matrix;
 }

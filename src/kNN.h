@@ -4,6 +4,7 @@
 #include <cassert>
 #include <chrono>
 #include "Matrix.h"
+#include "utils.h"
 
 Matrix distance(const Matrix& input, const Matrix& image);
 Matrix distance_old(const Matrix& input, const Matrix& image);

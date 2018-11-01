@@ -56,6 +56,21 @@ protected:
         g.setIndex(2, 2, 8);
         g.setIndex(2, 0, 9);
 
+        a.setIndex(0, 0, 1);
+        a.setIndex(1, 0, 2);
+        a.setIndex(2, 0, 3);
+
+        b.setIndex(1, 0, 4);
+        b.setIndex(1, 0, 5);
+        b.setIndex(2, 0, 6);
+
+        h.setIndex(0, 0, 1);
+        h.setIndex(1, 0, 2);
+        h.setIndex(2, 0, 3);
+        h.setIndex(1, 1, 4);
+        h.setIndex(1, 1, 5);
+        h.setIndex(2, 1, 6);
+
 
         std::cout << "Test Matrix initialized:" << std::endl;
         std::cout << "e:" << std::endl;
@@ -66,7 +81,9 @@ protected:
         std::cout << l << std::endl;
 
     }
-
+    Matrix a = Matrix(3,1);
+    Matrix b = Matrix(3,1);
+    Matrix h = Matrix(3,2);
     Matrix e = Matrix(5,3);
     Matrix m = Matrix(3,3);
     Matrix l = Matrix(3,3);
@@ -164,3 +181,19 @@ TEST_F (mockMatrices, abs){
     ASSERT_EQ(l_copy, l.abs());
 }
 
+TEST_F (mockMatrices, mt_times_m){
+
+    ASSERT_TRUE(e.mt_times_m().isApproximate(e.transpose()*e, 0.01));
+    ASSERT_TRUE(e.transpose().mt_times_m().isApproximate(e*e.transpose(), 0.01));
+}
+
+TEST_F (mockMatrices, hstack){
+    ASSERT_EQ(h, Matrix::hstack(a, b));
+}
+
+TEST_F (mockMatrices, saveMatrixToCsv){
+    string filename("../../test/debugging_matrices/erase_me.csv");
+    Matrix::saveMatrixToCsv(e, filename);
+    ASSERT_EQ(Matrix::loadMatrixFromFile(filename), e);
+
+}

@@ -17,7 +17,6 @@
 #include "vector_builder.h"
 
 
-
 class Dataset {
 public:
 
@@ -140,15 +139,19 @@ public:
     Matrix getTrainLabels() const;
     Matrix getPcaVecs() const;
     Matrix getPcaLambdas() const;
+    Matrix getTransformedTrainImages() const;
     void generate_mt_times_m();
     Matrix& get_mt_times_m() ;
 
     void shuffle();
-    void trainPca(int alpha, double epsilon);
-    Matrix pca_kNN_predict_old(int k) const;
-    Matrix pca_kNN_predict_old(int k, int alpha) const;
-    Matrix kNN_predict(int k) const;
     void splitTrainFromTest(double testPercentage);
+    void chunkTrainSet(double percentageToKeep);
+
+    void trainPca(int alpha);
+    Matrix pca_kNN_predict(int k, int alpha);
+    Matrix kNN_predict(int k) const;
+    void trainActualPCA(int alpha);
+
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
         knnEquitativeSamplingKFold(int neighbours, bool bigTestSet);
     std::vector<std::tuple<double, std::vector<double>, std::vector<double>>>
@@ -162,6 +165,11 @@ public:
                                                          bool bigTestSet) const;
 
     static Dataset loadImdbVectorizedReviews();
+    static Dataset loadImdbVectorizedReviews(const std::string & entries_path);
+    static Dataset loadImdbVectorizedReviews(const std::string & entries_path,
+                                               double higher_percentile, double lower_percentile);
+    void setTestIds(Matrix test_ids);
+    Matrix getTestIds() const;
 
 
 private:
@@ -171,6 +179,7 @@ private:
 
     Matrix _testImages;
     Matrix _testLabels;
+    Matrix _test_ids;
     Matrix _trainImages;
     Matrix _trainLabels;
     Matrix _mt_times_m;
@@ -179,6 +188,9 @@ private:
     Matrix _pcaLambdas;
     Matrix _transformedTrainImages;
     int _pcaAlpha = 0;
+    int _currentPcaAlpha = 0;
+    int _currentTrainSetAlpha = 0;
+
     // Matrix _transformedTestImages;
 };
 

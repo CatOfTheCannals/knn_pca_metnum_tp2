@@ -2,12 +2,15 @@
 #define __MATRIX_HPP__
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <assert.h>
 #include <tuple>
 #include <math.h>
 #include <chrono>
+
 
 #define GET_TIME std::chrono::high_resolution_clock::now()
 #define     GET_TIME_DELTA(begin, end) \
@@ -70,9 +73,13 @@ public:
     std::tuple<int, int> maxCoeff();
     friend std::ostream& operator<<(std::ostream& o, const Matrix& a);
     bool isApproximate(const Matrix b, double epsilon) const;
+    double sum() const;
     double squared_norm() const;
     double norm() const;
     static Matrix vecOfRowsToMatrix(const std::vector<Matrix> vecOfRows);
+    static Matrix hstack(const Matrix a, const Matrix b);
+    static void saveMatrixToCsv(Matrix e, string filename);
+    static Matrix loadMatrixFromFile(string filename);
 
 private:
     int _rows;

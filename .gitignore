@@ -13,6 +13,8 @@ libmetodos-tp2-base.a
 main
 tp2_metodos.cbp
 data/Makefile
+data/notebooks/plots/
+data/notebooks/.ipynb_checkpoints/
 
 *.aux
 *.bcf

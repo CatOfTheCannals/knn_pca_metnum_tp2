@@ -1,7 +1,7 @@
 #include "Pca.h"
 
 
-tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double epsilon) {
+tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components) {
     Matrix X(A);
     Matrix mean(1, A.cols());
 
@@ -22,31 +22,13 @@ tuple<Matrix, Matrix> pca(const Matrix &A, unsigned int num_components, double e
     auto M = X.mt_times_m();
 
 
-    return svd(M, num_components, epsilon);
+    return svd(M, num_components);
 
-    // auto M_eigenvectors = X.transpose().multiply(m_eigenvectors);
-
-    // std::cout << M_eigenvectors.rows() << ", " << M_eigenvectors.cols() << std::endl;
-    // std::cout << X.rows() << ", " << X.cols() << std::endl;
-
-    //std::cout << "difference between U's:" << std::endl ;
-    //std::cout << big_m_eigenvectors - M_eigenvectors << std::endl;
-    //std::cout << M_eigenvectors << std::endl;
-
-    //std::cout << "BIG: " << big_M.multiply(big_m_eigenvectors) -big_m_eigenvectors.multiply(big_lambdas) << std::endl;
-    //std::cout << std::endl << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl;
-    //std::cout << "SMALL: " << M.multiply(m_eigenvectors) - m_eigenvectors.multiply(lambdas) << std::endl;
-
-    // std::cout << "lambdas:" << std::endl << lambdas << std::endl;
-
-    //return make_tuple(m_eigenvectors, lambdas);
 }
 
-tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
-                          double epsilon) {
+tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components) {
 
     Matrix X(A);
-    Matrix A_copy(A);
 
     assert((num_components <= X.rows()) && (num_components <= X.cols()));
 
@@ -58,15 +40,19 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
         Matrix x_0( random(A.rows(), 1));
         Matrix eigen_vector(A.rows(), 1);
         double eigen_value;
+        // compute i_th eigen vector and its value
+        tie(eigen_vector, eigen_value) = powerMethodQ1(x_0, X);
+        cout << i << " eigen value: " << eigen_value << endl;
 
-        tie(eigen_vector, eigen_value) =
-                power_method(x_0, X, epsilon); // calculate i_th eigen vector and it's value
+        if ((i > 0) && eigen_vector.isApproximate(k_eigen_vectors.subMatrix(0, A.rows()-1, i-1, i-1), 0.01)){
+            std::cout << "se esta repitiendo autovector ñeri" << std::endl;
+        }
 
         for (auto q = 0; q < k_eigen_vectors.rows(); q++) {
             k_eigen_vectors.setIndex(q, i, eigen_vector(q, 0)); // fill eigen vector in res matrix
         }
         lambdas.setIndex(i, i, eigen_value);
-
+        if(i%100==0){ cout << "PCA i : " << i << endl;}
         auto external = eigen_vector*eigen_vector.transpose();
         X = X - (external * eigen_value);
     }
@@ -74,40 +60,59 @@ tuple<Matrix, Matrix> svd(const Matrix &A, unsigned int num_components,
     return make_tuple(k_eigen_vectors, lambdas);
 }
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
-                                   double epsilon) {
-    return power_method(x_0, input, epsilon, 100);
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input) {
+    return power_method(x_0, input, 100);
 
 };
 
-tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input,
-                                   double epsilon, int max_iters) {
+tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a) {
+    return powerMethodQ1(x_0, a, 25);
+};
+
+tuple<Matrix, double> powerMethodQ1(Matrix x_0, const Matrix &a, long N) {
+
+
+    for (long i = 0; i < N; i++) {
+        x_0 = a * x_0;
+        x_0 = x_0 / x_0.norm();
+    }
+
+    Matrix producto = a * x_0;
+    double val = 0.0;
+    for(int i = 0 ; i< x_0.size() ; i++){
+        if(x_0(i)!=0.0){
+            val = producto(i)/x_0(i);
+        }
+
+    }
+    std::tuple<Matrix, double> res = std::make_tuple(x_0, val);
+    return res;
+}
+
+tuple<Matrix, double> power_method(Matrix& x_0, Matrix& input, int max_iters) {
     assert(input.rows() == input.cols());
     assert(input.rows() == x_0.rows());
     assert(1 == x_0.cols());
 
-
-
     Matrix x(x_0 / x_0.norm());
     Matrix A(input);
 
-    double prev_norm = 0;
+    double lambda;
+    double prev_lambda = 0;
 
-    auto Ax = A*x;
+    Matrix Ax = A*x;
 
     for(int i = 0; i < max_iters; i++) {
-        auto Ax_norm = Ax.norm();
+        double Ax_norm = Ax.norm();
+        if(i==0){
+            cout <<"ax norm: "<< Ax_norm <<endl; }
         x = Ax / Ax_norm;
         Ax = A*x;
-        if( fabs(Ax_norm - prev_norm) < epsilon ) {
-            break;
-        }
-        prev_norm = Ax_norm;
 
+        lambda = (x.transpose()*Ax)(0);
+        prev_lambda = lambda;
     }
-
-    auto lambda = x.transpose()*Ax;
-    return make_tuple(x, lambda(0));
+    return make_tuple(x, lambda);
 }
 
 Matrix ones(int rows, int cols)  {
