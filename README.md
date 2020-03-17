@@ -1,7 +1,4 @@
-# knn_pca_metnum_tp2
-
-# Link al informe en OverLeaf:
-https://www.overleaf.com/3358827566mtktdxmynbhn
+# knn_pca_sentiment_analysis
 
 ## Compiling with cmake from root dir:
 
